@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sale;
+package customerdatamanagement;
 
 /**
  *
  * @author JISOO
  */
-public class Sale {
+public class customerdatamanagement {
 
     /**
      * @param args the command line arguments
