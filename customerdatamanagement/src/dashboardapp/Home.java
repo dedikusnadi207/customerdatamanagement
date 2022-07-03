@@ -382,7 +382,6 @@ public class Home extends javax.swing.JFrame {
         jLabel7.setText("Jumlah Pelanggan");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 51, 153));
@@ -422,7 +421,6 @@ public class Home extends javax.swing.JFrame {
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -450,7 +448,6 @@ public class Home extends javax.swing.JFrame {
         jLabel10.setText("Jumlah Transaksi");
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
