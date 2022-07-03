@@ -77,6 +77,7 @@ public class Home extends javax.swing.JFrame {
         btn_hapus = new com.k33ptoo.components.KButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
         setBackground(new java.awt.Color(204, 204, 204));
         setLocationByPlatform(true);
         setUndecorated(true);

@@ -43,6 +43,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
 
         kGradientPanel1.setLayout(null);
 
@@ -67,7 +68,6 @@ public class Login extends javax.swing.JFrame {
 
         jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPasswordField1.setForeground(new java.awt.Color(102, 102, 102));
-        jPasswordField1.setText("jPasswordField1");
         jPasswordField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(12, 91, 160)));
 
         kGradientPanel2.setLayout(null);
@@ -113,45 +113,47 @@ public class Login extends javax.swing.JFrame {
         );
 
         kGradientPanel1.add(jPanel1);
-        jPanel1.setBounds(530, 220, 400, 300);
+        jPanel1.setBounds(420, 160, 400, 300);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("KELOMPOK 5 Y6B");
         kGradientPanel1.add(jLabel1);
-        jLabel1.setBounds(130, 210, 370, 48);
+        jLabel1.setBounds(30, 200, 370, 48);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("APLIKASI CUSTOMER DATA MANAGEMENT");
         kGradientPanel1.add(jLabel11);
-        jLabel11.setBounds(130, 70, 510, 32);
+        jLabel11.setBounds(180, 20, 510, 32);
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardapp/images/grap.png"))); // NOI18N
         kGradientPanel1.add(jLabel9);
-        jLabel9.setBounds(100, 330, 360, 200);
+        jLabel9.setBounds(30, 290, 360, 200);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 153, 255));
         jLabel4.setText("TUGAS PEMROGRAMAN VISUAL");
         kGradientPanel1.add(jLabel4);
-        jLabel4.setBounds(130, 170, 300, 40);
+        jLabel4.setBounds(30, 170, 300, 40);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("*############################################################*");
         kGradientPanel1.add(jLabel2);
-        jLabel2.setBounds(130, 100, 500, 20);
+        jLabel2.setBounds(180, 50, 500, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
