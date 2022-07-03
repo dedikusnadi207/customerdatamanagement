@@ -44,6 +44,7 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
+        setLocationByPlatform(true);
 
         kGradientPanel1.setLayout(null);
 
