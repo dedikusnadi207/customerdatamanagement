@@ -139,9 +139,9 @@ public class Login extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("*#####*");
+        jLabel2.setText("*############################################################*");
         kGradientPanel1.add(jLabel2);
-        jLabel2.setBounds(140, 100, 200, 20);
+        jLabel2.setBounds(130, 100, 500, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
