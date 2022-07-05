@@ -76,6 +76,11 @@ public class Admin extends javax.swing.JFrame {
 
         kGradientPanel2.setkEndColor(new java.awt.Color(255, 255, 51));
         kGradientPanel2.setkStartColor(new java.awt.Color(0, 153, 153));
+        kGradientPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                kGradientPanel2MouseClicked(evt);
+            }
+        });
         kGradientPanel2.setLayout(null);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -179,6 +184,10 @@ public class Admin extends javax.swing.JFrame {
         this.setVisible(false);
         new Login().setVisible(true);
     }//GEN-LAST:event_label_salesMouseClicked
+
+    private void kGradientPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kGradientPanel2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kGradientPanel2MouseClicked
 
     /**
      * @param args the command line arguments

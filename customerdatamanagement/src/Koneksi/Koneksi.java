@@ -1,4 +1,4 @@
-package Connection;
+package Koneksi;
 
 import java.sql.*;
 
