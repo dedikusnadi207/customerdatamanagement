@@ -9,12 +9,12 @@ package dashboardapp;
  *
  * @author Easternisme
  */
-public class Login extends javax.swing.JFrame {
+public class Admin extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
-    public Login() {
+    public Admin() {
         initComponents();
     }
 
@@ -36,7 +36,7 @@ public class Login extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         kGradientPanel2 = new keeptoo.KGradientPanel();
         jLabel10 = new javax.swing.JLabel();
-        label_admin = new javax.swing.JLabel();
+        label_sales = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -47,6 +47,8 @@ public class Login extends javax.swing.JFrame {
         setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
         setLocationByPlatform(true);
 
+        kGradientPanel1.setkEndColor(new java.awt.Color(0, 204, 204));
+        kGradientPanel1.setkStartColor(new java.awt.Color(0, 102, 255));
         kGradientPanel1.setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -58,7 +60,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel3.setText("LOGIN PAGE");
+        jLabel3.setText("ADMIN LOGIN PAGE");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 153, 153));
@@ -72,6 +74,8 @@ public class Login extends javax.swing.JFrame {
         jPasswordField1.setForeground(new java.awt.Color(102, 102, 102));
         jPasswordField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(12, 91, 160)));
 
+        kGradientPanel2.setkEndColor(new java.awt.Color(255, 255, 51));
+        kGradientPanel2.setkStartColor(new java.awt.Color(0, 153, 153));
         kGradientPanel2.setLayout(null);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -80,10 +84,10 @@ public class Login extends javax.swing.JFrame {
         kGradientPanel2.add(jLabel10);
         jLabel10.setBounds(100, 0, 100, 40);
 
-        label_admin.setText("Login Administrator");
-        label_admin.addMouseListener(new java.awt.event.MouseAdapter() {
+        label_sales.setText("Login Sales");
+        label_sales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                label_adminMouseClicked(evt);
+                label_salesMouseClicked(evt);
             }
         });
 
@@ -94,7 +98,7 @@ public class Login extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_admin)
+                    .addComponent(label_sales)
                     .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel8)
@@ -119,9 +123,9 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(label_admin)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(label_sales)
+                .addContainerGap())
         );
 
         kGradientPanel1.add(jPanel1);
@@ -135,7 +139,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("APLIKASI CUSTOMER DATA MANAGEMENT");
+        jLabel11.setText("ADMIN CUSTOMER DATA MANAGEMENT");
         kGradientPanel1.add(jLabel11);
         jLabel11.setBounds(180, 20, 510, 30);
 
@@ -171,10 +175,10 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void label_adminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_adminMouseClicked
-        new Admin().setVisible(true);
+    private void label_salesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_salesMouseClicked
         this.setVisible(false);
-    }//GEN-LAST:event_label_adminMouseClicked
+        new Login().setVisible(true);
+    }//GEN-LAST:event_label_salesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -193,20 +197,21 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new Admin().setVisible(true);
             }
         });
     }
@@ -226,6 +231,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private keeptoo.KGradientPanel kGradientPanel1;
     private keeptoo.KGradientPanel kGradientPanel2;
-    private javax.swing.JLabel label_admin;
+    private javax.swing.JLabel label_sales;
     // End of variables declaration//GEN-END:variables
 }

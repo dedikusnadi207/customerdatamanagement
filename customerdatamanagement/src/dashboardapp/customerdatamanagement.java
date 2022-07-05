@@ -5,12 +5,6 @@
  */
 package dashboardapp;
 
-import customerdatamanagement.menu;
-
-/**
- *
- * @author Easternisme
- */
 public class customerdatamanagement {
      public static void main(String[] args) {
         new Login().setVisible(true);
