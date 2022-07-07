@@ -7,8 +7,6 @@ package dashboardapp;
 
 import java.sql.*;
 import Koneksi.Koneksi;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import javax.swing.JOptionPane;
 /**
  *
@@ -142,8 +140,6 @@ public class Login extends javax.swing.JFrame {
         jLabel11.setText("APLIKASI PENGELOLAAN DATA PELANGGAN");
         kGradientPanel1.add(jLabel11);
         jLabel11.setBounds(160, 20, 550, 30);
-
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardapp/images/grap.png"))); // NOI18N
         kGradientPanel1.add(jLabel9);
         jLabel9.setBounds(30, 290, 360, 200);
 
@@ -184,32 +180,18 @@ public class Login extends javax.swing.JFrame {
         try {
             String pwd = new String(txt_password.getPassword());
             String mail = txt_email.getText();
-            String emaildb = "";
-            String passworddb = "";
-//            MessageDigest digest = MessageDigest.getInstance("SHA1");
-//            digest.update(pwd.getBytes(),0,pwd.length());
-//            String encpwd = new BigInteger(1, digest.digest()).toString(16);
-              String query ="SELECT * FROM sales WHERE `email` = ? AND `password` = ?";
+            String query ="SELECT * FROM sales WHERE email = ? AND password = ?";
            
-            java.sql.PreparedStatement data = koneksi.prepareStatement(query);
-           
-            java.sql.ResultSet hasil =  data.executeQuery();
+            PreparedStatement data = koneksi.prepareStatement(query);
             data.setString(1, mail);
             data.setString(2, pwd);
             
-            while(hasil.next()){
-                 emaildb = hasil.getString("email");
-                 passworddb = hasil.getString("password");      
-                data.executeQuery();
-            }
-                 
-            
-            if(emaildb.equals(txt_email.getText())&&(passworddb.equals(pwd))){
+            ResultSet hasil =  data.executeQuery();            
+            if(hasil.next()){
                 JOptionPane.showMessageDialog(null, "Login Berhasil");
+            } else {
+                JOptionPane.showMessageDialog(null, "Email atau password salah");
             }
-            
-                
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
             System.err.println(e.getMessage());
