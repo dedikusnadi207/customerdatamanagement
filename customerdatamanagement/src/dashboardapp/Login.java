@@ -7,6 +7,8 @@ package dashboardapp;
 
 import java.sql.*;
 import Koneksi.Koneksi;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import javax.swing.JOptionPane;
 /**
  *
@@ -180,13 +182,34 @@ public class Login extends javax.swing.JFrame {
 
     private void btn_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseClicked
         try {
-            String query ="SELECT * FROM sales WHERE email = ? AND password = ?";
-            java.sql.PreparedStatement stat=koneksi.prepareStatement(query);
             String pwd = new String(txt_password.getPassword());
-            stat.setString(1, txt_email.getText());
-            stat.setString(1, pwd);
-            stat.execute();
-            JOptionPane.showMessageDialog(null, "Penyimpanan Data Berhasil");
+            String mail = txt_email.getText();
+            String emaildb = "";
+            String passworddb = "";
+//            MessageDigest digest = MessageDigest.getInstance("SHA1");
+//            digest.update(pwd.getBytes(),0,pwd.length());
+//            String encpwd = new BigInteger(1, digest.digest()).toString(16);
+              String query ="SELECT * FROM sales WHERE `email` = ? AND `password` = ?";
+           
+            java.sql.PreparedStatement data = koneksi.prepareStatement(query);
+           
+            java.sql.ResultSet hasil =  data.executeQuery();
+            data.setString(1, mail);
+            data.setString(2, pwd);
+            
+            while(hasil.next()){
+                 emaildb = hasil.getString("email");
+                 passworddb = hasil.getString("password");      
+                data.executeQuery();
+            }
+                 
+            
+            if(emaildb.equals(txt_email.getText())&&(passworddb.equals(pwd))){
+                JOptionPane.showMessageDialog(null, "Login Berhasil");
+            }
+            
+                
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
             System.err.println(e.getMessage());
