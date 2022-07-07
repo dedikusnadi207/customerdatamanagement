@@ -144,16 +144,16 @@ public class Admin extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("ADMIN CUSTOMER DATA MANAGEMENT");
+        jLabel11.setText("APLIKASI PENGELOLAAN DATA PELANGGAN");
         kGradientPanel1.add(jLabel11);
-        jLabel11.setBounds(180, 20, 510, 30);
+        jLabel11.setBounds(160, 20, 550, 30);
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardapp/images/grap.png"))); // NOI18N
         kGradientPanel1.add(jLabel9);
         jLabel9.setBounds(30, 290, 360, 200);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(102, 153, 255));
+        jLabel4.setForeground(new java.awt.Color(204, 204, 0));
         jLabel4.setText("TUGAS PEMROGRAMAN VISUAL");
         kGradientPanel1.add(jLabel4);
         jLabel4.setBounds(30, 170, 300, 40);
@@ -162,7 +162,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("*############################################################*");
         kGradientPanel1.add(jLabel2);
-        jLabel2.setBounds(180, 50, 500, 17);
+        jLabel2.setBounds(150, 50, 560, 17);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

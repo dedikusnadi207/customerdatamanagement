@@ -373,8 +373,8 @@ public class Home extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel5.setText("Aplikasi Customer Data Management");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 330, 37));
+        jLabel5.setText("APLIKASI PENGELOLAAN DATA PELANGGAN");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
 
         nav_panel.setOpaque(false);
 
@@ -483,7 +483,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, Short.MAX_VALUE))
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nav_panelLayout.createSequentialGroup()
                         .addGap(58, 58, 58)
@@ -544,7 +544,6 @@ public class Home extends javax.swing.JFrame {
             }
         });
         jTable1.setGridColor(new java.awt.Color(247, 247, 247));
-        jTable1.setRowHeight(20);
         jTable1.setSelectionBackground(new java.awt.Color(96, 83, 150));
         panel_tabel.setViewportView(jTable1);
 
