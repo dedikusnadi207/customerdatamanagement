@@ -5,15 +5,17 @@
  */
 package dashboardapp;
 
+import java.sql.*;
+import javax.swing.JOptionPane;
+import Koneksi.Koneksi;
+
 /**
  *
  * @author Easternisme
  */
 public class Admin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
+    private final Connection koneksi = new Koneksi().koneksidb();
     public Admin() {
         initComponents();
     }
@@ -29,12 +31,12 @@ public class Admin extends javax.swing.JFrame {
 
         kGradientPanel1 = new keeptoo.KGradientPanel();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        txt_email = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        kGradientPanel2 = new keeptoo.KGradientPanel();
+        txt_pwd = new javax.swing.JPasswordField();
+        btn_login = new keeptoo.KGradientPanel();
         jLabel10 = new javax.swing.JLabel();
         label_sales = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -54,9 +56,9 @@ public class Admin extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(102, 102, 102));
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(12, 91, 160)));
+        txt_email.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txt_email.setForeground(new java.awt.Color(102, 102, 102));
+        txt_email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(12, 91, 160)));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
@@ -70,23 +72,23 @@ public class Admin extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(153, 153, 153));
         jLabel8.setText("password");
 
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(102, 102, 102));
-        jPasswordField1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(12, 91, 160)));
+        txt_pwd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txt_pwd.setForeground(new java.awt.Color(102, 102, 102));
+        txt_pwd.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(12, 91, 160)));
 
-        kGradientPanel2.setkEndColor(new java.awt.Color(255, 255, 51));
-        kGradientPanel2.setkStartColor(new java.awt.Color(0, 153, 153));
-        kGradientPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_login.setkEndColor(new java.awt.Color(255, 255, 51));
+        btn_login.setkStartColor(new java.awt.Color(0, 153, 153));
+        btn_login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                kGradientPanel2MouseClicked(evt);
+                btn_loginMouseClicked(evt);
             }
         });
-        kGradientPanel2.setLayout(null);
+        btn_login.setLayout(null);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("LOGIN");
-        kGradientPanel2.add(jLabel10);
+        btn_login.add(jLabel10);
         jLabel10.setBounds(100, 0, 100, 40);
 
         label_sales.setText("Login Sales");
@@ -108,9 +110,9 @@ public class Admin extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel8)
                         .addComponent(jLabel5)
-                        .addComponent(jTextField1)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-                        .addComponent(kGradientPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(txt_email)
+                        .addComponent(txt_pwd, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                        .addComponent(btn_login, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -121,13 +123,13 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_pwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(label_sales)
                 .addContainerGap())
@@ -185,9 +187,29 @@ public class Admin extends javax.swing.JFrame {
         new Login().setVisible(true);
     }//GEN-LAST:event_label_salesMouseClicked
 
-    private void kGradientPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kGradientPanel2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kGradientPanel2MouseClicked
+    private void btn_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseClicked
+        try {
+            String pwd = new String(txt_pwd.getPassword());
+            String mail = txt_email.getText();
+            String query ="SELECT * FROM admin WHERE email = ? AND password = ?";
+           
+            PreparedStatement data = koneksi.prepareStatement(query);
+            data.setString(1, mail);
+            data.setString(2, pwd);
+            
+            ResultSet hasil =  data.executeQuery();            
+            if(hasil.next()){
+                JOptionPane.showMessageDialog(null, "Login Berhasil");
+                this.setVisible(false);
+                new Home().setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Email atau password salah");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            System.err.println(e.getMessage());
+        }
+    }//GEN-LAST:event_btn_loginMouseClicked
 
     /**
      * @param args the command line arguments
@@ -226,6 +248,7 @@ public class Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private keeptoo.KGradientPanel btn_login;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -236,10 +259,9 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
     private keeptoo.KGradientPanel kGradientPanel1;
-    private keeptoo.KGradientPanel kGradientPanel2;
     private javax.swing.JLabel label_sales;
+    private javax.swing.JTextField txt_email;
+    private javax.swing.JPasswordField txt_pwd;
     // End of variables declaration//GEN-END:variables
 }
