@@ -5,18 +5,36 @@
  */
 package dashboardapp;
 
-import java.sql.*;
-import Koneksi.Koneksi;
+import java.awt.event.KeyEvent;
+import java.util.Map;
 import javax.swing.JOptionPane;
+import repository.SalesRepository;
 /**
  *
  * @author Easternisme
  */
 public class Login extends javax.swing.JFrame {
 
-   private final Connection koneksi = new Koneksi().koneksidb();
     public Login() {
         initComponents();
+    }
+    
+    private void login() {
+        try {
+            String mail = txt_email.getText();
+            String pwd = new String(txt_password.getPassword());
+            SalesRepository sales = new SalesRepository();
+            if (sales.first(Map.of("email", mail, "password", pwd)) != null) {
+                JOptionPane.showMessageDialog(null, "Login Berhasil");
+                this.setVisible(false);
+                new Home().setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Email atau password salah");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            System.err.println(e.getMessage());
+        }
     }
 
     
@@ -43,6 +61,7 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
         setLocationByPlatform(true);
+        setResizable(false);
 
         kGradientPanel1.setLayout(null);
 
@@ -68,6 +87,11 @@ public class Login extends javax.swing.JFrame {
         txt_password.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txt_password.setForeground(new java.awt.Color(102, 102, 102));
         txt_password.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(12, 91, 160)));
+        txt_password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_passwordKeyPressed(evt);
+            }
+        });
 
         btn_login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -140,6 +164,8 @@ public class Login extends javax.swing.JFrame {
         jLabel11.setText("APLIKASI PENGELOLAAN DATA PELANGGAN");
         kGradientPanel1.add(jLabel11);
         jLabel11.setBounds(160, 20, 550, 30);
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardapp/images/grap.png"))); // NOI18N
         kGradientPanel1.add(jLabel9);
         jLabel9.setBounds(30, 290, 360, 200);
 
@@ -169,6 +195,7 @@ public class Login extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void label_adminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_adminMouseClicked
@@ -177,29 +204,14 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_label_adminMouseClicked
 
     private void btn_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseClicked
-        try {
-            String pwd = new String(txt_password.getPassword());
-            String mail = txt_email.getText();
-            String query ="SELECT * FROM sales WHERE email = ? AND password = ?";
-           
-            PreparedStatement data = koneksi.prepareStatement(query);
-            data.setString(1, mail);
-            data.setString(2, pwd);
-            
-            ResultSet hasil =  data.executeQuery();            
-            if(hasil.next()){
-                JOptionPane.showMessageDialog(null, "Login Berhasil");
-                this.setVisible(false);
-                new Home().setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Email atau password salah");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            System.err.println(e.getMessage());
-        }
-        
+        this.login();
     }//GEN-LAST:event_btn_loginMouseClicked
+
+    private void txt_passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passwordKeyPressed
+        if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
+            this.login();
+        }
+    }//GEN-LAST:event_txt_passwordKeyPressed
 
     /**
      * @param args the command line arguments
