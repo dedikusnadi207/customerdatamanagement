@@ -5,9 +5,10 @@
  */
 package dashboardapp;
 
-import java.sql.*;
+import java.awt.event.KeyEvent;
+import java.util.Map;
 import javax.swing.JOptionPane;
-import Koneksi.Koneksi;
+import repository.AdminRepository;
 
 /**
  *
@@ -15,9 +16,25 @@ import Koneksi.Koneksi;
  */
 public class Admin extends javax.swing.JFrame {
 
-    private final Connection koneksi = new Koneksi().koneksidb();
     public Admin() {
         initComponents();
+    }
+    private void login() {
+        try {
+            String pwd = new String(txt_pwd.getPassword());
+            String mail = txt_email.getText();
+            AdminRepository admin = new AdminRepository();
+            if (admin.first(Map.of("email", mail, "password", pwd)) != null) {
+                JOptionPane.showMessageDialog(null, "Login Berhasil");
+                this.setVisible(false);
+                new Home().setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Email atau password salah");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            System.err.println(e.getMessage());
+        }
     }
 
     /**
@@ -48,6 +65,7 @@ public class Admin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
         setLocationByPlatform(true);
+        setResizable(false);
 
         kGradientPanel1.setkEndColor(new java.awt.Color(0, 204, 204));
         kGradientPanel1.setkStartColor(new java.awt.Color(0, 102, 255));
@@ -75,6 +93,11 @@ public class Admin extends javax.swing.JFrame {
         txt_pwd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txt_pwd.setForeground(new java.awt.Color(102, 102, 102));
         txt_pwd.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(12, 91, 160)));
+        txt_pwd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_pwdKeyPressed(evt);
+            }
+        });
 
         btn_login.setkEndColor(new java.awt.Color(255, 255, 51));
         btn_login.setkStartColor(new java.awt.Color(0, 153, 153));
@@ -180,6 +203,7 @@ public class Admin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void label_salesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_salesMouseClicked
@@ -188,28 +212,14 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_label_salesMouseClicked
 
     private void btn_loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseClicked
-        try {
-            String pwd = new String(txt_pwd.getPassword());
-            String mail = txt_email.getText();
-            String query ="SELECT * FROM admin WHERE email = ? AND password = ?";
-           
-            PreparedStatement data = koneksi.prepareStatement(query);
-            data.setString(1, mail);
-            data.setString(2, pwd);
-            
-            ResultSet hasil =  data.executeQuery();            
-            if(hasil.next()){
-                JOptionPane.showMessageDialog(null, "Login Berhasil");
-                this.setVisible(false);
-                new Home().setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Email atau password salah");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-            System.err.println(e.getMessage());
-        }
+        this.login();
     }//GEN-LAST:event_btn_loginMouseClicked
+
+    private void txt_pwdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pwdKeyPressed
+        if (KeyEvent.VK_ENTER == evt.getKeyCode()) {
+            this.login();
+        }
+    }//GEN-LAST:event_txt_pwdKeyPressed
 
     /**
      * @param args the command line arguments
