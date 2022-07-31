@@ -20,9 +20,13 @@ public class AdminDashboard extends javax.swing.JFrame {
     public AdminDashboard() {
         
         initComponents();
-       panel_tabel.setVisible(false);
-      
-       panel_tombol.setVisible(false);
+        panel_admin.setVisible(false);
+        panel_sales.setVisible(false);
+        panel_konfig.setVisible(false);
+        panel_layanan.setVisible(false);
+    
+        
+
         
     }
 
@@ -36,23 +40,23 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        Button1 = new javax.swing.JPanel();
+        btn_nav_admin = new javax.swing.JPanel();
         Indicator1 = new javax.swing.JPanel();
         lbl_layanan = new javax.swing.JLabel();
-        Button2 = new javax.swing.JPanel();
+        btn_nav_sales = new javax.swing.JPanel();
         Indicator2 = new javax.swing.JPanel();
         lbl_pelanggan = new javax.swing.JLabel();
-        Button3 = new javax.swing.JPanel();
+        btn_nav_layanan = new javax.swing.JPanel();
         Indicator3 = new javax.swing.JPanel();
         lbl_transaksi = new javax.swing.JLabel();
-        Button4 = new javax.swing.JPanel();
+        btn_nav_konfig = new javax.swing.JPanel();
         Indicator4 = new javax.swing.JPanel();
         lbl_report = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        panel_dashboard = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         nav_panel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -67,14 +71,72 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        panel_tabel = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         btn_close = new javax.swing.JLabel();
-        panel_tombol = new javax.swing.JPanel();
-        btn_tambah = new com.k33ptoo.components.KButton();
-        btn_edit = new com.k33ptoo.components.KButton();
-        btn_hapus = new com.k33ptoo.components.KButton();
+        panel_admin = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        panel_tabel1 = new javax.swing.JScrollPane();
+        tbl_admin = new javax.swing.JTable();
+        jPanel18 = new javax.swing.JPanel();
+        btn_close1 = new javax.swing.JLabel();
+        btn_tambah1 = new com.k33ptoo.components.KButton();
+        btn_edit1 = new com.k33ptoo.components.KButton();
+        btn_hapus1 = new com.k33ptoo.components.KButton();
+        btn_hapus2 = new com.k33ptoo.components.KButton();
+        label1 = new java.awt.Label();
+        txtPassword = new java.awt.TextField();
+        label2 = new java.awt.Label();
+        label3 = new java.awt.Label();
+        txtNama1 = new java.awt.TextField();
+        txtEmail1 = new java.awt.TextField();
+        panel_sales = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        panel_tabel2 = new javax.swing.JScrollPane();
+        tbl_sales = new javax.swing.JTable();
+        jPanel19 = new javax.swing.JPanel();
+        btn_close2 = new javax.swing.JLabel();
+        btn_tambah2 = new com.k33ptoo.components.KButton();
+        btn_edit2 = new com.k33ptoo.components.KButton();
+        btn_hapus3 = new com.k33ptoo.components.KButton();
+        btn_hapus4 = new com.k33ptoo.components.KButton();
+        label4 = new java.awt.Label();
+        txtPassword1 = new java.awt.TextField();
+        label5 = new java.awt.Label();
+        label6 = new java.awt.Label();
+        txtNama2 = new java.awt.TextField();
+        txtEmail2 = new java.awt.TextField();
+        panel_layanan = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        panel_tabel3 = new javax.swing.JScrollPane();
+        tbl_sales1 = new javax.swing.JTable();
+        jPanel20 = new javax.swing.JPanel();
+        btn_close3 = new javax.swing.JLabel();
+        btn_tambah3 = new com.k33ptoo.components.KButton();
+        btn_edit3 = new com.k33ptoo.components.KButton();
+        btn_hapus5 = new com.k33ptoo.components.KButton();
+        btn_hapus6 = new com.k33ptoo.components.KButton();
+        label7 = new java.awt.Label();
+        txtHarga = new java.awt.TextField();
+        label8 = new java.awt.Label();
+        label9 = new java.awt.Label();
+        txtLayanan = new java.awt.TextField();
+        txtDeskripsi = new java.awt.TextField();
+        panel_konfig = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        panel_tabel4 = new javax.swing.JScrollPane();
+        tbl_sales2 = new javax.swing.JTable();
+        jPanel21 = new javax.swing.JPanel();
+        btn_close4 = new javax.swing.JLabel();
+        btn_tambah4 = new com.k33ptoo.components.KButton();
+        btn_edit4 = new com.k33ptoo.components.KButton();
+        btn_hapus7 = new com.k33ptoo.components.KButton();
+        btn_hapus8 = new com.k33ptoo.components.KButton();
+        label10 = new java.awt.Label();
+        txtHarga1 = new java.awt.TextField();
+        label11 = new java.awt.Label();
+        label12 = new java.awt.Label();
+        txtLayanan1 = new java.awt.TextField();
+        txtDeskripsi1 = new java.awt.TextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
@@ -87,17 +149,17 @@ public class AdminDashboard extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Button1.setBackground(new java.awt.Color(255, 255, 255));
-        Button1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Button1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_nav_admin.setBackground(new java.awt.Color(255, 255, 255));
+        btn_nav_admin.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_nav_admin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Button1MouseClicked(evt);
+                btn_nav_adminMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Button1MouseEntered(evt);
+                btn_nav_adminMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Button1MouseExited(evt);
+                btn_nav_adminMouseExited(evt);
             }
         });
 
@@ -123,38 +185,38 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout Button1Layout = new javax.swing.GroupLayout(Button1);
-        Button1.setLayout(Button1Layout);
-        Button1Layout.setHorizontalGroup(
-            Button1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Button1Layout.createSequentialGroup()
+        javax.swing.GroupLayout btn_nav_adminLayout = new javax.swing.GroupLayout(btn_nav_admin);
+        btn_nav_admin.setLayout(btn_nav_adminLayout);
+        btn_nav_adminLayout.setHorizontalGroup(
+            btn_nav_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_nav_adminLayout.createSequentialGroup()
                 .addComponent(Indicator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51)
                 .addComponent(lbl_layanan)
                 .addGap(0, 86, Short.MAX_VALUE))
         );
-        Button1Layout.setVerticalGroup(
-            Button1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btn_nav_adminLayout.setVerticalGroup(
+            btn_nav_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Indicator1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Button1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_adminLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbl_layanan, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel1.add(Button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 175, 190, -1));
+        jPanel1.add(btn_nav_admin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 175, 190, -1));
 
-        Button2.setBackground(new java.awt.Color(255, 255, 255));
-        Button2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Button2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_nav_sales.setBackground(new java.awt.Color(255, 255, 255));
+        btn_nav_sales.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_nav_sales.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Button2MouseClicked(evt);
+                btn_nav_salesMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Button2MouseEntered(evt);
+                btn_nav_salesMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Button2MouseExited(evt);
+                btn_nav_salesMouseExited(evt);
             }
         });
 
@@ -180,38 +242,38 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout Button2Layout = new javax.swing.GroupLayout(Button2);
-        Button2.setLayout(Button2Layout);
-        Button2Layout.setHorizontalGroup(
-            Button2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Button2Layout.createSequentialGroup()
+        javax.swing.GroupLayout btn_nav_salesLayout = new javax.swing.GroupLayout(btn_nav_sales);
+        btn_nav_sales.setLayout(btn_nav_salesLayout);
+        btn_nav_salesLayout.setHorizontalGroup(
+            btn_nav_salesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_nav_salesLayout.createSequentialGroup()
                 .addComponent(Indicator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51)
                 .addComponent(lbl_pelanggan)
                 .addGap(0, 95, Short.MAX_VALUE))
         );
-        Button2Layout.setVerticalGroup(
-            Button2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btn_nav_salesLayout.setVerticalGroup(
+            btn_nav_salesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Indicator2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Button2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_salesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbl_pelanggan, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel1.add(Button2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 227, 190, -1));
+        jPanel1.add(btn_nav_sales, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 227, 190, -1));
 
-        Button3.setBackground(new java.awt.Color(255, 255, 255));
-        Button3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Button3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_nav_layanan.setBackground(new java.awt.Color(255, 255, 255));
+        btn_nav_layanan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_nav_layanan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Button3MouseClicked(evt);
+                btn_nav_layananMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Button3MouseEntered(evt);
+                btn_nav_layananMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Button3MouseExited(evt);
+                btn_nav_layananMouseExited(evt);
             }
         });
 
@@ -237,38 +299,38 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout Button3Layout = new javax.swing.GroupLayout(Button3);
-        Button3.setLayout(Button3Layout);
-        Button3Layout.setHorizontalGroup(
-            Button3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Button3Layout.createSequentialGroup()
+        javax.swing.GroupLayout btn_nav_layananLayout = new javax.swing.GroupLayout(btn_nav_layanan);
+        btn_nav_layanan.setLayout(btn_nav_layananLayout);
+        btn_nav_layananLayout.setHorizontalGroup(
+            btn_nav_layananLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_nav_layananLayout.createSequentialGroup()
                 .addComponent(Indicator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51)
                 .addComponent(lbl_transaksi)
                 .addGap(0, 76, Short.MAX_VALUE))
         );
-        Button3Layout.setVerticalGroup(
-            Button3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btn_nav_layananLayout.setVerticalGroup(
+            btn_nav_layananLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Indicator3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Button3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_layananLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbl_transaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel1.add(Button3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 279, 190, -1));
+        jPanel1.add(btn_nav_layanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 279, 190, -1));
 
-        Button4.setBackground(new java.awt.Color(255, 255, 255));
-        Button4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Button4.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_nav_konfig.setBackground(new java.awt.Color(255, 255, 255));
+        btn_nav_konfig.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_nav_konfig.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Button4MouseClicked(evt);
+                btn_nav_konfigMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Button4MouseEntered(evt);
+                btn_nav_konfigMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Button4MouseExited(evt);
+                btn_nav_konfigMouseExited(evt);
             }
         });
 
@@ -294,26 +356,26 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout Button4Layout = new javax.swing.GroupLayout(Button4);
-        Button4.setLayout(Button4Layout);
-        Button4Layout.setHorizontalGroup(
-            Button4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Button4Layout.createSequentialGroup()
+        javax.swing.GroupLayout btn_nav_konfigLayout = new javax.swing.GroupLayout(btn_nav_konfig);
+        btn_nav_konfig.setLayout(btn_nav_konfigLayout);
+        btn_nav_konfigLayout.setHorizontalGroup(
+            btn_nav_konfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_nav_konfigLayout.createSequentialGroup()
                 .addComponent(Indicator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(51, 51, 51)
                 .addComponent(lbl_report)
                 .addGap(0, 54, Short.MAX_VALUE))
         );
-        Button4Layout.setVerticalGroup(
-            Button4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btn_nav_konfigLayout.setVerticalGroup(
+            btn_nav_konfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Indicator4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Button4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_konfigLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbl_report, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel1.add(Button4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 190, -1));
+        jPanel1.add(btn_nav_konfig, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 190, -1));
         jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 39, -1, -1));
 
         jLabel21.setFont(new java.awt.Font("Impact", 0, 16)); // NOI18N
@@ -358,29 +420,29 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 530));
 
-        jPanel2.setBackground(new java.awt.Color(247, 247, 247));
-        jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        panel_dashboard.setBackground(new java.awt.Color(247, 247, 247));
+        panel_dashboard.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jPanel2MouseDragged(evt);
+                panel_dashboardMouseDragged(evt);
             }
         });
-        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        panel_dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanel2MousePressed(evt);
+                panel_dashboardMousePressed(evt);
             }
         });
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panel_dashboard.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 102, 102));
         jLabel5.setText("APLIKASI PENGELOLAAN DATA PELANGGAN");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
+        panel_dashboard.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
 
         nav_panel.setOpaque(false);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel7.setText("Jumlah Pelanggan");
+        jLabel7.setText("Jumlah Layanan");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -446,7 +508,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel10.setText("Jumlah Transaksi");
+        jLabel10.setText("Jumlah Sales");
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -473,7 +535,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel12.setText("Pemasukan");
+        jLabel12.setText("Jumlah Admin");
 
         javax.swing.GroupLayout nav_panelLayout = new javax.swing.GroupLayout(nav_panel);
         nav_panel.setLayout(nav_panelLayout);
@@ -483,7 +545,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nav_panelLayout.createSequentialGroup()
                         .addGap(58, 58, 58)
@@ -517,37 +579,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel2.add(nav_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 480, 150));
-
-        panel_tabel.setBackground(new java.awt.Color(247, 247, 247));
-        panel_tabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
-        jTable1.setBackground(new java.awt.Color(247, 247, 247));
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Allan", "XLS", "2hrs", "$200"},
-                {"Brian", "React", "1hr", "$100 per hr"},
-                {"Romeo", "C#", "3 Days", "$1000"},
-                {"Alex", "C++ ", "10 hrs", "$50 per hr"}
-            },
-            new String [] {
-                "Name", "Project", "Time", "Cost"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable1.setGridColor(new java.awt.Color(247, 247, 247));
-        jTable1.setSelectionBackground(new java.awt.Color(96, 83, 150));
-        panel_tabel.setViewportView(jTable1);
-
-        jPanel2.add(panel_tabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 710, 260));
+        panel_dashboard.add(nav_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 480, 150));
 
         jPanel8.setBackground(new java.awt.Color(0, 102, 102));
         jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -577,55 +609,593 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGap(0, 11, Short.MAX_VALUE))
         );
 
-        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
+        panel_dashboard.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
 
-        panel_tombol.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(panel_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
-        btn_tambah.setText("Tambah");
+        panel_admin.setBackground(new java.awt.Color(247, 247, 247));
+        panel_admin.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panel_adminMouseDragged(evt);
+            }
+        });
+        panel_admin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panel_adminMousePressed(evt);
+            }
+        });
+        panel_admin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btn_edit.setText("Edit");
-        btn_edit.setkStartColor(new java.awt.Color(0, 51, 153));
-        btn_edit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_editActionPerformed(evt);
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel6.setText("DATA ADMIN APLIKASI");
+        panel_admin.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
+
+        panel_tabel1.setBackground(new java.awt.Color(247, 247, 247));
+        panel_tabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        tbl_admin.setBackground(new java.awt.Color(247, 247, 247));
+        tbl_admin.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tbl_admin.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Allan", "XLS", "2hrs", "$200"},
+                {"Brian", "React", "1hr", "$100 per hr"},
+                {"Romeo", "C#", "3 Days", "$1000"},
+                {"Alex", "C++ ", "10 hrs", "$50 per hr"}
+            },
+            new String [] {
+                "Name", "Project", "Time", "Cost"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tbl_admin.setGridColor(new java.awt.Color(247, 247, 247));
+        tbl_admin.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        panel_tabel1.setViewportView(tbl_admin);
+
+        panel_admin.add(panel_tabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 710, 280));
+
+        jPanel18.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel18.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btn_close1.setBackground(new java.awt.Color(96, 83, 150));
+        btn_close1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btn_close1.setForeground(new java.awt.Color(255, 255, 255));
+        btn_close1.setText("X");
+        btn_close1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_close1MouseClicked(evt);
             }
         });
 
-        btn_hapus.setText("Hapus");
-        btn_hapus.setkStartColor(new java.awt.Color(255, 0, 0));
-        btn_hapus.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
+                .addGap(0, 156, Short.MAX_VALUE)
+                .addComponent(btn_close1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addComponent(btn_close1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
+        );
+
+        panel_admin.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
+
+        btn_tambah1.setText("Tambah");
+        panel_admin.add(btn_tambah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 83, 29));
+
+        btn_edit1.setText("Edit");
+        btn_edit1.setkStartColor(new java.awt.Color(0, 51, 153));
+        btn_edit1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_hapusActionPerformed(evt);
+                btn_edit1ActionPerformed(evt);
+            }
+        });
+        panel_admin.add(btn_edit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 83, 29));
+
+        btn_hapus1.setText("Hapus");
+        btn_hapus1.setkStartColor(new java.awt.Color(255, 0, 0));
+        btn_hapus1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus1ActionPerformed(evt);
+            }
+        });
+        panel_admin.add(btn_hapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, 83, 29));
+
+        btn_hapus2.setText("Bersihkan");
+        btn_hapus2.setkStartColor(new java.awt.Color(255, 102, 51));
+        btn_hapus2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus2ActionPerformed(evt);
+            }
+        });
+        panel_admin.add(btn_hapus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 83, 29));
+
+        label1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label1.setText("Password");
+        panel_admin.add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+
+        txtPassword.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordActionPerformed(evt);
+            }
+        });
+        panel_admin.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 320, -1));
+
+        label2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label2.setText("Nama");
+        panel_admin.add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        label3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label3.setText("Email");
+        panel_admin.add(label3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+
+        txtNama1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtNama1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNama1ActionPerformed(evt);
+            }
+        });
+        panel_admin.add(txtNama1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 320, -1));
+
+        txtEmail1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtEmail1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmail1ActionPerformed(evt);
+            }
+        });
+        panel_admin.add(txtEmail1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 320, -1));
+
+        getContentPane().add(panel_admin, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
+
+        panel_sales.setBackground(new java.awt.Color(247, 247, 247));
+        panel_sales.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panel_salesMouseDragged(evt);
+            }
+        });
+        panel_sales.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panel_salesMousePressed(evt);
+            }
+        });
+        panel_sales.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel13.setText("DATA SALES APLIKASI");
+        panel_sales.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
+
+        panel_tabel2.setBackground(new java.awt.Color(247, 247, 247));
+        panel_tabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        tbl_sales.setBackground(new java.awt.Color(247, 247, 247));
+        tbl_sales.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tbl_sales.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Allan", "XLS", "2hrs", "$200"},
+                {"Brian", "React", "1hr", "$100 per hr"},
+                {"Romeo", "C#", "3 Days", "$1000"},
+                {"Alex", "C++ ", "10 hrs", "$50 per hr"}
+            },
+            new String [] {
+                "Name", "Project", "Time", "Cost"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tbl_sales.setGridColor(new java.awt.Color(247, 247, 247));
+        tbl_sales.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        panel_tabel2.setViewportView(tbl_sales);
+
+        panel_sales.add(panel_tabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 710, 280));
+
+        jPanel19.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel19.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btn_close2.setBackground(new java.awt.Color(96, 83, 150));
+        btn_close2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btn_close2.setForeground(new java.awt.Color(255, 255, 255));
+        btn_close2.setText("X");
+        btn_close2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_close2MouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout panel_tombolLayout = new javax.swing.GroupLayout(panel_tombol);
-        panel_tombol.setLayout(panel_tombolLayout);
-        panel_tombolLayout.setHorizontalGroup(
-            panel_tombolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_tombolLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panel_tombolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
+                .addGap(0, 156, Short.MAX_VALUE)
+                .addComponent(btn_close2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        panel_tombolLayout.setVerticalGroup(
-            panel_tombolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_tombolLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addComponent(btn_close2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
-        jPanel2.add(panel_tombol, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 80, -1, 120));
+        panel_sales.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
+        btn_tambah2.setText("Tambah");
+        panel_sales.add(btn_tambah2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 83, 29));
+
+        btn_edit2.setText("Edit");
+        btn_edit2.setkStartColor(new java.awt.Color(0, 51, 153));
+        btn_edit2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_edit2ActionPerformed(evt);
+            }
+        });
+        panel_sales.add(btn_edit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 83, 29));
+
+        btn_hapus3.setText("Hapus");
+        btn_hapus3.setkStartColor(new java.awt.Color(255, 0, 0));
+        btn_hapus3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus3ActionPerformed(evt);
+            }
+        });
+        panel_sales.add(btn_hapus3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, 83, 29));
+
+        btn_hapus4.setText("Bersihkan");
+        btn_hapus4.setkStartColor(new java.awt.Color(255, 102, 51));
+        btn_hapus4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus4ActionPerformed(evt);
+            }
+        });
+        panel_sales.add(btn_hapus4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 83, 29));
+
+        label4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label4.setText("Password");
+        panel_sales.add(label4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+
+        txtPassword1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtPassword1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassword1ActionPerformed(evt);
+            }
+        });
+        panel_sales.add(txtPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 320, -1));
+
+        label5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label5.setText("Nama");
+        panel_sales.add(label5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        label6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label6.setText("Email");
+        panel_sales.add(label6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+
+        txtNama2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtNama2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNama2ActionPerformed(evt);
+            }
+        });
+        panel_sales.add(txtNama2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 320, -1));
+
+        txtEmail2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtEmail2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmail2ActionPerformed(evt);
+            }
+        });
+        panel_sales.add(txtEmail2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 320, -1));
+
+        getContentPane().add(panel_sales, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
+
+        panel_layanan.setBackground(new java.awt.Color(247, 247, 247));
+        panel_layanan.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panel_layananMouseDragged(evt);
+            }
+        });
+        panel_layanan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panel_layananMousePressed(evt);
+            }
+        });
+        panel_layanan.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel14.setText("DATA LAYANAN APLIKASI");
+        panel_layanan.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
+
+        panel_tabel3.setBackground(new java.awt.Color(247, 247, 247));
+        panel_tabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        tbl_sales1.setBackground(new java.awt.Color(247, 247, 247));
+        tbl_sales1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tbl_sales1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Allan", "XLS", "2hrs", "$200"},
+                {"Brian", "React", "1hr", "$100 per hr"},
+                {"Romeo", "C#", "3 Days", "$1000"},
+                {"Alex", "C++ ", "10 hrs", "$50 per hr"}
+            },
+            new String [] {
+                "Name", "Project", "Time", "Cost"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tbl_sales1.setGridColor(new java.awt.Color(247, 247, 247));
+        tbl_sales1.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        panel_tabel3.setViewportView(tbl_sales1);
+
+        panel_layanan.add(panel_tabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 710, 280));
+
+        jPanel20.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel20.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btn_close3.setBackground(new java.awt.Color(96, 83, 150));
+        btn_close3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btn_close3.setForeground(new java.awt.Color(255, 255, 255));
+        btn_close3.setText("X");
+        btn_close3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_close3MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
+        jPanel20.setLayout(jPanel20Layout);
+        jPanel20Layout.setHorizontalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
+                .addGap(0, 156, Short.MAX_VALUE)
+                .addComponent(btn_close3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel20Layout.setVerticalGroup(
+            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addComponent(btn_close3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
+        );
+
+        panel_layanan.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
+
+        btn_tambah3.setText("Tambah");
+        panel_layanan.add(btn_tambah3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 83, 29));
+
+        btn_edit3.setText("Edit");
+        btn_edit3.setkStartColor(new java.awt.Color(0, 51, 153));
+        btn_edit3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_edit3ActionPerformed(evt);
+            }
+        });
+        panel_layanan.add(btn_edit3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 83, 29));
+
+        btn_hapus5.setText("Hapus");
+        btn_hapus5.setkStartColor(new java.awt.Color(255, 0, 0));
+        btn_hapus5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus5ActionPerformed(evt);
+            }
+        });
+        panel_layanan.add(btn_hapus5, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, 83, 29));
+
+        btn_hapus6.setText("Bersihkan");
+        btn_hapus6.setkStartColor(new java.awt.Color(255, 102, 51));
+        btn_hapus6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus6ActionPerformed(evt);
+            }
+        });
+        panel_layanan.add(btn_hapus6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 83, 29));
+
+        label7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label7.setText("Harga");
+        panel_layanan.add(label7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+
+        txtHarga.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtHarga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHargaActionPerformed(evt);
+            }
+        });
+        panel_layanan.add(txtHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 320, -1));
+
+        label8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label8.setText("Nama Layanan");
+        panel_layanan.add(label8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        label9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label9.setText("Deskrpsi");
+        panel_layanan.add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+
+        txtLayanan.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtLayanan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLayananActionPerformed(evt);
+            }
+        });
+        panel_layanan.add(txtLayanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 320, -1));
+
+        txtDeskripsi.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtDeskripsi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDeskripsiActionPerformed(evt);
+            }
+        });
+        panel_layanan.add(txtDeskripsi, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 320, -1));
+
+        getContentPane().add(panel_layanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
+
+        panel_konfig.setBackground(new java.awt.Color(247, 247, 247));
+        panel_konfig.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panel_konfigMouseDragged(evt);
+            }
+        });
+        panel_konfig.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panel_konfigMousePressed(evt);
+            }
+        });
+        panel_konfig.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel15.setText("DATA LAYANAN APLIKASI");
+        panel_konfig.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
+
+        panel_tabel4.setBackground(new java.awt.Color(247, 247, 247));
+        panel_tabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        tbl_sales2.setBackground(new java.awt.Color(247, 247, 247));
+        tbl_sales2.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tbl_sales2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Allan", "XLS", "2hrs", "$200"},
+                {"Brian", "React", "1hr", "$100 per hr"},
+                {"Romeo", "C#", "3 Days", "$1000"},
+                {"Alex", "C++ ", "10 hrs", "$50 per hr"}
+            },
+            new String [] {
+                "Name", "Project", "Time", "Cost"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tbl_sales2.setGridColor(new java.awt.Color(247, 247, 247));
+        tbl_sales2.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        panel_tabel4.setViewportView(tbl_sales2);
+
+        panel_konfig.add(panel_tabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 710, 280));
+
+        jPanel21.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel21.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btn_close4.setBackground(new java.awt.Color(96, 83, 150));
+        btn_close4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btn_close4.setForeground(new java.awt.Color(255, 255, 255));
+        btn_close4.setText("X");
+        btn_close4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_close4MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
+        jPanel21.setLayout(jPanel21Layout);
+        jPanel21Layout.setHorizontalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
+                .addGap(0, 156, Short.MAX_VALUE)
+                .addComponent(btn_close4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel21Layout.setVerticalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addComponent(btn_close4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
+        );
+
+        panel_konfig.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
+
+        btn_tambah4.setText("Tambah");
+        panel_konfig.add(btn_tambah4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 83, 29));
+
+        btn_edit4.setText("Edit");
+        btn_edit4.setkStartColor(new java.awt.Color(0, 51, 153));
+        btn_edit4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_edit4ActionPerformed(evt);
+            }
+        });
+        panel_konfig.add(btn_edit4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 83, 29));
+
+        btn_hapus7.setText("Hapus");
+        btn_hapus7.setkStartColor(new java.awt.Color(255, 0, 0));
+        btn_hapus7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus7ActionPerformed(evt);
+            }
+        });
+        panel_konfig.add(btn_hapus7, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, 83, 29));
+
+        btn_hapus8.setText("Bersihkan");
+        btn_hapus8.setkStartColor(new java.awt.Color(255, 102, 51));
+        btn_hapus8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus8ActionPerformed(evt);
+            }
+        });
+        panel_konfig.add(btn_hapus8, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 83, 29));
+
+        label10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label10.setText("Harga");
+        panel_konfig.add(label10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+
+        txtHarga1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtHarga1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHarga1ActionPerformed(evt);
+            }
+        });
+        panel_konfig.add(txtHarga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 320, -1));
+
+        label11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label11.setText("Nama Layanan");
+        panel_konfig.add(label11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        label12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label12.setText("Deskrpsi");
+        panel_konfig.add(label12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+
+        txtLayanan1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtLayanan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLayanan1ActionPerformed(evt);
+            }
+        });
+        panel_konfig.add(txtLayanan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 320, -1));
+
+        txtDeskripsi1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtDeskripsi1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDeskripsi1ActionPerformed(evt);
+            }
+        });
+        panel_konfig.add(txtDeskripsi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 320, -1));
+
+        getContentPane().add(panel_konfig, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -635,12 +1205,17 @@ public class AdminDashboard extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btn_closeMouseClicked
 
-    private void Button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button1MouseClicked
-        // TODO add your handling code here:
-        onClick(Button1);
-        onLeaveClick(Button2);
-        onLeaveClick(Button3);
-        onLeaveClick(Button4);
+    private void btn_nav_adminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_adminMouseClicked
+       panel_dashboard.setVisible(false);
+        panel_admin.setVisible(true);
+        panel_sales.setVisible(false);
+        panel_konfig.setVisible(false);
+        panel_layanan.setVisible(false);
+       
+        onClick(btn_nav_admin);
+        onLeaveClick(btn_nav_sales);
+        onLeaveClick(btn_nav_layanan);
+        onLeaveClick(btn_nav_konfig);
         
         //indicators
         Indicator1.setOpaque(true);
@@ -648,130 +1223,278 @@ public class AdminDashboard extends javax.swing.JFrame {
         Indicator3.setOpaque(false);
         Indicator4.setOpaque(false);
         
-    }//GEN-LAST:event_Button1MouseClicked
+    }//GEN-LAST:event_btn_nav_adminMouseClicked
 
-    private void Button2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button2MouseClicked
-        // TODO add your handling code here:
-        onClick(Button2);
-         onLeaveClick(Button1);
-        onLeaveClick(Button3);
-        onLeaveClick(Button4);
+    private void btn_nav_salesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_salesMouseClicked
+        panel_admin.setVisible(false);
+        panel_dashboard.setVisible(false);
+        panel_sales.setVisible(true);
+        panel_konfig.setVisible(false);
+        panel_layanan.setVisible(false);
+        onClick(btn_nav_sales);
+         onLeaveClick(btn_nav_admin);
+        onLeaveClick(btn_nav_layanan);
+        onLeaveClick(btn_nav_konfig);
         
          //indicators
         Indicator1.setOpaque(false);
         Indicator2.setOpaque(true);
         Indicator3.setOpaque(false);
         Indicator4.setOpaque(false);
-    }//GEN-LAST:event_Button2MouseClicked
+    }//GEN-LAST:event_btn_nav_salesMouseClicked
 
-    private void Button3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button3MouseClicked
-        // TODO add your handling code here:
-        onClick(Button3);
-         onLeaveClick(Button2);
-        onLeaveClick(Button1);
-        onLeaveClick(Button4);
+    private void btn_nav_layananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_layananMouseClicked
+        panel_layanan.setVisible(true);
+         panel_admin.setVisible(false);
+        panel_dashboard.setVisible(false);
+        panel_sales.setVisible(false);
+        panel_konfig.setVisible(false);
+        onClick(btn_nav_layanan);
+         onLeaveClick(btn_nav_sales);
+        onLeaveClick(btn_nav_admin);
+        onLeaveClick(btn_nav_konfig);
         
          //indicators
         Indicator1.setOpaque(false);
         Indicator2.setOpaque(false);
         Indicator3.setOpaque(true);
         Indicator4.setOpaque(false);
-    }//GEN-LAST:event_Button3MouseClicked
+    }//GEN-LAST:event_btn_nav_layananMouseClicked
 
-    private void Button4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button4MouseClicked
-        // TODO add your handling code here:
-        onClick(Button4);
-         onLeaveClick(Button2);
-        onLeaveClick(Button3);
-        onLeaveClick(Button1);
+    private void btn_nav_konfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_konfigMouseClicked
+        panel_konfig.setVisible(true);
+        panel_admin.setVisible(false);
+        panel_dashboard.setVisible(false);
+        panel_layanan.setVisible(false);
+        panel_sales.setVisible(false);
+        onClick(btn_nav_konfig);
+         onLeaveClick(btn_nav_sales);
+        onLeaveClick(btn_nav_layanan);
+        onLeaveClick(btn_nav_admin);
          //indicators
         Indicator1.setOpaque(false);
         Indicator2.setOpaque(false);
         Indicator3.setOpaque(false);
         Indicator4.setOpaque(true);
-    }//GEN-LAST:event_Button4MouseClicked
+    }//GEN-LAST:event_btn_nav_konfigMouseClicked
 
-    private void Button1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button1MouseEntered
+    private void btn_nav_adminMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_adminMouseEntered
         // TODO add your handling code here:
  
-    }//GEN-LAST:event_Button1MouseEntered
+    }//GEN-LAST:event_btn_nav_adminMouseEntered
 
-    private void Button2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button2MouseEntered
+    private void btn_nav_salesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_salesMouseEntered
         // TODO add your handling code here:
          
-    }//GEN-LAST:event_Button2MouseEntered
+    }//GEN-LAST:event_btn_nav_salesMouseEntered
 
-    private void Button3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button3MouseEntered
+    private void btn_nav_layananMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_layananMouseEntered
         // TODO add your handling code here:
      
-    }//GEN-LAST:event_Button3MouseEntered
+    }//GEN-LAST:event_btn_nav_layananMouseEntered
 
-    private void Button4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button4MouseEntered
+    private void btn_nav_konfigMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_konfigMouseEntered
         // TODO add your handling code here:]
          
-    }//GEN-LAST:event_Button4MouseEntered
+    }//GEN-LAST:event_btn_nav_konfigMouseEntered
 
-    private void Button1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button1MouseExited
+    private void btn_nav_adminMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_adminMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_Button1MouseExited
+    }//GEN-LAST:event_btn_nav_adminMouseExited
 
-    private void Button2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button2MouseExited
+    private void btn_nav_salesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_salesMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_Button2MouseExited
+    }//GEN-LAST:event_btn_nav_salesMouseExited
 
-    private void Button3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button3MouseExited
+    private void btn_nav_layananMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_layananMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_Button3MouseExited
+    }//GEN-LAST:event_btn_nav_layananMouseExited
 
-    private void Button4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Button4MouseExited
+    private void btn_nav_konfigMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_konfigMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_Button4MouseExited
+    }//GEN-LAST:event_btn_nav_konfigMouseExited
 
-    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
+    private void panel_dashboardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_dashboardMousePressed
         // TODO add your handling code here:
           xx = evt.getX();
         xy = evt.getY();
-    }//GEN-LAST:event_jPanel2MousePressed
+    }//GEN-LAST:event_panel_dashboardMousePressed
 
-    private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
+    private void panel_dashboardMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_dashboardMouseDragged
         // TODO add your handling code here:
          int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x-xx,y-xy);
-    }//GEN-LAST:event_jPanel2MouseDragged
+    }//GEN-LAST:event_panel_dashboardMouseDragged
 
     private void lbl_layananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_layananMouseClicked
-        panel_tabel.setVisible(true);
-        panel_tombol.setVisible(true);
+       
     }//GEN-LAST:event_lbl_layananMouseClicked
 
-    private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_editActionPerformed
-
-    private void btn_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_hapusActionPerformed
-
     private void lbl_pelangganMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_pelangganMouseClicked
-        panel_tabel.setVisible(true);
-        panel_tombol.setVisible(true);
+        
     }//GEN-LAST:event_lbl_pelangganMouseClicked
 
     private void lbl_transaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_transaksiMouseClicked
-         panel_tabel.setVisible(true);
-        panel_tombol.setVisible(true);
+        
     }//GEN-LAST:event_lbl_transaksiMouseClicked
 
     private void lbl_reportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_reportMouseClicked
-        panel_tabel.setVisible(true);
-        panel_tombol.setVisible(true);
+        
     }//GEN-LAST:event_lbl_reportMouseClicked
 
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
-        panel_tabel.setVisible(false);
-        panel_tombol.setVisible(false);        // TODO add your handling code here:
+    panel_dashboard.setVisible(true);
+    panel_admin.setVisible(false);
+    panel_sales.setVisible(false);
+    panel_konfig.setVisible(false);
+    panel_layanan.setVisible(false);
+        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel21MouseClicked
+
+    private void btn_close1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_close1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_close1MouseClicked
+
+    private void btn_edit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_edit1ActionPerformed
+
+    private void btn_hapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_hapus1ActionPerformed
+
+    private void panel_adminMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_adminMouseDragged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_adminMouseDragged
+
+    private void panel_adminMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_adminMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_adminMousePressed
+
+    private void btn_hapus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_hapus2ActionPerformed
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordActionPerformed
+
+    private void txtNama1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNama1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNama1ActionPerformed
+
+    private void txtEmail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmail1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmail1ActionPerformed
+
+    private void btn_close2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_close2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_close2MouseClicked
+
+    private void btn_edit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_edit2ActionPerformed
+
+    private void btn_hapus3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_hapus3ActionPerformed
+
+    private void btn_hapus4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_hapus4ActionPerformed
+
+    private void txtPassword1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassword1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPassword1ActionPerformed
+
+    private void txtNama2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNama2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNama2ActionPerformed
+
+    private void txtEmail2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmail2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmail2ActionPerformed
+
+    private void panel_salesMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_salesMouseDragged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_salesMouseDragged
+
+    private void panel_salesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_salesMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_salesMousePressed
+
+    private void btn_close3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_close3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_close3MouseClicked
+
+    private void btn_edit3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_edit3ActionPerformed
+
+    private void btn_hapus5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_hapus5ActionPerformed
+
+    private void btn_hapus6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_hapus6ActionPerformed
+
+    private void txtHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHargaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHargaActionPerformed
+
+    private void txtLayananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLayananActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLayananActionPerformed
+
+    private void txtDeskripsiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeskripsiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDeskripsiActionPerformed
+
+    private void panel_layananMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_layananMouseDragged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_layananMouseDragged
+
+    private void panel_layananMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_layananMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_layananMousePressed
+
+    private void btn_close4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_close4MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_close4MouseClicked
+
+    private void btn_edit4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_edit4ActionPerformed
+
+    private void btn_hapus7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_hapus7ActionPerformed
+
+    private void btn_hapus8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_hapus8ActionPerformed
+
+    private void txtHarga1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHarga1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHarga1ActionPerformed
+
+    private void txtLayanan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLayanan1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLayanan1ActionPerformed
+
+    private void txtDeskripsi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeskripsi1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDeskripsi1ActionPerformed
+
+    private void panel_konfigMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_konfigMouseDragged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_konfigMouseDragged
+
+    private void panel_konfigMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_konfigMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_konfigMousePressed
 
     int xx ,xy;
     
@@ -826,24 +1549,45 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Button1;
-    private javax.swing.JPanel Button2;
-    private javax.swing.JPanel Button3;
-    private javax.swing.JPanel Button4;
     private javax.swing.JPanel Indicator1;
     private javax.swing.JPanel Indicator2;
     private javax.swing.JPanel Indicator3;
     private javax.swing.JPanel Indicator4;
     private javax.swing.JLabel btn_close;
-    private com.k33ptoo.components.KButton btn_edit;
-    private com.k33ptoo.components.KButton btn_hapus;
-    private com.k33ptoo.components.KButton btn_tambah;
+    private javax.swing.JLabel btn_close1;
+    private javax.swing.JLabel btn_close2;
+    private javax.swing.JLabel btn_close3;
+    private javax.swing.JLabel btn_close4;
+    private com.k33ptoo.components.KButton btn_edit1;
+    private com.k33ptoo.components.KButton btn_edit2;
+    private com.k33ptoo.components.KButton btn_edit3;
+    private com.k33ptoo.components.KButton btn_edit4;
+    private com.k33ptoo.components.KButton btn_hapus1;
+    private com.k33ptoo.components.KButton btn_hapus2;
+    private com.k33ptoo.components.KButton btn_hapus3;
+    private com.k33ptoo.components.KButton btn_hapus4;
+    private com.k33ptoo.components.KButton btn_hapus5;
+    private com.k33ptoo.components.KButton btn_hapus6;
+    private com.k33ptoo.components.KButton btn_hapus7;
+    private com.k33ptoo.components.KButton btn_hapus8;
+    private javax.swing.JPanel btn_nav_admin;
+    private javax.swing.JPanel btn_nav_konfig;
+    private javax.swing.JPanel btn_nav_layanan;
+    private javax.swing.JPanel btn_nav_sales;
+    private com.k33ptoo.components.KButton btn_tambah1;
+    private com.k33ptoo.components.KButton btn_tambah2;
+    private com.k33ptoo.components.KButton btn_tambah3;
+    private com.k33ptoo.components.KButton btn_tambah4;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -853,18 +1597,55 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JTable jTable1;
+    private java.awt.Label label1;
+    private java.awt.Label label10;
+    private java.awt.Label label11;
+    private java.awt.Label label12;
+    private java.awt.Label label2;
+    private java.awt.Label label3;
+    private java.awt.Label label4;
+    private java.awt.Label label5;
+    private java.awt.Label label6;
+    private java.awt.Label label7;
+    private java.awt.Label label8;
+    private java.awt.Label label9;
     private javax.swing.JLabel lbl_layanan;
     private javax.swing.JLabel lbl_pelanggan;
     private javax.swing.JLabel lbl_report;
     private javax.swing.JLabel lbl_transaksi;
     private javax.swing.JPanel nav_panel;
-    private javax.swing.JScrollPane panel_tabel;
-    private javax.swing.JPanel panel_tombol;
+    private javax.swing.JPanel panel_admin;
+    private javax.swing.JPanel panel_dashboard;
+    private javax.swing.JPanel panel_konfig;
+    private javax.swing.JPanel panel_layanan;
+    private javax.swing.JPanel panel_sales;
+    private javax.swing.JScrollPane panel_tabel1;
+    private javax.swing.JScrollPane panel_tabel2;
+    private javax.swing.JScrollPane panel_tabel3;
+    private javax.swing.JScrollPane panel_tabel4;
+    private javax.swing.JTable tbl_admin;
+    private javax.swing.JTable tbl_sales;
+    private javax.swing.JTable tbl_sales1;
+    private javax.swing.JTable tbl_sales2;
+    private java.awt.TextField txtDeskripsi;
+    private java.awt.TextField txtDeskripsi1;
+    private java.awt.TextField txtEmail1;
+    private java.awt.TextField txtEmail2;
+    private java.awt.TextField txtHarga;
+    private java.awt.TextField txtHarga1;
+    private java.awt.TextField txtLayanan;
+    private java.awt.TextField txtLayanan1;
+    private java.awt.TextField txtNama1;
+    private java.awt.TextField txtNama2;
+    private java.awt.TextField txtPassword;
+    private java.awt.TextField txtPassword1;
     // End of variables declaration//GEN-END:variables
 }
