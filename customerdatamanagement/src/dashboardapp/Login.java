@@ -8,6 +8,7 @@ package dashboardapp;
 import java.awt.event.KeyEvent;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import model.Sales;
 import repository.SalesRepository;
 /**
  *
@@ -24,8 +25,9 @@ public class Login extends javax.swing.JFrame {
             String mail = txt_email.getText();
             String pwd = new String(txt_password.getPassword());
             SalesRepository sales = new SalesRepository();
-            if (sales.first(Map.of("email", mail, "password", pwd)) != null) {
-                JOptionPane.showMessageDialog(null, "Login Berhasil");
+            Sales data = sales.first(Map.of("email", mail, "password", pwd));
+            if (data != null) {
+                JOptionPane.showMessageDialog(null, "Login Berhasil! Selamat Datang "+data.getNama());
                 this.setVisible(false);
                 new Home().setVisible(true);
             } else {
