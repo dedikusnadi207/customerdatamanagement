@@ -34,4 +34,14 @@ public class LayananRepository extends Repository<Layanan> {
     public Class<Layanan> model() {
         return Layanan.class;
     }
+
+    @Override
+    public String[] tableHeaders() {
+        return new String[]{"ID", "Nama", "Deskripsi", "Harga"};
+    }
+
+    @Override
+    public Object[] renderItem(Layanan item) {
+        return new Object[]{item.getIdLayanan(), item.getNama(), item.getDeskripsi(), item.getHarga()};
+    }
 }

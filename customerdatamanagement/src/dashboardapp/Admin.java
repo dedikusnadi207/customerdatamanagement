@@ -27,7 +27,7 @@ public class Admin extends javax.swing.JFrame {
             if (admin.first(Map.of("email", mail, "password", pwd)) != null) {
                 JOptionPane.showMessageDialog(null, "Login Berhasil");
                 this.setVisible(false);
-                new Home().setVisible(true);
+                new AdminDashboard().setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Email atau password salah");
             }

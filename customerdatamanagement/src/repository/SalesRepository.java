@@ -34,5 +34,15 @@ public class SalesRepository extends Repository<Sales> {
     public Class model() {
         return Sales.class;
     }
+
+    @Override
+    public String[] tableHeaders() {
+        return new String[]{"ID", "Nama", "Email"};
+    }
+
+    @Override
+    public Object[] renderItem(Sales item) {
+        return new Object[]{item.getIdSales(), item.getNama(), item.getEmail()};
+    }
     
 }

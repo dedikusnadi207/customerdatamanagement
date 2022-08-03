@@ -6,30 +6,73 @@
 package dashboardapp;
 
 import java.awt.Color;
+import java.text.NumberFormat;
+import java.util.Map;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import repository.AdminRepository;
+import repository.LayananRepository;
+import repository.Repository;
+import repository.SalesRepository;
 
 /**
  *
  * @author KeepToo
  */
 public class AdminDashboard extends javax.swing.JFrame {
-
     /**
      * Creates new form Home
      */
+    AdminRepository adminRepository;
+    SalesRepository salesRepository;
+    LayananRepository layananRepository;
     public AdminDashboard() {
-        
         initComponents();
-        panel_admin.setVisible(false);
-        panel_sales.setVisible(false);
-        panel_konfig.setVisible(false);
-        panel_layanan.setVisible(false);
-    
-        
-
-        
+        adminRepository = new AdminRepository();
+        salesRepository = new SalesRepository();
+        layananRepository = new LayananRepository();
+        selectMenu("dashboard");
     }
-
+    private void selectMenu(String menu) {
+        panel_dashboard.setVisible(menu.equals("dashboard"));
+        Map<String, JPanel> mapPanel = Map.of("admin", panel_admin, "sales", panel_sales, "layanan", panel_layanan, "konfig", panel_konfig);
+        Map<String, JPanel> mapBtnNav = Map.of("admin", btn_nav_admin, "sales", btn_nav_sales, "layanan", btn_nav_layanan, "konfig", btn_nav_konfig);
+        Map<String, JPanel> mapIndicator = Map.of("admin", Indicator1, "sales", Indicator2, "layanan", Indicator3, "konfig", Indicator4);
+        Map<String, Repository> mapRepositories = Map.of("admin", adminRepository, "sales", salesRepository, "layanan", layananRepository, "konfig", layananRepository);
+        Map<String, JTable> mapTable = Map.of("admin", tbl_admin, "sales", tbl_sales, "layanan", tbl_layanan, "konfig", tbl_konfig);
+        for (String key : mapPanel.keySet()) {
+            if (key.equals(menu)) {
+                mapPanel.get(key).setVisible(true);
+                onClick(mapBtnNav.get(key));
+                mapIndicator.get(key).setOpaque(true);
+                mapRepositories.get(key).renderDataTable(mapTable.get(key));
+            } else {
+                mapPanel.get(key).setVisible(false);
+                onLeaveClick(mapBtnNav.get(key));
+                mapIndicator.get(key).setOpaque(false);
+            }
+        }
+    }
+    void clearFormAdmin(){
+        txtNamaAdmin.setText("");
+        txtEmailAdmin.setText("");
+        txtPasswordAdmin.setText("");
+        tbl_admin.clearSelection();
+    }
+    void clearFormSales(){
+        txtNamaSales.setText("");
+        txtEmailSales.setText("");
+        txtPasswordSales.setText("");
+        tbl_sales.clearSelection();
+    }
+    void clearFormLayanan(){
+        txtNamaLayanan.setText("");
+        txtDeskripsiLayanan.setText("");
+        txtHargaLayanan.setText("");
+        tbl_layanan.clearSelection();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,62 +114,56 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
-        btn_close = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
         panel_admin = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         panel_tabel1 = new javax.swing.JScrollPane();
         tbl_admin = new javax.swing.JTable();
-        jPanel18 = new javax.swing.JPanel();
-        btn_close1 = new javax.swing.JLabel();
         btn_tambah1 = new com.k33ptoo.components.KButton();
         btn_edit1 = new com.k33ptoo.components.KButton();
         btn_hapus1 = new com.k33ptoo.components.KButton();
         btn_hapus2 = new com.k33ptoo.components.KButton();
         label1 = new java.awt.Label();
-        txtPassword = new java.awt.TextField();
         label2 = new java.awt.Label();
         label3 = new java.awt.Label();
-        txtNama1 = new java.awt.TextField();
-        txtEmail1 = new java.awt.TextField();
+        txtPasswordAdmin = new javax.swing.JPasswordField();
+        txtNamaAdmin = new javax.swing.JTextField();
+        txtEmailAdmin = new javax.swing.JTextField();
+        jButton8 = new javax.swing.JButton();
         panel_sales = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         panel_tabel2 = new javax.swing.JScrollPane();
         tbl_sales = new javax.swing.JTable();
-        jPanel19 = new javax.swing.JPanel();
-        btn_close2 = new javax.swing.JLabel();
-        btn_tambah2 = new com.k33ptoo.components.KButton();
-        btn_edit2 = new com.k33ptoo.components.KButton();
-        btn_hapus3 = new com.k33ptoo.components.KButton();
-        btn_hapus4 = new com.k33ptoo.components.KButton();
-        label4 = new java.awt.Label();
-        txtPassword1 = new java.awt.TextField();
-        label5 = new java.awt.Label();
-        label6 = new java.awt.Label();
-        txtNama2 = new java.awt.TextField();
-        txtEmail2 = new java.awt.TextField();
+        jButton7 = new javax.swing.JButton();
+        btn_tambah5 = new com.k33ptoo.components.KButton();
+        btn_edit5 = new com.k33ptoo.components.KButton();
+        btn_hapus9 = new com.k33ptoo.components.KButton();
+        btn_hapus10 = new com.k33ptoo.components.KButton();
+        label13 = new java.awt.Label();
+        label14 = new java.awt.Label();
+        label15 = new java.awt.Label();
+        txtPasswordSales = new javax.swing.JPasswordField();
+        txtNamaSales = new javax.swing.JTextField();
+        txtEmailSales = new javax.swing.JTextField();
         panel_layanan = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         panel_tabel3 = new javax.swing.JScrollPane();
-        tbl_sales1 = new javax.swing.JTable();
-        jPanel20 = new javax.swing.JPanel();
-        btn_close3 = new javax.swing.JLabel();
-        btn_tambah3 = new com.k33ptoo.components.KButton();
-        btn_edit3 = new com.k33ptoo.components.KButton();
-        btn_hapus5 = new com.k33ptoo.components.KButton();
-        btn_hapus6 = new com.k33ptoo.components.KButton();
-        label7 = new java.awt.Label();
-        txtHarga = new java.awt.TextField();
-        label8 = new java.awt.Label();
-        label9 = new java.awt.Label();
-        txtLayanan = new java.awt.TextField();
-        txtDeskripsi = new java.awt.TextField();
+        tbl_layanan = new javax.swing.JTable();
+        jButton6 = new javax.swing.JButton();
+        btn_tambah6 = new com.k33ptoo.components.KButton();
+        btn_edit6 = new com.k33ptoo.components.KButton();
+        btn_hapus11 = new com.k33ptoo.components.KButton();
+        btn_hapus12 = new com.k33ptoo.components.KButton();
+        label16 = new java.awt.Label();
+        label17 = new java.awt.Label();
+        label18 = new java.awt.Label();
+        txtNamaLayanan = new javax.swing.JTextField();
+        txtDeskripsiLayanan = new javax.swing.JTextField();
+        txtHargaLayanan = new javax.swing.JTextField();
         panel_konfig = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         panel_tabel4 = new javax.swing.JScrollPane();
-        tbl_sales2 = new javax.swing.JTable();
-        jPanel21 = new javax.swing.JPanel();
-        btn_close4 = new javax.swing.JLabel();
+        tbl_konfig = new javax.swing.JTable();
         btn_tambah4 = new com.k33ptoo.components.KButton();
         btn_edit4 = new com.k33ptoo.components.KButton();
         btn_hapus7 = new com.k33ptoo.components.KButton();
@@ -137,6 +174,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         label12 = new java.awt.Label();
         txtLayanan1 = new java.awt.TextField();
         txtDeskripsi1 = new java.awt.TextField();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
@@ -581,35 +619,20 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         panel_dashboard.add(nav_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 480, 150));
 
-        jPanel8.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        btn_close.setBackground(new java.awt.Color(96, 83, 150));
-        btn_close.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btn_close.setForeground(new java.awt.Color(255, 255, 255));
-        btn_close.setText("X");
-        btn_close.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_closeMouseClicked(evt);
+        jButton9.setBackground(new java.awt.Color(0, 102, 102));
+        jButton9.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 255, 255));
+        jButton9.setText("X ");
+        jButton9.setBorder(null);
+        jButton9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton9.setOpaque(true);
+        jButton9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(0, 156, Short.MAX_VALUE)
-                .addComponent(btn_close, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addComponent(btn_close, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-        );
-
-        panel_dashboard.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
+        panel_dashboard.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
 
         getContentPane().add(panel_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -657,42 +680,22 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
         tbl_admin.setGridColor(new java.awt.Color(247, 247, 247));
         tbl_admin.setSelectionBackground(new java.awt.Color(96, 83, 150));
-        panel_tabel1.setViewportView(tbl_admin);
-
-        panel_admin.add(panel_tabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 710, 280));
-
-        jPanel18.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel18.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        btn_close1.setBackground(new java.awt.Color(96, 83, 150));
-        btn_close1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btn_close1.setForeground(new java.awt.Color(255, 255, 255));
-        btn_close1.setText("X");
-        btn_close1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbl_admin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_close1MouseClicked(evt);
+                tbl_adminMouseClicked(evt);
             }
         });
+        panel_tabel1.setViewportView(tbl_admin);
 
-        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
-        jPanel18.setLayout(jPanel18Layout);
-        jPanel18Layout.setHorizontalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
-                .addGap(0, 156, Short.MAX_VALUE)
-                .addComponent(btn_close1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel18Layout.setVerticalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addComponent(btn_close1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-        );
-
-        panel_admin.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
+        panel_admin.add(panel_tabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 710, 280));
 
         btn_tambah1.setText("Tambah");
-        panel_admin.add(btn_tambah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 83, 29));
+        btn_tambah1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambah1ActionPerformed(evt);
+            }
+        });
+        panel_admin.add(btn_tambah1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, 83, 29));
 
         btn_edit1.setText("Edit");
         btn_edit1.setkStartColor(new java.awt.Color(0, 51, 153));
@@ -701,7 +704,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 btn_edit1ActionPerformed(evt);
             }
         });
-        panel_admin.add(btn_edit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 83, 29));
+        panel_admin.add(btn_edit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 83, 29));
 
         btn_hapus1.setText("Hapus");
         btn_hapus1.setkStartColor(new java.awt.Color(255, 0, 0));
@@ -710,7 +713,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 btn_hapus1ActionPerformed(evt);
             }
         });
-        panel_admin.add(btn_hapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, 83, 29));
+        panel_admin.add(btn_hapus1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 83, 29));
 
         btn_hapus2.setText("Bersihkan");
         btn_hapus2.setkStartColor(new java.awt.Color(255, 102, 51));
@@ -719,19 +722,11 @@ public class AdminDashboard extends javax.swing.JFrame {
                 btn_hapus2ActionPerformed(evt);
             }
         });
-        panel_admin.add(btn_hapus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 83, 29));
+        panel_admin.add(btn_hapus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 83, 29));
 
         label1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label1.setText("Password");
         panel_admin.add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
-
-        txtPassword.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
-        panel_admin.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 320, -1));
 
         label2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label2.setText("Nama");
@@ -740,22 +735,36 @@ public class AdminDashboard extends javax.swing.JFrame {
         label3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label3.setText("Email");
         panel_admin.add(label3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        panel_admin.add(txtPasswordAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 320, -1));
 
-        txtNama1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtNama1.addActionListener(new java.awt.event.ActionListener() {
+        txtNamaAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNama1ActionPerformed(evt);
+                txtNamaAdminActionPerformed(evt);
             }
         });
-        panel_admin.add(txtNama1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 320, -1));
+        panel_admin.add(txtNamaAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 320, -1));
 
-        txtEmail1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtEmail1.addActionListener(new java.awt.event.ActionListener() {
+        txtEmailAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmail1ActionPerformed(evt);
+                txtEmailAdminActionPerformed(evt);
             }
         });
-        panel_admin.add(txtEmail1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 320, -1));
+        panel_admin.add(txtEmailAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 320, -1));
+
+        jButton8.setBackground(new java.awt.Color(0, 102, 102));
+        jButton8.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setText("X ");
+        jButton8.setBorder(null);
+        jButton8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton8.setOpaque(true);
+        jButton8.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        panel_admin.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
 
         getContentPane().add(panel_admin, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -803,105 +812,91 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
         tbl_sales.setGridColor(new java.awt.Color(247, 247, 247));
         tbl_sales.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        tbl_sales.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_salesMouseClicked(evt);
+            }
+        });
         panel_tabel2.setViewportView(tbl_sales);
 
-        panel_sales.add(panel_tabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 710, 280));
+        panel_sales.add(panel_tabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 710, 350));
 
-        jPanel19.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel19.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        btn_close2.setBackground(new java.awt.Color(96, 83, 150));
-        btn_close2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btn_close2.setForeground(new java.awt.Color(255, 255, 255));
-        btn_close2.setText("X");
-        btn_close2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_close2MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
-        jPanel19.setLayout(jPanel19Layout);
-        jPanel19Layout.setHorizontalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
-                .addGap(0, 156, Short.MAX_VALUE)
-                .addComponent(btn_close2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel19Layout.setVerticalGroup(
-            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel19Layout.createSequentialGroup()
-                .addComponent(btn_close2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-        );
-
-        panel_sales.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
-
-        btn_tambah2.setText("Tambah");
-        panel_sales.add(btn_tambah2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 83, 29));
-
-        btn_edit2.setText("Edit");
-        btn_edit2.setkStartColor(new java.awt.Color(0, 51, 153));
-        btn_edit2.addActionListener(new java.awt.event.ActionListener() {
+        jButton7.setBackground(new java.awt.Color(0, 102, 102));
+        jButton7.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("X ");
+        jButton7.setBorder(null);
+        jButton7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton7.setOpaque(true);
+        jButton7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_edit2ActionPerformed(evt);
+                jButton7ActionPerformed(evt);
             }
         });
-        panel_sales.add(btn_edit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 83, 29));
+        panel_sales.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
 
-        btn_hapus3.setText("Hapus");
-        btn_hapus3.setkStartColor(new java.awt.Color(255, 0, 0));
-        btn_hapus3.addActionListener(new java.awt.event.ActionListener() {
+        btn_tambah5.setText("Tambah");
+        btn_tambah5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_hapus3ActionPerformed(evt);
+                btn_tambah5ActionPerformed(evt);
             }
         });
-        panel_sales.add(btn_hapus3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, 83, 29));
+        panel_sales.add(btn_tambah5, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, 83, 29));
 
-        btn_hapus4.setText("Bersihkan");
-        btn_hapus4.setkStartColor(new java.awt.Color(255, 102, 51));
-        btn_hapus4.addActionListener(new java.awt.event.ActionListener() {
+        btn_edit5.setText("Edit");
+        btn_edit5.setkStartColor(new java.awt.Color(0, 51, 153));
+        btn_edit5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_hapus4ActionPerformed(evt);
+                btn_edit5ActionPerformed(evt);
             }
         });
-        panel_sales.add(btn_hapus4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 83, 29));
+        panel_sales.add(btn_edit5, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 83, 29));
 
-        label4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label4.setText("Password");
-        panel_sales.add(label4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
-
-        txtPassword1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtPassword1.addActionListener(new java.awt.event.ActionListener() {
+        btn_hapus9.setText("Hapus");
+        btn_hapus9.setkStartColor(new java.awt.Color(255, 0, 0));
+        btn_hapus9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPassword1ActionPerformed(evt);
+                btn_hapus9ActionPerformed(evt);
             }
         });
-        panel_sales.add(txtPassword1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 320, -1));
+        panel_sales.add(btn_hapus9, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 83, 29));
 
-        label5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label5.setText("Nama");
-        panel_sales.add(label5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
-
-        label6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label6.setText("Email");
-        panel_sales.add(label6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
-
-        txtNama2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtNama2.addActionListener(new java.awt.event.ActionListener() {
+        btn_hapus10.setText("Bersihkan");
+        btn_hapus10.setkStartColor(new java.awt.Color(255, 102, 51));
+        btn_hapus10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNama2ActionPerformed(evt);
+                btn_hapus10ActionPerformed(evt);
             }
         });
-        panel_sales.add(txtNama2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 320, -1));
+        panel_sales.add(btn_hapus10, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 83, 29));
 
-        txtEmail2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtEmail2.addActionListener(new java.awt.event.ActionListener() {
+        label13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label13.setText("Password");
+        panel_sales.add(label13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+
+        label14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label14.setText("Nama");
+        panel_sales.add(label14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        label15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label15.setText("Email");
+        panel_sales.add(label15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        panel_sales.add(txtPasswordSales, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 320, -1));
+
+        txtNamaSales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmail2ActionPerformed(evt);
+                txtNamaSalesActionPerformed(evt);
             }
         });
-        panel_sales.add(txtEmail2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 320, -1));
+        panel_sales.add(txtNamaSales, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 320, -1));
+
+        txtEmailSales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailSalesActionPerformed(evt);
+            }
+        });
+        panel_sales.add(txtEmailSales, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 320, -1));
 
         getContentPane().add(panel_sales, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -926,9 +921,9 @@ public class AdminDashboard extends javax.swing.JFrame {
         panel_tabel3.setBackground(new java.awt.Color(247, 247, 247));
         panel_tabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        tbl_sales1.setBackground(new java.awt.Color(247, 247, 247));
-        tbl_sales1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        tbl_sales1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_layanan.setBackground(new java.awt.Color(247, 247, 247));
+        tbl_layanan.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tbl_layanan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Allan", "XLS", "2hrs", "$200"},
                 {"Brian", "React", "1hr", "$100 per hr"},
@@ -947,107 +942,99 @@ public class AdminDashboard extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        tbl_sales1.setGridColor(new java.awt.Color(247, 247, 247));
-        tbl_sales1.setSelectionBackground(new java.awt.Color(96, 83, 150));
-        panel_tabel3.setViewportView(tbl_sales1);
-
-        panel_layanan.add(panel_tabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 710, 280));
-
-        jPanel20.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel20.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        btn_close3.setBackground(new java.awt.Color(96, 83, 150));
-        btn_close3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btn_close3.setForeground(new java.awt.Color(255, 255, 255));
-        btn_close3.setText("X");
-        btn_close3.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbl_layanan.setGridColor(new java.awt.Color(247, 247, 247));
+        tbl_layanan.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        tbl_layanan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_close3MouseClicked(evt);
+                tbl_layananMouseClicked(evt);
             }
         });
+        panel_tabel3.setViewportView(tbl_layanan);
 
-        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-        jPanel20.setLayout(jPanel20Layout);
-        jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
-                .addGap(0, 156, Short.MAX_VALUE)
-                .addComponent(btn_close3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addComponent(btn_close3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-        );
+        panel_layanan.add(panel_tabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 710, 360));
 
-        panel_layanan.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
-
-        btn_tambah3.setText("Tambah");
-        panel_layanan.add(btn_tambah3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 83, 29));
-
-        btn_edit3.setText("Edit");
-        btn_edit3.setkStartColor(new java.awt.Color(0, 51, 153));
-        btn_edit3.addActionListener(new java.awt.event.ActionListener() {
+        jButton6.setBackground(new java.awt.Color(0, 102, 102));
+        jButton6.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setText("X ");
+        jButton6.setBorder(null);
+        jButton6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton6.setOpaque(true);
+        jButton6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_edit3ActionPerformed(evt);
+                jButton6ActionPerformed(evt);
             }
         });
-        panel_layanan.add(btn_edit3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 83, 29));
+        panel_layanan.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
 
-        btn_hapus5.setText("Hapus");
-        btn_hapus5.setkStartColor(new java.awt.Color(255, 0, 0));
-        btn_hapus5.addActionListener(new java.awt.event.ActionListener() {
+        btn_tambah6.setText("Tambah");
+        btn_tambah6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_hapus5ActionPerformed(evt);
+                btn_tambah6ActionPerformed(evt);
             }
         });
-        panel_layanan.add(btn_hapus5, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, 83, 29));
+        panel_layanan.add(btn_tambah6, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, 83, 29));
 
-        btn_hapus6.setText("Bersihkan");
-        btn_hapus6.setkStartColor(new java.awt.Color(255, 102, 51));
-        btn_hapus6.addActionListener(new java.awt.event.ActionListener() {
+        btn_edit6.setText("Edit");
+        btn_edit6.setkStartColor(new java.awt.Color(0, 51, 153));
+        btn_edit6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_hapus6ActionPerformed(evt);
+                btn_edit6ActionPerformed(evt);
             }
         });
-        panel_layanan.add(btn_hapus6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 83, 29));
+        panel_layanan.add(btn_edit6, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 83, 29));
 
-        label7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label7.setText("Harga");
-        panel_layanan.add(label7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
-
-        txtHarga.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtHarga.addActionListener(new java.awt.event.ActionListener() {
+        btn_hapus11.setText("Hapus");
+        btn_hapus11.setkStartColor(new java.awt.Color(255, 0, 0));
+        btn_hapus11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtHargaActionPerformed(evt);
+                btn_hapus11ActionPerformed(evt);
             }
         });
-        panel_layanan.add(txtHarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 320, -1));
+        panel_layanan.add(btn_hapus11, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 83, 29));
 
-        label8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label8.setText("Nama Layanan");
-        panel_layanan.add(label8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
-
-        label9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label9.setText("Deskrpsi");
-        panel_layanan.add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
-
-        txtLayanan.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtLayanan.addActionListener(new java.awt.event.ActionListener() {
+        btn_hapus12.setText("Bersihkan");
+        btn_hapus12.setkStartColor(new java.awt.Color(255, 102, 51));
+        btn_hapus12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLayananActionPerformed(evt);
+                btn_hapus12ActionPerformed(evt);
             }
         });
-        panel_layanan.add(txtLayanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 320, -1));
+        panel_layanan.add(btn_hapus12, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 83, 29));
 
-        txtDeskripsi.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtDeskripsi.addActionListener(new java.awt.event.ActionListener() {
+        label16.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label16.setText("Harga");
+        panel_layanan.add(label16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+
+        label17.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label17.setText("Nama Layanan");
+        panel_layanan.add(label17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
+
+        label18.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label18.setText("Deskripsi");
+        panel_layanan.add(label18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+
+        txtNamaLayanan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDeskripsiActionPerformed(evt);
+                txtNamaLayananActionPerformed(evt);
             }
         });
-        panel_layanan.add(txtDeskripsi, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 320, -1));
+        panel_layanan.add(txtNamaLayanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 320, -1));
+
+        txtDeskripsiLayanan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDeskripsiLayananActionPerformed(evt);
+            }
+        });
+        panel_layanan.add(txtDeskripsiLayanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 320, -1));
+
+        txtHargaLayanan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHargaLayananActionPerformed(evt);
+            }
+        });
+        panel_layanan.add(txtHargaLayanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 320, -1));
 
         getContentPane().add(panel_layanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -1072,9 +1059,9 @@ public class AdminDashboard extends javax.swing.JFrame {
         panel_tabel4.setBackground(new java.awt.Color(247, 247, 247));
         panel_tabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        tbl_sales2.setBackground(new java.awt.Color(247, 247, 247));
-        tbl_sales2.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        tbl_sales2.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_konfig.setBackground(new java.awt.Color(247, 247, 247));
+        tbl_konfig.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tbl_konfig.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Allan", "XLS", "2hrs", "$200"},
                 {"Brian", "React", "1hr", "$100 per hr"},
@@ -1093,41 +1080,11 @@ public class AdminDashboard extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        tbl_sales2.setGridColor(new java.awt.Color(247, 247, 247));
-        tbl_sales2.setSelectionBackground(new java.awt.Color(96, 83, 150));
-        panel_tabel4.setViewportView(tbl_sales2);
+        tbl_konfig.setGridColor(new java.awt.Color(247, 247, 247));
+        tbl_konfig.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        panel_tabel4.setViewportView(tbl_konfig);
 
         panel_konfig.add(panel_tabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 710, 280));
-
-        jPanel21.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel21.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        btn_close4.setBackground(new java.awt.Color(96, 83, 150));
-        btn_close4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btn_close4.setForeground(new java.awt.Color(255, 255, 255));
-        btn_close4.setText("X");
-        btn_close4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_close4MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
-        jPanel21.setLayout(jPanel21Layout);
-        jPanel21Layout.setHorizontalGroup(
-            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
-                .addGap(0, 156, Short.MAX_VALUE)
-                .addComponent(btn_close4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel21Layout.setVerticalGroup(
-            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel21Layout.createSequentialGroup()
-                .addComponent(btn_close4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-        );
-
-        panel_konfig.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
 
         btn_tambah4.setText("Tambah");
         panel_konfig.add(btn_tambah4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 83, 29));
@@ -1195,87 +1152,41 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
         panel_konfig.add(txtDeskripsi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 320, -1));
 
+        jButton5.setBackground(new java.awt.Color(0, 102, 102));
+        jButton5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setText("X ");
+        jButton5.setBorder(null);
+        jButton5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton5.setOpaque(true);
+        jButton5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        panel_konfig.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
+
         getContentPane().add(panel_konfig, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_closeMouseClicked
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_btn_closeMouseClicked
-
     private void btn_nav_adminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_adminMouseClicked
-       panel_dashboard.setVisible(false);
-        panel_admin.setVisible(true);
-        panel_sales.setVisible(false);
-        panel_konfig.setVisible(false);
-        panel_layanan.setVisible(false);
-       
-        onClick(btn_nav_admin);
-        onLeaveClick(btn_nav_sales);
-        onLeaveClick(btn_nav_layanan);
-        onLeaveClick(btn_nav_konfig);
-        
-        //indicators
-        Indicator1.setOpaque(true);
-        Indicator2.setOpaque(false);
-        Indicator3.setOpaque(false);
-        Indicator4.setOpaque(false);
-        
+        selectMenu("admin");
     }//GEN-LAST:event_btn_nav_adminMouseClicked
 
     private void btn_nav_salesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_salesMouseClicked
-        panel_admin.setVisible(false);
-        panel_dashboard.setVisible(false);
-        panel_sales.setVisible(true);
-        panel_konfig.setVisible(false);
-        panel_layanan.setVisible(false);
-        onClick(btn_nav_sales);
-         onLeaveClick(btn_nav_admin);
-        onLeaveClick(btn_nav_layanan);
-        onLeaveClick(btn_nav_konfig);
-        
-         //indicators
-        Indicator1.setOpaque(false);
-        Indicator2.setOpaque(true);
-        Indicator3.setOpaque(false);
-        Indicator4.setOpaque(false);
+        selectMenu("sales");
     }//GEN-LAST:event_btn_nav_salesMouseClicked
 
     private void btn_nav_layananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_layananMouseClicked
-        panel_layanan.setVisible(true);
-         panel_admin.setVisible(false);
-        panel_dashboard.setVisible(false);
-        panel_sales.setVisible(false);
-        panel_konfig.setVisible(false);
-        onClick(btn_nav_layanan);
-         onLeaveClick(btn_nav_sales);
-        onLeaveClick(btn_nav_admin);
-        onLeaveClick(btn_nav_konfig);
-        
-         //indicators
-        Indicator1.setOpaque(false);
-        Indicator2.setOpaque(false);
-        Indicator3.setOpaque(true);
-        Indicator4.setOpaque(false);
+        selectMenu("layanan");
     }//GEN-LAST:event_btn_nav_layananMouseClicked
 
     private void btn_nav_konfigMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_konfigMouseClicked
-        panel_konfig.setVisible(true);
-        panel_admin.setVisible(false);
-        panel_dashboard.setVisible(false);
-        panel_layanan.setVisible(false);
-        panel_sales.setVisible(false);
-        onClick(btn_nav_konfig);
-         onLeaveClick(btn_nav_sales);
-        onLeaveClick(btn_nav_layanan);
-        onLeaveClick(btn_nav_admin);
-         //indicators
-        Indicator1.setOpaque(false);
-        Indicator2.setOpaque(false);
-        Indicator3.setOpaque(false);
-        Indicator4.setOpaque(true);
+        selectMenu("konfig");
     }//GEN-LAST:event_btn_nav_konfigMouseClicked
 
     private void btn_nav_adminMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_adminMouseEntered
@@ -1344,24 +1255,33 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_reportMouseClicked
 
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
-    panel_dashboard.setVisible(true);
-    panel_admin.setVisible(false);
-    panel_sales.setVisible(false);
-    panel_konfig.setVisible(false);
-    panel_layanan.setVisible(false);
+        selectMenu("dashboard");
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel21MouseClicked
 
-    private void btn_close1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_close1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_close1MouseClicked
-
     private void btn_edit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit1ActionPerformed
-        // TODO add your handling code here:
+        model.Admin admin = new model.Admin();
+        admin.setNama(txtNamaAdmin.getText());
+        admin.setEmail(txtEmailAdmin.getText());
+        admin.setPassword(new String(txtPasswordAdmin.getPassword()));
+        try {
+            adminRepository.update(admin.toMap(), Map.of("id_admin", adminRepository.selectedData(tbl_admin).getIdAdmin()));
+            clearFormAdmin();
+            selectMenu("admin");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal mengubah data Admin! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_edit1ActionPerformed
 
     private void btn_hapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            adminRepository.delete(Map.of("id_admin", adminRepository.selectedData(tbl_admin).getIdAdmin()));
+            clearFormAdmin();
+            selectMenu("admin");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus data Admin! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btn_hapus1ActionPerformed
 
     private void panel_adminMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_adminMouseDragged
@@ -1373,48 +1293,8 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_panel_adminMousePressed
 
     private void btn_hapus2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus2ActionPerformed
-        // TODO add your handling code here:
+        clearFormAdmin();
     }//GEN-LAST:event_btn_hapus2ActionPerformed
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
-    private void txtNama1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNama1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNama1ActionPerformed
-
-    private void txtEmail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmail1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmail1ActionPerformed
-
-    private void btn_close2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_close2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_close2MouseClicked
-
-    private void btn_edit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_edit2ActionPerformed
-
-    private void btn_hapus3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_hapus3ActionPerformed
-
-    private void btn_hapus4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_hapus4ActionPerformed
-
-    private void txtPassword1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassword1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPassword1ActionPerformed
-
-    private void txtNama2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNama2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNama2ActionPerformed
-
-    private void txtEmail2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmail2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmail2ActionPerformed
 
     private void panel_salesMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_salesMouseDragged
         // TODO add your handling code here:
@@ -1424,34 +1304,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_panel_salesMousePressed
 
-    private void btn_close3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_close3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_close3MouseClicked
-
-    private void btn_edit3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_edit3ActionPerformed
-
-    private void btn_hapus5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_hapus5ActionPerformed
-
-    private void btn_hapus6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_hapus6ActionPerformed
-
-    private void txtHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHargaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtHargaActionPerformed
-
-    private void txtLayananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLayananActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtLayananActionPerformed
-
-    private void txtDeskripsiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeskripsiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDeskripsiActionPerformed
-
     private void panel_layananMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_layananMouseDragged
         // TODO add your handling code here:
     }//GEN-LAST:event_panel_layananMouseDragged
@@ -1459,10 +1311,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void panel_layananMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_layananMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_panel_layananMousePressed
-
-    private void btn_close4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_close4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_close4MouseClicked
 
     private void btn_edit4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit4ActionPerformed
         // TODO add your handling code here:
@@ -1495,6 +1343,176 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void panel_konfigMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_konfigMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_panel_konfigMousePressed
+
+    private void btn_tambah1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah1ActionPerformed
+        model.Admin admin = new model.Admin();
+        admin.setNama(txtNamaAdmin.getText());
+        admin.setEmail(txtEmailAdmin.getText());
+        admin.setPassword(new String(txtPasswordAdmin.getPassword()));
+        try {
+            adminRepository.save(admin);
+            clearFormAdmin();
+            selectMenu("admin");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data Admin! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_tambah1ActionPerformed
+
+    private void txtNamaAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaAdminActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNamaAdminActionPerformed
+
+    private void txtEmailAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailAdminActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailAdminActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void tbl_adminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_adminMouseClicked
+        model.Admin admin = adminRepository.selectedData(tbl_admin);
+        txtNamaAdmin.setText(admin.getNama());
+        txtEmailAdmin.setText(admin.getEmail());
+        txtPasswordAdmin.setText(admin.getPassword());
+    }//GEN-LAST:event_tbl_adminMouseClicked
+
+    private void tbl_salesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_salesMouseClicked
+        model.Sales sales = salesRepository.selectedData(tbl_sales);
+        txtNamaSales.setText(sales.getNama());
+        txtEmailSales.setText(sales.getEmail());
+        txtPasswordSales.setText(sales.getPassword());
+    }//GEN-LAST:event_tbl_salesMouseClicked
+
+    private void tbl_layananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_layananMouseClicked
+        model.Layanan layanan = layananRepository.selectedData(tbl_layanan);
+        txtNamaLayanan.setText(layanan.getNama());
+        txtDeskripsiLayanan.setText(layanan.getDeskripsi());
+        System.out.println(layanan.getHarga());
+        txtHargaLayanan.setText(Integer.toString(layanan.getHarga()));
+    }//GEN-LAST:event_tbl_layananMouseClicked
+
+    private void btn_tambah5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah5ActionPerformed
+        model.Sales sales = new model.Sales();
+        sales.setNama(txtNamaSales.getText());
+        sales.setEmail(txtEmailSales.getText());
+        sales.setPassword(new String(txtPasswordSales.getPassword()));
+        try {
+            salesRepository.save(sales);
+            clearFormSales();
+            selectMenu("sales");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data Sales! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_tambah5ActionPerformed
+
+    private void btn_edit5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit5ActionPerformed
+        model.Sales sales = new model.Sales();
+        sales.setNama(txtNamaSales.getText());
+        sales.setEmail(txtEmailSales.getText());
+        sales.setPassword(new String(txtPasswordSales.getPassword()));
+        try {
+            salesRepository.update(sales.toMap(), Map.of("id_sales", salesRepository.selectedData(tbl_sales).getIdSales()));
+            clearFormSales();
+            selectMenu("sales");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal mengubah data Sales! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btn_edit5ActionPerformed
+
+    private void btn_hapus9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus9ActionPerformed
+        try {
+            salesRepository.delete(Map.of("id_sales", salesRepository.selectedData(tbl_sales).getIdSales()));
+            clearFormSales();
+            selectMenu("sales");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus data Sales! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btn_hapus9ActionPerformed
+
+    private void btn_hapus10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus10ActionPerformed
+        clearFormSales();
+    }//GEN-LAST:event_btn_hapus10ActionPerformed
+
+    private void txtNamaSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaSalesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNamaSalesActionPerformed
+
+    private void txtEmailSalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailSalesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailSalesActionPerformed
+
+    private void btn_tambah6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah6ActionPerformed
+        model.Layanan layanan = new model.Layanan();
+        layanan.setNama(txtNamaLayanan.getText());
+        layanan.setDeskripsi(txtDeskripsiLayanan.getText());
+        try {
+            layanan.setHarga(Integer.parseInt(txtHargaLayanan.getText()));
+            layananRepository.save(layanan);
+            clearFormLayanan();
+            selectMenu("layanan");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data Layanan! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_tambah6ActionPerformed
+
+    private void btn_edit6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit6ActionPerformed
+        model.Layanan layanan = new model.Layanan();
+        layanan.setNama(txtNamaLayanan.getText());
+        layanan.setDeskripsi(txtDeskripsiLayanan.getText());
+        try {
+            layanan.setHarga(Integer.parseInt(txtHargaLayanan.getText()));
+            layananRepository.update(layanan.toMap(), Map.of("id_layanan", layananRepository.selectedData(tbl_layanan).getIdLayanan()));
+            clearFormLayanan();
+            selectMenu("layanan");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal mengubah data Layanan! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_edit6ActionPerformed
+
+    private void btn_hapus11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus11ActionPerformed
+        try {
+            layananRepository.delete(Map.of("id_layanan", layananRepository.selectedData(tbl_layanan).getIdLayanan()));
+            clearFormLayanan();
+            selectMenu("layanan");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus data Layanan! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_hapus11ActionPerformed
+
+    private void btn_hapus12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus12ActionPerformed
+        clearFormLayanan();
+    }//GEN-LAST:event_btn_hapus12ActionPerformed
+
+    private void txtNamaLayananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaLayananActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNamaLayananActionPerformed
+
+    private void txtDeskripsiLayananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeskripsiLayananActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDeskripsiLayananActionPerformed
+
+    private void txtHargaLayananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHargaLayananActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHargaLayananActionPerformed
 
     int xx ,xy;
     
@@ -1553,31 +1571,31 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel Indicator2;
     private javax.swing.JPanel Indicator3;
     private javax.swing.JPanel Indicator4;
-    private javax.swing.JLabel btn_close;
-    private javax.swing.JLabel btn_close1;
-    private javax.swing.JLabel btn_close2;
-    private javax.swing.JLabel btn_close3;
-    private javax.swing.JLabel btn_close4;
     private com.k33ptoo.components.KButton btn_edit1;
-    private com.k33ptoo.components.KButton btn_edit2;
-    private com.k33ptoo.components.KButton btn_edit3;
     private com.k33ptoo.components.KButton btn_edit4;
+    private com.k33ptoo.components.KButton btn_edit5;
+    private com.k33ptoo.components.KButton btn_edit6;
     private com.k33ptoo.components.KButton btn_hapus1;
+    private com.k33ptoo.components.KButton btn_hapus10;
+    private com.k33ptoo.components.KButton btn_hapus11;
+    private com.k33ptoo.components.KButton btn_hapus12;
     private com.k33ptoo.components.KButton btn_hapus2;
-    private com.k33ptoo.components.KButton btn_hapus3;
-    private com.k33ptoo.components.KButton btn_hapus4;
-    private com.k33ptoo.components.KButton btn_hapus5;
-    private com.k33ptoo.components.KButton btn_hapus6;
     private com.k33ptoo.components.KButton btn_hapus7;
     private com.k33ptoo.components.KButton btn_hapus8;
+    private com.k33ptoo.components.KButton btn_hapus9;
     private javax.swing.JPanel btn_nav_admin;
     private javax.swing.JPanel btn_nav_konfig;
     private javax.swing.JPanel btn_nav_layanan;
     private javax.swing.JPanel btn_nav_sales;
     private com.k33ptoo.components.KButton btn_tambah1;
-    private com.k33ptoo.components.KButton btn_tambah2;
-    private com.k33ptoo.components.KButton btn_tambah3;
     private com.k33ptoo.components.KButton btn_tambah4;
+    private com.k33ptoo.components.KButton btn_tambah5;
+    private com.k33ptoo.components.KButton btn_tambah6;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1597,26 +1615,21 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel8;
     private java.awt.Label label1;
     private java.awt.Label label10;
     private java.awt.Label label11;
     private java.awt.Label label12;
+    private java.awt.Label label13;
+    private java.awt.Label label14;
+    private java.awt.Label label15;
+    private java.awt.Label label16;
+    private java.awt.Label label17;
+    private java.awt.Label label18;
     private java.awt.Label label2;
     private java.awt.Label label3;
-    private java.awt.Label label4;
-    private java.awt.Label label5;
-    private java.awt.Label label6;
-    private java.awt.Label label7;
-    private java.awt.Label label8;
-    private java.awt.Label label9;
     private javax.swing.JLabel lbl_layanan;
     private javax.swing.JLabel lbl_pelanggan;
     private javax.swing.JLabel lbl_report;
@@ -1632,20 +1645,20 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane panel_tabel3;
     private javax.swing.JScrollPane panel_tabel4;
     private javax.swing.JTable tbl_admin;
+    private javax.swing.JTable tbl_konfig;
+    private javax.swing.JTable tbl_layanan;
     private javax.swing.JTable tbl_sales;
-    private javax.swing.JTable tbl_sales1;
-    private javax.swing.JTable tbl_sales2;
-    private java.awt.TextField txtDeskripsi;
     private java.awt.TextField txtDeskripsi1;
-    private java.awt.TextField txtEmail1;
-    private java.awt.TextField txtEmail2;
-    private java.awt.TextField txtHarga;
+    private javax.swing.JTextField txtDeskripsiLayanan;
+    private javax.swing.JTextField txtEmailAdmin;
+    private javax.swing.JTextField txtEmailSales;
     private java.awt.TextField txtHarga1;
-    private java.awt.TextField txtLayanan;
+    private javax.swing.JTextField txtHargaLayanan;
     private java.awt.TextField txtLayanan1;
-    private java.awt.TextField txtNama1;
-    private java.awt.TextField txtNama2;
-    private java.awt.TextField txtPassword;
-    private java.awt.TextField txtPassword1;
+    private javax.swing.JTextField txtNamaAdmin;
+    private javax.swing.JTextField txtNamaLayanan;
+    private javax.swing.JTextField txtNamaSales;
+    private javax.swing.JPasswordField txtPasswordAdmin;
+    private javax.swing.JPasswordField txtPasswordSales;
     // End of variables declaration//GEN-END:variables
 }

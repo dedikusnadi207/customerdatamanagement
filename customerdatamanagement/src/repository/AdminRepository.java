@@ -34,5 +34,15 @@ public class AdminRepository extends Repository<Admin>{
                 "password", Types.VARCHAR
         );
     }
+
+    @Override
+    public String[] tableHeaders() {
+        return new String[]{"ID", "Nama", "Email"};
+    }
+
+    @Override
+    public Object[] renderItem(Admin item) {
+        return new Object[]{item.getIdAdmin(), item.getNama(), item.getEmail()};
+    }
     
 }

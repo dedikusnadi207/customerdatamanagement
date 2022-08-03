@@ -6,6 +6,7 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  *
@@ -13,4 +14,5 @@ import java.sql.SQLException;
  */
 public abstract class BaseModel {
     public abstract void fillData(ResultSet rs) throws SQLException;
+    public abstract Map<String, Object> toMap();
 }

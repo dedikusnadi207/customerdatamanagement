@@ -8,6 +8,11 @@ import Koneksi.Koneksi;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import model.BaseModel;
 
 /*
@@ -18,11 +23,33 @@ import model.BaseModel;
 /**
  *
  * @author dedikusnadi
+ * @param <T>
  */
-abstract class Repository<T extends BaseModel> {
+public abstract class Repository<T extends BaseModel> {
     public abstract Class<T> model();
     public abstract String tableName();
     public abstract Map<String, Integer> fields();
+    public abstract String[] tableHeaders();
+    public abstract Object[] renderItem(T item);
+    
+    private DefaultTableModel model;
+    private ArrayList<T> rows;
+    public void renderDataTable(JTable table){
+        model = new DefaultTableModel(null, tableHeaders());
+        table.setModel(model);
+        try {
+            rows = all();
+            for (T item : rows) {
+                model.addRow(renderItem(item));
+            }
+        } catch (Exception ex) {
+            System.out.println("ERROR : "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Gagal menampilkan data!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    public T selectedData(JTable table){
+        return this.rows.get(table.getSelectedRow());
+    }
     
     private Map<String, Object> values;
     private Map<String, Object> conds;
@@ -34,9 +61,15 @@ abstract class Repository<T extends BaseModel> {
     private String preparedConds() { return this.conds.keySet().stream().collect(Collectors.joining("=? AND ", "","=?")); }
     
     private PreparedStatement setPreparedStatement(PreparedStatement ps, Map<String, Object> data) throws SQLException {
+        return setPreparedStatement(ps, data, Map.of());
+    }
+    private PreparedStatement setPreparedStatement(PreparedStatement ps, Map<String, Object> data, Map<String, Object> conds) throws SQLException {
         int index = 1;
         for (String key : data.keySet()) {
             ps.setObject(index++, data.get(key), this.fields().get(key));
+        }
+        for (String key : conds.keySet()) {
+            ps.setObject(index++, conds.get(key), this.fields().get(key));
         }
         return ps;
     }
@@ -53,12 +86,16 @@ abstract class Repository<T extends BaseModel> {
         return save();
     }
     
+    public int save(T model) throws SQLException {
+        setValues(model.toMap());
+        return save();
+    }
+    
     public int update() throws SQLException {
         String sql = "UPDATE "+tableName()+" SET "+preparedFields()+" WHERE "+preparedConds();
+        System.out.println(sql);
         PreparedStatement ps = Koneksi.koneksidb().prepareStatement(sql);
-        Map<String, Object> data = values;
-        data.putAll(conds);
-        ps = this.setPreparedStatement(ps, data);
+        ps = this.setPreparedStatement(ps, values, conds);
         return ps.executeUpdate();
 
     }
