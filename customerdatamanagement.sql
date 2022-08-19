@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 19 Agu 2022 pada 16.21
+-- Waktu pembuatan: 19 Agu 2022 pada 16.24
 -- Versi server: 10.4.21-MariaDB
 -- Versi PHP: 7.4.29
 
@@ -41,6 +41,21 @@ CREATE TABLE `admin` (
 INSERT INTO `admin` (`id_admin`, `nama`, `email`, `password`) VALUES
 (1, 'admin', 'admin@gmail.com', 'admin'),
 (2, 'Timur', 'timur@gmail.com', 'timur');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `informasi_perusahaan`
+--
+
+CREATE TABLE `informasi_perusahaan` (
+  `id` int(11) NOT NULL,
+  `nama_perusahaan` varchar(50) DEFAULT NULL,
+  `alamat` varchar(100) DEFAULT NULL,
+  `no_tlp` varchar(13) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `logo` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -126,6 +141,12 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`id_admin`);
 
 --
+-- Indeks untuk tabel `informasi_perusahaan`
+--
+ALTER TABLE `informasi_perusahaan`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `layanan`
 --
 ALTER TABLE `layanan`
@@ -161,6 +182,12 @@ ALTER TABLE `transaksi`
 --
 ALTER TABLE `admin`
   MODIFY `id_admin` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `informasi_perusahaan`
+--
+ALTER TABLE `informasi_perusahaan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `layanan`
