@@ -1,85 +1,125 @@
-/*
-SQLyog Ultimate v12.5.1 (64 bit)
-MySQL - 10.4.22-MariaDB : Database - customerdatamanagement
-*********************************************************************
-*/
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Waktu pembuatan: 19 Agu 2022 pada 16.24
+-- Versi server: 10.4.21-MariaDB
+-- Versi PHP: 7.4.29
 
-/*!40101 SET NAMES utf8 */;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-/*!40101 SET SQL_MODE=''*/;
 
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`customerdatamanagement` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-USE `customerdatamanagement`;
+--
+-- Database: `customerdatamanagement`
+--
 
-/*Table structure for table `admin` */
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `admin`;
+--
+-- Struktur dari tabel `admin`
+--
 
 CREATE TABLE `admin` (
-  `id_admin` int(3) NOT NULL AUTO_INCREMENT,
+  `id_admin` int(3) NOT NULL,
   `nama` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_admin`)
+  `password` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-/*Data for the table `admin` */
+--
+-- Dumping data untuk tabel `admin`
+--
 
-/*Table structure for table `layanan` */
+INSERT INTO `admin` (`id_admin`, `nama`, `email`, `password`) VALUES
+(1, 'admin', 'admin@gmail.com', 'admin'),
+(2, 'Timur', 'timur@gmail.com', 'timur');
 
-DROP TABLE IF EXISTS `layanan`;
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `informasi_perusahaan`
+--
+
+CREATE TABLE `informasi_perusahaan` (
+  `id` int(11) NOT NULL,
+  `nama_perusahaan` varchar(50) DEFAULT NULL,
+  `alamat` varchar(100) DEFAULT NULL,
+  `no_tlp` varchar(13) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `logo` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `layanan`
+--
 
 CREATE TABLE `layanan` (
-  `id_layanan` int(5) NOT NULL AUTO_INCREMENT,
+  `id_layanan` int(5) NOT NULL,
   `nama` varchar(50) DEFAULT NULL,
   `deskripsi` varchar(50) DEFAULT NULL,
-  `harga` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_layanan`)
+  `harga` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-/*Data for the table `layanan` */
+--
+-- Dumping data untuk tabel `layanan`
+--
 
-/*Table structure for table `pelanggan` */
+INSERT INTO `layanan` (`id_layanan`, `nama`, `deskripsi`, `harga`) VALUES
+(1, 'Security Assessment', 'Jasa  Pengujian Sistem Informasi', 35000000);
 
-DROP TABLE IF EXISTS `pelanggan`;
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pelanggan`
+--
 
 CREATE TABLE `pelanggan` (
-  `id_pelanggan` int(5) NOT NULL AUTO_INCREMENT,
+  `id_pelanggan` int(5) NOT NULL,
   `nik` varchar(20) DEFAULT NULL,
   `nama_pic` varchar(50) DEFAULT NULL,
   `nama_instansi` varchar(50) DEFAULT NULL,
   `no_tlp` varchar(13) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_pelanggan`)
+  `email` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-/*Data for the table `pelanggan` */
+-- --------------------------------------------------------
 
-/*Table structure for table `sales` */
-
-DROP TABLE IF EXISTS `sales`;
+--
+-- Struktur dari tabel `sales`
+--
 
 CREATE TABLE `sales` (
-  `id_sales` int(3) NOT NULL AUTO_INCREMENT,
+  `id_sales` int(3) NOT NULL,
   `nama` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_sales`)
+  `password` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-/*Data for the table `sales` */
+--
+-- Dumping data untuk tabel `sales`
+--
 
-/*Table structure for table `transaksi` */
+INSERT INTO `sales` (`id_sales`, `nama`, `email`, `password`) VALUES
+(1, 'timur', 'timur@gmail.com', 'timur');
 
-DROP TABLE IF EXISTS `transaksi`;
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `transaksi`
+--
 
 CREATE TABLE `transaksi` (
-  `id_transaksi` int(11) NOT NULL AUTO_INCREMENT,
+  `id_transaksi` int(11) NOT NULL,
   `tanggal_mulai` datetime DEFAULT NULL,
   `tanggal_selesai` datetime DEFAULT NULL,
   `id_pelanggan` int(5) DEFAULT NULL,
@@ -87,19 +127,105 @@ CREATE TABLE `transaksi` (
   `id_sales` int(3) DEFAULT NULL,
   `total_harga` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_transaksi`),
-  KEY `id_pelanggan` (`id_pelanggan`),
-  KEY `id_layanan` (`id_layanan`),
-  KEY `id_sales` (`id_sales`),
-  CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`),
-  CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_layanan`) REFERENCES `layanan` (`id_layanan`),
-  CONSTRAINT `transaksi_ibfk_3` FOREIGN KEY (`id_sales`) REFERENCES `sales` (`id_sales`)
+  `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-/*Data for the table `transaksi` */
+--
+-- Indexes for dumped tables
+--
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+--
+-- Indeks untuk tabel `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id_admin`);
+
+--
+-- Indeks untuk tabel `informasi_perusahaan`
+--
+ALTER TABLE `informasi_perusahaan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `layanan`
+--
+ALTER TABLE `layanan`
+  ADD PRIMARY KEY (`id_layanan`);
+
+--
+-- Indeks untuk tabel `pelanggan`
+--
+ALTER TABLE `pelanggan`
+  ADD PRIMARY KEY (`id_pelanggan`);
+
+--
+-- Indeks untuk tabel `sales`
+--
+ALTER TABLE `sales`
+  ADD PRIMARY KEY (`id_sales`);
+
+--
+-- Indeks untuk tabel `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD PRIMARY KEY (`id_transaksi`),
+  ADD KEY `id_pelanggan` (`id_pelanggan`),
+  ADD KEY `id_layanan` (`id_layanan`),
+  ADD KEY `id_sales` (`id_sales`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id_admin` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `informasi_perusahaan`
+--
+ALTER TABLE `informasi_perusahaan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `layanan`
+--
+ALTER TABLE `layanan`
+  MODIFY `id_layanan` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `pelanggan`
+--
+ALTER TABLE `pelanggan`
+  MODIFY `id_pelanggan` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `sales`
+--
+ALTER TABLE `sales`
+  MODIFY `id_sales` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `transaksi`
+--
+ALTER TABLE `transaksi`
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_pelanggan`) REFERENCES `pelanggan` (`id_pelanggan`),
+  ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_layanan`) REFERENCES `layanan` (`id_layanan`),
+  ADD CONSTRAINT `transaksi_ibfk_3` FOREIGN KEY (`id_sales`) REFERENCES `sales` (`id_sales`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
