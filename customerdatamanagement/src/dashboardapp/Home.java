@@ -6,7 +6,18 @@
 package dashboardapp;
 
 import java.awt.Color;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import model.Layanan;
+import model.Pelanggan;
+import repository.*;
 
 /**
  *
@@ -17,16 +28,68 @@ public class Home extends javax.swing.JFrame {
     /**
      * Creates new form Home
      */
+    LayananRepository layananRepository;
+    PelangganRepository pelangganRepository;
+    TransaksiRepository transaksiRepository;
+    ArrayList<model.Pelanggan> pelangganOptions;
+    ArrayList<model.Layanan> layananOptions;
     public Home() {
-        
         initComponents();
-        panel_pelanggan.setVisible(false);
-        panel_report.setVisible(false);
-        panel_transaksi.setVisible(false);
-        panel_layanan.setVisible(false);
-      
-        
+        layananRepository = new LayananRepository();
+        pelangganRepository = new PelangganRepository();
+        transaksiRepository = new TransaksiRepository();
+        selectMenu("dashboard");
     }
+    private void selectMenu(String menu) {
+        panel_dashboard.setVisible(menu.equals("dashboard"));
+        Map<String, JPanel> mapPanel = Map.of("layanan", panel_layanan, "pelanggan", panel_pelanggan, "transaksi", panel_transaksi, "report", panel_report);
+        Map<String, JPanel> mapBtnNav = Map.of("layanan", btn_nav_layanan, "pelanggan", btn_nav_pelanggan, "transaksi", btn_nav_tansaksi, "report", btn_nav_report);
+        Map<String, JPanel> mapIndicator = Map.of("layanan", Indicator1, "pelanggan", Indicator2, "transaksi", Indicator3, "report", Indicator4);
+        Map<String, Repository> mapRepositories = Map.of("layanan", layananRepository, "pelanggan", pelangganRepository, "transaksi", transaksiRepository, "report", pelangganRepository);
+        Map<String, JTable> mapTable = Map.of("layanan", tabel_layanan, "pelanggan", tabel_pelanggan, "transaksi", tabel_transaksi);
+        if (menu.equals("transaksi")) {
+            try {
+                pelangganOptions = pelangganRepository.all();
+                cPelanggan.removeAllItems();
+                for (Pelanggan pelangganOption : pelangganOptions) {
+                    cPelanggan.addItem(pelangganOption.getNamaPic()+" - "+pelangganOption.getNamaInstansi());
+                }
+                layananOptions = layananRepository.all();
+                cLayanan.removeAllItems();
+                for (Layanan layananOption : layananOptions) {
+                    cLayanan.addItem(layananOption.getNama()+" - Rp."+layananOption.getHarga());
+                }
+            } catch (Exception e) {
+            }
+        }
+        for (String key : mapPanel.keySet()) {
+            if (key.equals(menu)) {
+                mapPanel.get(key).setVisible(true);
+                onClick(mapBtnNav.get(key));
+                mapIndicator.get(key).setOpaque(true);
+                mapRepositories.get(key).renderDataTable(mapTable.get(key));
+            } else {
+                mapPanel.get(key).setVisible(false);
+                onLeaveClick(mapBtnNav.get(key));
+                mapIndicator.get(key).setOpaque(false);
+            }
+        }
+    }
+    
+    void clearFormPelanggan(){
+        txtNIKPelanggan.setText("");
+        txtNamaPelanggan.setText("");
+        txtInstansiPelanggan.setText("");
+        txtTeleponPelanggan.setText("");
+        txtEmailPelanggan.setText("");
+    }
+    void clearFormTransaksi(){
+        tanggalMulai.setDate(new Date());
+        tanggalSelesai.setDate(new Date());
+        cPelanggan.setSelectedIndex(0);
+        cLayanan.setSelectedIndex(0);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,14 +139,11 @@ public class Home extends javax.swing.JFrame {
         jLabel35 = new javax.swing.JLabel();
         panel_tabel4 = new javax.swing.JScrollPane();
         tabel_layanan = new javax.swing.JTable();
-        jPanel39 = new javax.swing.JPanel();
-        btn_close4 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
         panel_pelanggan = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         panel_tabel1 = new javax.swing.JScrollPane();
         tabel_pelanggan = new javax.swing.JTable();
-        jPanel18 = new javax.swing.JPanel();
-        btn_close1 = new javax.swing.JLabel();
         btn_tambah_pelanggan = new com.k33ptoo.components.KButton();
         btn_edit_pelanggan = new com.k33ptoo.components.KButton();
         btn_clear_pelanggan = new com.k33ptoo.components.KButton();
@@ -93,39 +153,36 @@ public class Home extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
-        txtNamaPelanggan1 = new javax.swing.JTextField();
-        txtNIK1 = new javax.swing.JTextField();
-        txtInstansi1 = new javax.swing.JTextField();
-        txtTelepon1 = new javax.swing.JTextField();
+        txtEmailPelanggan = new javax.swing.JTextField();
+        txtNamaPelanggan = new javax.swing.JTextField();
+        txtNIKPelanggan = new javax.swing.JTextField();
+        txtInstansiPelanggan = new javax.swing.JTextField();
+        txtTeleponPelanggan = new javax.swing.JTextField();
+        jButton9 = new javax.swing.JButton();
         panel_transaksi = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         panel_tabel2 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        jPanel25 = new javax.swing.JPanel();
-        btn_close2 = new javax.swing.JLabel();
+        tabel_transaksi = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
-        txtNamaPelanggan2 = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        txtNIK2 = new javax.swing.JTextField();
         jLabel37 = new javax.swing.JLabel();
-        txtInstansi2 = new javax.swing.JTextField();
         jLabel38 = new javax.swing.JLabel();
-        txtTelepon2 = new javax.swing.JTextField();
-        jLabel39 = new javax.swing.JLabel();
-        txtEmail1 = new javax.swing.JTextField();
         btn_tambah_pelanggan1 = new com.k33ptoo.components.KButton();
         btn_edit_pelanggan1 = new com.k33ptoo.components.KButton();
         btn_clear_pelanggan1 = new com.k33ptoo.components.KButton();
         btn_hapus_pelanggan1 = new com.k33ptoo.components.KButton();
+        jButton10 = new javax.swing.JButton();
+        tanggalMulai = new com.toedter.calendar.JDateChooser();
+        tanggalSelesai = new com.toedter.calendar.JDateChooser();
+        cPelanggan = new javax.swing.JComboBox<>();
+        cLayanan = new javax.swing.JComboBox<>();
         panel_report = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
-        jPanel32 = new javax.swing.JPanel();
-        btn_close3 = new javax.swing.JLabel();
         btn_tambah_pelanggan2 = new com.k33ptoo.components.KButton();
         btn_edit_pelanggan2 = new com.k33ptoo.components.KButton();
         btn_clear_pelanggan2 = new com.k33ptoo.components.KButton();
         btn_hapus_pelanggan2 = new com.k33ptoo.components.KButton();
+        jButton11 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
@@ -534,7 +591,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, Short.MAX_VALUE))
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nav_panelLayout.createSequentialGroup()
                         .addGap(58, 58, 58)
@@ -655,35 +712,20 @@ public class Home extends javax.swing.JFrame {
 
         panel_layanan.add(panel_tabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 710, 260));
 
-        jPanel39.setBackground(new java.awt.Color(0, 51, 153));
-        jPanel39.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        btn_close4.setBackground(new java.awt.Color(96, 83, 150));
-        btn_close4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btn_close4.setForeground(new java.awt.Color(255, 255, 255));
-        btn_close4.setText("X");
-        btn_close4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_close4MouseClicked(evt);
+        jButton8.setBackground(new java.awt.Color(0, 51, 153));
+        jButton8.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setText("X ");
+        jButton8.setBorder(null);
+        jButton8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton8.setOpaque(true);
+        jButton8.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel39Layout = new javax.swing.GroupLayout(jPanel39);
-        jPanel39.setLayout(jPanel39Layout);
-        jPanel39Layout.setHorizontalGroup(
-            jPanel39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel39Layout.createSequentialGroup()
-                .addGap(0, 156, Short.MAX_VALUE)
-                .addComponent(btn_close4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel39Layout.setVerticalGroup(
-            jPanel39Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel39Layout.createSequentialGroup()
-                .addComponent(btn_close4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-        );
-
-        panel_layanan.add(jPanel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
+        panel_layanan.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
 
         getContentPane().add(panel_layanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -731,42 +773,22 @@ public class Home extends javax.swing.JFrame {
         });
         tabel_pelanggan.setGridColor(new java.awt.Color(247, 247, 247));
         tabel_pelanggan.setSelectionBackground(new java.awt.Color(96, 83, 150));
-        panel_tabel1.setViewportView(tabel_pelanggan);
-
-        panel_pelanggan.add(panel_tabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 710, 220));
-
-        jPanel18.setBackground(new java.awt.Color(0, 51, 153));
-        jPanel18.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        btn_close1.setBackground(new java.awt.Color(96, 83, 150));
-        btn_close1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btn_close1.setForeground(new java.awt.Color(255, 255, 255));
-        btn_close1.setText("X");
-        btn_close1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabel_pelanggan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_close1MouseClicked(evt);
+                tabel_pelangganMouseClicked(evt);
             }
         });
+        panel_tabel1.setViewportView(tabel_pelanggan);
 
-        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
-        jPanel18.setLayout(jPanel18Layout);
-        jPanel18Layout.setHorizontalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
-                .addGap(0, 156, Short.MAX_VALUE)
-                .addComponent(btn_close1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel18Layout.setVerticalGroup(
-            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel18Layout.createSequentialGroup()
-                .addComponent(btn_close1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-        );
-
-        panel_pelanggan.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
+        panel_pelanggan.add(panel_tabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 710, 240));
 
         btn_tambah_pelanggan.setText("Tambah");
-        panel_pelanggan.add(btn_tambah_pelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 83, 29));
+        btn_tambah_pelanggan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambah_pelangganActionPerformed(evt);
+            }
+        });
+        panel_pelanggan.add(btn_tambah_pelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 80, 83, 29));
 
         btn_edit_pelanggan.setText("Edit");
         btn_edit_pelanggan.setkStartColor(new java.awt.Color(0, 51, 153));
@@ -775,7 +797,7 @@ public class Home extends javax.swing.JFrame {
                 btn_edit_pelangganActionPerformed(evt);
             }
         });
-        panel_pelanggan.add(btn_edit_pelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 83, 29));
+        panel_pelanggan.add(btn_edit_pelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 130, 83, 29));
 
         btn_clear_pelanggan.setText("Bersihkan");
         btn_clear_pelanggan.setkStartColor(new java.awt.Color(255, 102, 51));
@@ -784,7 +806,7 @@ public class Home extends javax.swing.JFrame {
                 btn_clear_pelangganActionPerformed(evt);
             }
         });
-        panel_pelanggan.add(btn_clear_pelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 340, 83, 29));
+        panel_pelanggan.add(btn_clear_pelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 230, 83, 29));
 
         btn_hapus_pelanggan.setText("Hapus");
         btn_hapus_pelanggan.setkStartColor(new java.awt.Color(255, 0, 0));
@@ -793,7 +815,7 @@ public class Home extends javax.swing.JFrame {
                 btn_hapus_pelangganActionPerformed(evt);
             }
         });
-        panel_pelanggan.add(btn_hapus_pelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 340, 83, 29));
+        panel_pelanggan.add(btn_hapus_pelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 180, 83, 29));
 
         jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(0, 51, 153));
@@ -820,45 +842,60 @@ public class Home extends javax.swing.JFrame {
         jLabel16.setText("Telepon");
         panel_pelanggan.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 140, 30));
 
-        txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+        txtEmailPelanggan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtEmailPelanggan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
+                txtEmailPelangganActionPerformed(evt);
             }
         });
-        panel_pelanggan.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 370, 30));
+        panel_pelanggan.add(txtEmailPelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 370, 30));
 
-        txtNamaPelanggan1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtNamaPelanggan1.addActionListener(new java.awt.event.ActionListener() {
+        txtNamaPelanggan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtNamaPelanggan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNamaPelanggan1ActionPerformed(evt);
+                txtNamaPelangganActionPerformed(evt);
             }
         });
-        panel_pelanggan.add(txtNamaPelanggan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 370, 30));
+        panel_pelanggan.add(txtNamaPelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 370, 30));
 
-        txtNIK1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtNIK1.addActionListener(new java.awt.event.ActionListener() {
+        txtNIKPelanggan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtNIKPelanggan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNIK1ActionPerformed(evt);
+                txtNIKPelangganActionPerformed(evt);
             }
         });
-        panel_pelanggan.add(txtNIK1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 370, 30));
+        panel_pelanggan.add(txtNIKPelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 370, 30));
 
-        txtInstansi1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtInstansi1.addActionListener(new java.awt.event.ActionListener() {
+        txtInstansiPelanggan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtInstansiPelanggan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtInstansi1ActionPerformed(evt);
+                txtInstansiPelangganActionPerformed(evt);
             }
         });
-        panel_pelanggan.add(txtInstansi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 370, 30));
+        panel_pelanggan.add(txtInstansiPelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 370, 30));
 
-        txtTelepon1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtTelepon1.addActionListener(new java.awt.event.ActionListener() {
+        txtTeleponPelanggan.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtTeleponPelanggan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelepon1ActionPerformed(evt);
+                txtTeleponPelangganActionPerformed(evt);
             }
         });
-        panel_pelanggan.add(txtTelepon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 370, 30));
+        panel_pelanggan.add(txtTeleponPelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 370, 30));
+
+        jButton9.setBackground(new java.awt.Color(0, 51, 153));
+        jButton9.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 255, 255));
+        jButton9.setText("X ");
+        jButton9.setBorder(null);
+        jButton9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton9.setOpaque(true);
+        jButton9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        panel_pelanggan.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
 
         getContentPane().add(panel_pelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -883,9 +920,9 @@ public class Home extends javax.swing.JFrame {
         panel_tabel2.setBackground(new java.awt.Color(247, 247, 247));
         panel_tabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        jTable3.setBackground(new java.awt.Color(247, 247, 247));
-        jTable3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tabel_transaksi.setBackground(new java.awt.Color(247, 247, 247));
+        tabel_transaksi.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tabel_transaksi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Allan", "XLS", "2hrs", "$200"},
                 {"Brian", "React", "1hr", "$100 per hr"},
@@ -904,109 +941,44 @@ public class Home extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jTable3.setGridColor(new java.awt.Color(247, 247, 247));
-        jTable3.setSelectionBackground(new java.awt.Color(96, 83, 150));
-        panel_tabel2.setViewportView(jTable3);
-
-        panel_transaksi.add(panel_tabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 710, 240));
-
-        jPanel25.setBackground(new java.awt.Color(0, 51, 153));
-        jPanel25.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        btn_close2.setBackground(new java.awt.Color(96, 83, 150));
-        btn_close2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btn_close2.setForeground(new java.awt.Color(255, 255, 255));
-        btn_close2.setText("X");
-        btn_close2.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabel_transaksi.setGridColor(new java.awt.Color(247, 247, 247));
+        tabel_transaksi.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        tabel_transaksi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_close2MouseClicked(evt);
+                tabel_transaksiMouseClicked(evt);
             }
         });
+        panel_tabel2.setViewportView(tabel_transaksi);
 
-        javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
-        jPanel25.setLayout(jPanel25Layout);
-        jPanel25Layout.setHorizontalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel25Layout.createSequentialGroup()
-                .addGap(0, 156, Short.MAX_VALUE)
-                .addComponent(btn_close2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel25Layout.setVerticalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel25Layout.createSequentialGroup()
-                .addComponent(btn_close2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-        );
-
-        panel_transaksi.add(jPanel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
+        panel_transaksi.add(panel_tabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 710, 280));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel17.setText("Nama");
+        jLabel17.setText("Tanggal Mulai");
         panel_transaksi.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 140, 30));
-
-        txtNamaPelanggan2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtNamaPelanggan2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNamaPelanggan2ActionPerformed(evt);
-            }
-        });
-        panel_transaksi.add(txtNamaPelanggan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 370, 30));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel18.setText("NIK");
+        jLabel18.setText("Tanggal Selesai");
         panel_transaksi.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 140, 30));
-
-        txtNIK2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtNIK2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNIK2ActionPerformed(evt);
-            }
-        });
-        panel_transaksi.add(txtNIK2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 370, 30));
 
         jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel37.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel37.setText("Nama Instansi");
+        jLabel37.setText("Pelanggan");
         panel_transaksi.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 140, 30));
-
-        txtInstansi2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtInstansi2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtInstansi2ActionPerformed(evt);
-            }
-        });
-        panel_transaksi.add(txtInstansi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 370, 30));
 
         jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel38.setText("Telepon");
+        jLabel38.setText("Layanan");
         panel_transaksi.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 140, 30));
 
-        txtTelepon2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtTelepon2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelepon2ActionPerformed(evt);
-            }
-        });
-        panel_transaksi.add(txtTelepon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 370, 30));
-
-        jLabel39.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel39.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel39.setText("Email");
-        panel_transaksi.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 140, 30));
-
-        txtEmail1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtEmail1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmail1ActionPerformed(evt);
-            }
-        });
-        panel_transaksi.add(txtEmail1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 370, 30));
-
         btn_tambah_pelanggan1.setText("Tambah");
-        panel_transaksi.add(btn_tambah_pelanggan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 83, 29));
+        btn_tambah_pelanggan1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambah_pelanggan1ActionPerformed(evt);
+            }
+        });
+        panel_transaksi.add(btn_tambah_pelanggan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 80, 83, 29));
 
         btn_edit_pelanggan1.setText("Edit");
         btn_edit_pelanggan1.setkStartColor(new java.awt.Color(0, 51, 153));
@@ -1015,7 +987,7 @@ public class Home extends javax.swing.JFrame {
                 btn_edit_pelanggan1ActionPerformed(evt);
             }
         });
-        panel_transaksi.add(btn_edit_pelanggan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 83, 29));
+        panel_transaksi.add(btn_edit_pelanggan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, 83, 29));
 
         btn_clear_pelanggan1.setText("Bersihkan");
         btn_clear_pelanggan1.setkStartColor(new java.awt.Color(255, 102, 51));
@@ -1024,7 +996,7 @@ public class Home extends javax.swing.JFrame {
                 btn_clear_pelanggan1ActionPerformed(evt);
             }
         });
-        panel_transaksi.add(btn_clear_pelanggan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 320, 83, 29));
+        panel_transaksi.add(btn_clear_pelanggan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 200, 83, 29));
 
         btn_hapus_pelanggan1.setText("Hapus");
         btn_hapus_pelanggan1.setkStartColor(new java.awt.Color(255, 0, 0));
@@ -1033,7 +1005,26 @@ public class Home extends javax.swing.JFrame {
                 btn_hapus_pelanggan1ActionPerformed(evt);
             }
         });
-        panel_transaksi.add(btn_hapus_pelanggan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 320, 83, 29));
+        panel_transaksi.add(btn_hapus_pelanggan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 160, 83, 29));
+
+        jButton10.setBackground(new java.awt.Color(0, 51, 153));
+        jButton10.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton10.setForeground(new java.awt.Color(255, 255, 255));
+        jButton10.setText("X ");
+        jButton10.setBorder(null);
+        jButton10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton10.setOpaque(true);
+        jButton10.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        panel_transaksi.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
+        panel_transaksi.add(tanggalMulai, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 370, -1));
+        panel_transaksi.add(tanggalSelesai, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 370, -1));
+        panel_transaksi.add(cPelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 370, -1));
+        panel_transaksi.add(cLayanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 370, -1));
 
         getContentPane().add(panel_transaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -1054,36 +1045,6 @@ public class Home extends javax.swing.JFrame {
         jLabel28.setForeground(new java.awt.Color(0, 51, 153));
         jLabel28.setText("LAPORAN APLIKASI");
         panel_report.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
-
-        jPanel32.setBackground(new java.awt.Color(0, 51, 153));
-        jPanel32.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        btn_close3.setBackground(new java.awt.Color(96, 83, 150));
-        btn_close3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        btn_close3.setForeground(new java.awt.Color(255, 255, 255));
-        btn_close3.setText("X");
-        btn_close3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_close3MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel32Layout = new javax.swing.GroupLayout(jPanel32);
-        jPanel32.setLayout(jPanel32Layout);
-        jPanel32Layout.setHorizontalGroup(
-            jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel32Layout.createSequentialGroup()
-                .addGap(0, 156, Short.MAX_VALUE)
-                .addComponent(btn_close3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel32Layout.setVerticalGroup(
-            jPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel32Layout.createSequentialGroup()
-                .addComponent(btn_close3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-        );
-
-        panel_report.add(jPanel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 180, -1));
 
         btn_tambah_pelanggan2.setText("Tambah");
         panel_report.add(btn_tambah_pelanggan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 83, 29));
@@ -1115,6 +1076,21 @@ public class Home extends javax.swing.JFrame {
         });
         panel_report.add(btn_hapus_pelanggan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 240, 83, 29));
 
+        jButton11.setBackground(new java.awt.Color(0, 51, 153));
+        jButton11.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton11.setForeground(new java.awt.Color(255, 255, 255));
+        jButton11.setText("X ");
+        jButton11.setBorder(null);
+        jButton11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton11.setOpaque(true);
+        jButton11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+        panel_report.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
+
         getContentPane().add(panel_report, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
         pack();
@@ -1126,76 +1102,19 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_closeMouseClicked
 
     private void btn_nav_layananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_layananMouseClicked
-        panel_pelanggan.setVisible(false);
-        panel_report.setVisible(false);
-        panel_transaksi.setVisible(false);
-        panel_layanan.setVisible(true);
-        panel_dashboard.setVisible(false);
-        onClick(btn_nav_layanan);
-        onLeaveClick(btn_nav_pelanggan);
-        onLeaveClick(btn_nav_tansaksi);
-        onLeaveClick(btn_nav_report);
-        
-        //indicators
-        Indicator1.setOpaque(true);
-        Indicator2.setOpaque(false);
-        Indicator3.setOpaque(false);
-        Indicator4.setOpaque(false);
-        
+        selectMenu("layanan");
     }//GEN-LAST:event_btn_nav_layananMouseClicked
 
     private void btn_nav_pelangganMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_pelangganMouseClicked
-        panel_pelanggan.setVisible(true);
-        panel_report.setVisible(false);
-        panel_transaksi.setVisible(false);
-        panel_layanan.setVisible(false);
-        panel_dashboard.setVisible(false);
-        
-        onClick(btn_nav_pelanggan);
-         onLeaveClick(btn_nav_layanan);
-        onLeaveClick(btn_nav_tansaksi);
-        onLeaveClick(btn_nav_report);
-        
-         //indicators
-        Indicator1.setOpaque(false);
-        Indicator2.setOpaque(true);
-        Indicator3.setOpaque(false);
-        Indicator4.setOpaque(false);
+        selectMenu("pelanggan");
     }//GEN-LAST:event_btn_nav_pelangganMouseClicked
 
     private void btn_nav_tansaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_tansaksiMouseClicked
-        panel_pelanggan.setVisible(false);
-        panel_report.setVisible(false);
-        panel_transaksi.setVisible(true);
-        panel_layanan.setVisible(false);
-        panel_dashboard.setVisible(false);
-        onClick(btn_nav_tansaksi);
-         onLeaveClick(btn_nav_pelanggan);
-        onLeaveClick(btn_nav_layanan);
-        onLeaveClick(btn_nav_report);
-        
-         //indicators
-        Indicator1.setOpaque(false);
-        Indicator2.setOpaque(false);
-        Indicator3.setOpaque(true);
-        Indicator4.setOpaque(false);
+        selectMenu("transaksi");
     }//GEN-LAST:event_btn_nav_tansaksiMouseClicked
 
     private void btn_nav_reportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_reportMouseClicked
-        panel_pelanggan.setVisible(false);
-        panel_report.setVisible(true);
-        panel_transaksi.setVisible(false);
-        panel_layanan.setVisible(false);
-        panel_dashboard.setVisible(false);
-        onClick(btn_nav_report);
-         onLeaveClick(btn_nav_pelanggan);
-        onLeaveClick(btn_nav_tansaksi);
-        onLeaveClick(btn_nav_layanan);
-         //indicators
-        Indicator1.setOpaque(false);
-        Indicator2.setOpaque(false);
-        Indicator3.setOpaque(false);
-        Indicator4.setOpaque(true);
+        selectMenu("report");
     }//GEN-LAST:event_btn_nav_reportMouseClicked
 
     private void btn_nav_layananMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_layananMouseEntered
@@ -1264,16 +1183,13 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_reportMouseClicked
 
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
-    panel_pelanggan.setVisible(false);
-    panel_report.setVisible(false);
-    panel_transaksi.setVisible(false);
-    panel_layanan.setVisible(false);
-    panel_dashboard.setVisible(true);
+//    panel_pelanggan.setVisible(false);
+//    panel_report.setVisible(false);
+//    panel_transaksi.setVisible(false);
+//    panel_layanan.setVisible(false);
+//    panel_dashboard.setVisible(true);
+    selectMenu("dashboard");
     }//GEN-LAST:event_jLabel21MouseClicked
-
-    private void btn_close1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_close1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_close1MouseClicked
 
     private void panel_pelangganMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_pelangganMouseDragged
         // TODO add your handling code here:
@@ -1283,10 +1199,6 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_panel_pelangganMousePressed
 
-    private void btn_close2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_close2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_close2MouseClicked
-
     private void panel_transaksiMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_transaksiMouseDragged
         // TODO add your handling code here:
     }//GEN-LAST:event_panel_transaksiMouseDragged
@@ -1295,10 +1207,6 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_panel_transaksiMousePressed
 
-    private void btn_close3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_close3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_close3MouseClicked
-
     private void panel_reportMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_reportMouseDragged
         // TODO add your handling code here:
     }//GEN-LAST:event_panel_reportMouseDragged
@@ -1306,10 +1214,6 @@ public class Home extends javax.swing.JFrame {
     private void panel_reportMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_reportMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_panel_reportMousePressed
-
-    private void btn_close4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_close4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_close4MouseClicked
 
     private void panel_layananMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_layananMouseDragged
         // TODO add your handling code here:
@@ -1320,67 +1224,87 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_panel_layananMousePressed
 
     private void btn_edit_pelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_pelangganActionPerformed
-        // TODO add your handling code here:
+        model.Pelanggan pelanggan = new model.Pelanggan();
+        pelanggan.setNik(txtNIKPelanggan.getText());
+        pelanggan.setNamaPic(txtNamaPelanggan.getText());
+        pelanggan.setNamaInstansi(txtInstansiPelanggan.getText());
+        pelanggan.setNoTlp(txtTeleponPelanggan.getText());
+        pelanggan.setEmail(txtEmailPelanggan.getText());
+        try {
+            pelangganRepository.update(pelanggan.toMap(), Map.of("id_pelanggan", pelangganRepository.selectedData(tabel_pelanggan).getIdPelanggan()));
+            clearFormPelanggan();
+            selectMenu("pelanggan");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal mengubah data Pelanggan! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btn_edit_pelangganActionPerformed
 
     private void btn_clear_pelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clear_pelangganActionPerformed
-        // TODO add your handling code here:
+        clearFormPelanggan();
     }//GEN-LAST:event_btn_clear_pelangganActionPerformed
 
     private void btn_hapus_pelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus_pelangganActionPerformed
-        // TODO add your handling code here:
+        try {
+            pelangganRepository.delete(Map.of("id_pelanggan", pelangganRepository.selectedData(tabel_pelanggan).getIdPelanggan()));
+            clearFormPelanggan();
+            selectMenu("pelanggan");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus data Pelanggan! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_hapus_pelangganActionPerformed
 
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+    private void txtEmailPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailPelangganActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
+    }//GEN-LAST:event_txtEmailPelangganActionPerformed
 
-    private void txtNamaPelanggan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaPelanggan1ActionPerformed
+    private void txtNamaPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaPelangganActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNamaPelanggan1ActionPerformed
+    }//GEN-LAST:event_txtNamaPelangganActionPerformed
 
-    private void txtNIK1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNIK1ActionPerformed
+    private void txtNIKPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNIKPelangganActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNIK1ActionPerformed
+    }//GEN-LAST:event_txtNIKPelangganActionPerformed
 
-    private void txtInstansi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInstansi1ActionPerformed
+    private void txtInstansiPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInstansiPelangganActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtInstansi1ActionPerformed
+    }//GEN-LAST:event_txtInstansiPelangganActionPerformed
 
-    private void txtTelepon1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelepon1ActionPerformed
+    private void txtTeleponPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTeleponPelangganActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelepon1ActionPerformed
-
-    private void txtNamaPelanggan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaPelanggan2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNamaPelanggan2ActionPerformed
-
-    private void txtNIK2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNIK2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNIK2ActionPerformed
-
-    private void txtInstansi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInstansi2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtInstansi2ActionPerformed
-
-    private void txtTelepon2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelepon2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelepon2ActionPerformed
-
-    private void txtEmail1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmail1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmail1ActionPerformed
+    }//GEN-LAST:event_txtTeleponPelangganActionPerformed
 
     private void btn_edit_pelanggan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_pelanggan1ActionPerformed
-        // TODO add your handling code here:
+        model.Transaksi transaksi = new model.Transaksi();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        transaksi.setTanggalMulai(simpleDateFormat.format(tanggalMulai.getDate()));
+        transaksi.setTanggalSelesai(simpleDateFormat.format(tanggalSelesai.getDate()));
+        transaksi.setIdPelanggan(pelangganOptions.get(cPelanggan.getSelectedIndex()).getIdPelanggan());
+        transaksi.setIdLayanan(layananOptions.get(cLayanan.getSelectedIndex()).getIdLayanan());
+        transaksi.setIdSales(Login.idSales);
+        transaksi.setTotalHarga(layananOptions.get(cLayanan.getSelectedIndex()).getHarga());
+        try {
+            transaksiRepository.update(transaksi.toMap(), Map.of("id_transaksi", transaksiRepository.selectedData(tabel_transaksi).getIdTransaksi()));
+            clearFormTransaksi();
+            selectMenu("transaksi");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data Transaksi! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_edit_pelanggan1ActionPerformed
 
     private void btn_clear_pelanggan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clear_pelanggan1ActionPerformed
-        // TODO add your handling code here:
+        clearFormTransaksi();
     }//GEN-LAST:event_btn_clear_pelanggan1ActionPerformed
 
     private void btn_hapus_pelanggan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus_pelanggan1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            transaksiRepository.delete(Map.of("id_transaksi", transaksiRepository.selectedData(tabel_transaksi).getIdTransaksi()));
+            clearFormTransaksi();
+            selectMenu("transaksi");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus data Transaksi! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btn_hapus_pelanggan1ActionPerformed
 
     private void btn_edit_pelanggan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_pelanggan2ActionPerformed
@@ -1395,8 +1319,106 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_hapus_pelanggan2ActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        logout();
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        logout();
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        logout();
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        logout();
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void btn_tambah_pelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelangganActionPerformed
+        model.Pelanggan pelanggan = new model.Pelanggan();
+        pelanggan.setNik(txtNIKPelanggan.getText());
+        pelanggan.setNamaPic(txtNamaPelanggan.getText());
+        pelanggan.setNamaInstansi(txtInstansiPelanggan.getText());
+        pelanggan.setNoTlp(txtTeleponPelanggan.getText());
+        pelanggan.setEmail(txtEmailPelanggan.getText());
+        try {
+            pelangganRepository.save(pelanggan);
+            clearFormPelanggan();
+            selectMenu("pelanggan");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data Pelanggan! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_tambah_pelangganActionPerformed
+
+    private void tabel_pelangganMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_pelangganMouseClicked
+        model.Pelanggan pelanggan = pelangganRepository.selectedData(tabel_pelanggan);
+        txtNIKPelanggan.setText(pelanggan.getNik());
+        txtNamaPelanggan.setText(pelanggan.getNamaPic());
+        txtInstansiPelanggan.setText(pelanggan.getNamaInstansi());
+        txtTeleponPelanggan.setText(pelanggan.getNoTlp());
+        txtEmailPelanggan.setText(pelanggan.getEmail());
+    }//GEN-LAST:event_tabel_pelangganMouseClicked
+
+    private void btn_tambah_pelanggan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan1ActionPerformed
+        model.Transaksi transaksi = new model.Transaksi();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        transaksi.setTanggalMulai(simpleDateFormat.format(tanggalMulai.getDate()));
+        transaksi.setTanggalSelesai(simpleDateFormat.format(tanggalSelesai.getDate()));
+        transaksi.setIdPelanggan(pelangganOptions.get(cPelanggan.getSelectedIndex()).getIdPelanggan());
+        transaksi.setIdLayanan(layananOptions.get(cLayanan.getSelectedIndex()).getIdLayanan());
+        transaksi.setIdSales(Login.idSales);
+        transaksi.setTotalHarga(layananOptions.get(cLayanan.getSelectedIndex()).getHarga());
+        try {
+            transaksiRepository.save(transaksi);
+            clearFormTransaksi();
+            selectMenu("transaksi");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data Transaksi! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_tambah_pelanggan1ActionPerformed
+
+    private void tabel_transaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_transaksiMouseClicked
+        try {
+            model.Transaksi transaksi = transaksiRepository.selectedData(tabel_transaksi);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            tanggalMulai.setDate(simpleDateFormat.parse(transaksi.getTanggalMulai()));
+            tanggalSelesai.setDate(simpleDateFormat.parse(transaksi.getTanggalSelesai()));
+            int indexPelanggan = 0;
+            for (int i = 0; i < pelangganOptions.size(); i++) {
+                Pelanggan get = pelangganOptions.get(i);
+                if (get.getIdPelanggan() == transaksi.getIdPelanggan()) {
+                    indexPelanggan = i;
+                    break;
+                }
+            }
+            cPelanggan.setSelectedIndex(indexPelanggan);
+            int indexLayanan = 0;
+            for (int i = 0; i < layananOptions.size(); i++) {
+                Layanan get = layananOptions.get(i);
+                if (get.getIdLayanan() == transaksi.getIdLayanan()) {
+                    indexLayanan = i;
+                    break;
+                }
+            }
+            cLayanan.setSelectedIndex(indexLayanan);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+//        txtNIKPelanggan.setText(pelanggan.getNik());
+//        txtNamaPelanggan.setText(pelanggan.getNamaPic());
+//        txtInstansiPelanggan.setText(pelanggan.getNamaInstansi());
+//        txtTeleponPelanggan.setText(pelanggan.getNoTlp());
+//        txtEmailPelanggan.setText(pelanggan.getEmail());
+    }//GEN-LAST:event_tabel_transaksiMouseClicked
+
     int xx ,xy;
     
+    void logout(){
+        this.dispose();    
+        new Login().setVisible(true);
+    }
        
     //bad idea
     
@@ -1455,10 +1477,6 @@ public class Home extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton btn_clear_pelanggan1;
     private com.k33ptoo.components.KButton btn_clear_pelanggan2;
     private javax.swing.JLabel btn_close;
-    private javax.swing.JLabel btn_close1;
-    private javax.swing.JLabel btn_close2;
-    private javax.swing.JLabel btn_close3;
-    private javax.swing.JLabel btn_close4;
     private com.k33ptoo.components.KButton btn_edit_pelanggan;
     private com.k33ptoo.components.KButton btn_edit_pelanggan1;
     private com.k33ptoo.components.KButton btn_edit_pelanggan2;
@@ -1472,6 +1490,12 @@ public class Home extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton btn_tambah_pelanggan;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan1;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan2;
+    private javax.swing.JComboBox<String> cLayanan;
+    private javax.swing.JComboBox<String> cPelanggan;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1489,7 +1513,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
-    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1502,15 +1525,10 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel32;
-    private javax.swing.JPanel jPanel39;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JTable jTable3;
     private javax.swing.JLabel lbl_layanan;
     private javax.swing.JLabel lbl_pelanggan;
     private javax.swing.JLabel lbl_report;
@@ -1526,15 +1544,13 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel panel_transaksi;
     private javax.swing.JTable tabel_layanan;
     private javax.swing.JTable tabel_pelanggan;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtEmail1;
-    private javax.swing.JTextField txtInstansi1;
-    private javax.swing.JTextField txtInstansi2;
-    private javax.swing.JTextField txtNIK1;
-    private javax.swing.JTextField txtNIK2;
-    private javax.swing.JTextField txtNamaPelanggan1;
-    private javax.swing.JTextField txtNamaPelanggan2;
-    private javax.swing.JTextField txtTelepon1;
-    private javax.swing.JTextField txtTelepon2;
+    private javax.swing.JTable tabel_transaksi;
+    private com.toedter.calendar.JDateChooser tanggalMulai;
+    private com.toedter.calendar.JDateChooser tanggalSelesai;
+    private javax.swing.JTextField txtEmailPelanggan;
+    private javax.swing.JTextField txtInstansiPelanggan;
+    private javax.swing.JTextField txtNIKPelanggan;
+    private javax.swing.JTextField txtNamaPelanggan;
+    private javax.swing.JTextField txtTeleponPelanggan;
     // End of variables declaration//GEN-END:variables
 }

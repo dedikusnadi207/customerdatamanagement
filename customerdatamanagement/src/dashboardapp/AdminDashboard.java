@@ -6,16 +6,11 @@
 package dashboardapp;
 
 import java.awt.Color;
-import java.text.NumberFormat;
 import java.util.Map;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import repository.AdminRepository;
-import repository.LayananRepository;
-import repository.Repository;
-import repository.SalesRepository;
+import repository.*;
 
 /**
  *
@@ -28,26 +23,40 @@ public class AdminDashboard extends javax.swing.JFrame {
     AdminRepository adminRepository;
     SalesRepository salesRepository;
     LayananRepository layananRepository;
+    InformasiPerusahaanRepository informasiPerusahaanRepository;
     public AdminDashboard() {
         initComponents();
         adminRepository = new AdminRepository();
         salesRepository = new SalesRepository();
         layananRepository = new LayananRepository();
+        informasiPerusahaanRepository = new InformasiPerusahaanRepository();
         selectMenu("dashboard");
     }
+    int infoId;
     private void selectMenu(String menu) {
         panel_dashboard.setVisible(menu.equals("dashboard"));
         Map<String, JPanel> mapPanel = Map.of("admin", panel_admin, "sales", panel_sales, "layanan", panel_layanan, "konfig", panel_konfig);
         Map<String, JPanel> mapBtnNav = Map.of("admin", btn_nav_admin, "sales", btn_nav_sales, "layanan", btn_nav_layanan, "konfig", btn_nav_konfig);
         Map<String, JPanel> mapIndicator = Map.of("admin", Indicator1, "sales", Indicator2, "layanan", Indicator3, "konfig", Indicator4);
-        Map<String, Repository> mapRepositories = Map.of("admin", adminRepository, "sales", salesRepository, "layanan", layananRepository, "konfig", layananRepository);
-        Map<String, JTable> mapTable = Map.of("admin", tbl_admin, "sales", tbl_sales, "layanan", tbl_layanan, "konfig", tbl_konfig);
+        Map<String, Repository> mapRepositories = Map.of("admin", adminRepository, "sales", salesRepository, "layanan", layananRepository, "konfig", informasiPerusahaanRepository);
+        Map<String, JTable> mapTable = Map.of("admin", tbl_admin, "sales", tbl_sales, "layanan", tbl_layanan);
         for (String key : mapPanel.keySet()) {
             if (key.equals(menu)) {
                 mapPanel.get(key).setVisible(true);
                 onClick(mapBtnNav.get(key));
                 mapIndicator.get(key).setOpaque(true);
-                mapRepositories.get(key).renderDataTable(mapTable.get(key));
+                if (key.equals("konfig")) {
+                    model.InformasiPerusahaan info = (model.InformasiPerusahaan) mapRepositories.get(key).first();
+                    if (info != null) {
+                        infoId = info.getId();
+                        txtNamaPerusahaanKonfigurasi.setText(info.getNamaPerusahaan());
+                        txtAlamatKonfigurasi.setText(info.getAlamat());
+                        txtNoTeleponKonfigurasi.setText(info.getNoTlp());
+                        txtEmailKonfigurasi.setText(info.getEmail());
+                    }
+                } else {
+                    mapRepositories.get(key).renderDataTable(mapTable.get(key));
+                }
             } else {
                 mapPanel.get(key).setVisible(false);
                 onLeaveClick(mapBtnNav.get(key));
@@ -72,6 +81,10 @@ public class AdminDashboard extends javax.swing.JFrame {
         txtDeskripsiLayanan.setText("");
         txtHargaLayanan.setText("");
         tbl_layanan.clearSelection();
+    }
+    void logout(){
+        this.dispose();
+        new Login().setVisible(true);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -162,19 +175,16 @@ public class AdminDashboard extends javax.swing.JFrame {
         txtHargaLayanan = new javax.swing.JTextField();
         panel_konfig = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        panel_tabel4 = new javax.swing.JScrollPane();
-        tbl_konfig = new javax.swing.JTable();
         btn_tambah4 = new com.k33ptoo.components.KButton();
-        btn_edit4 = new com.k33ptoo.components.KButton();
-        btn_hapus7 = new com.k33ptoo.components.KButton();
-        btn_hapus8 = new com.k33ptoo.components.KButton();
         label10 = new java.awt.Label();
-        txtHarga1 = new java.awt.TextField();
         label11 = new java.awt.Label();
         label12 = new java.awt.Label();
-        txtLayanan1 = new java.awt.TextField();
-        txtDeskripsi1 = new java.awt.TextField();
         jButton5 = new javax.swing.JButton();
+        txtNamaPerusahaanKonfigurasi = new javax.swing.JTextField();
+        txtAlamatKonfigurasi = new javax.swing.JTextField();
+        txtNoTeleponKonfigurasi = new javax.swing.JTextField();
+        label19 = new java.awt.Label();
+        txtEmailKonfigurasi = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
@@ -722,7 +732,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 btn_hapus2ActionPerformed(evt);
             }
         });
-        panel_admin.add(btn_hapus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 83, 29));
+        panel_admin.add(btn_hapus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 200, 83, 29));
 
         label1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label1.setText("Password");
@@ -1053,104 +1063,28 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel15.setText("DATA LAYANAN APLIKASI");
+        jLabel15.setText("DATA KONFIGURASI");
         panel_konfig.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
 
-        panel_tabel4.setBackground(new java.awt.Color(247, 247, 247));
-        panel_tabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
-        tbl_konfig.setBackground(new java.awt.Color(247, 247, 247));
-        tbl_konfig.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        tbl_konfig.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Allan", "XLS", "2hrs", "$200"},
-                {"Brian", "React", "1hr", "$100 per hr"},
-                {"Romeo", "C#", "3 Days", "$1000"},
-                {"Alex", "C++ ", "10 hrs", "$50 per hr"}
-            },
-            new String [] {
-                "Name", "Project", "Time", "Cost"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tbl_konfig.setGridColor(new java.awt.Color(247, 247, 247));
-        tbl_konfig.setSelectionBackground(new java.awt.Color(96, 83, 150));
-        panel_tabel4.setViewportView(tbl_konfig);
-
-        panel_konfig.add(panel_tabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 710, 280));
-
-        btn_tambah4.setText("Tambah");
-        panel_konfig.add(btn_tambah4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 83, 29));
-
-        btn_edit4.setText("Edit");
-        btn_edit4.setkStartColor(new java.awt.Color(0, 51, 153));
-        btn_edit4.addActionListener(new java.awt.event.ActionListener() {
+        btn_tambah4.setText("Simpan");
+        btn_tambah4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_edit4ActionPerformed(evt);
+                btn_tambah4ActionPerformed(evt);
             }
         });
-        panel_konfig.add(btn_edit4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 83, 29));
-
-        btn_hapus7.setText("Hapus");
-        btn_hapus7.setkStartColor(new java.awt.Color(255, 0, 0));
-        btn_hapus7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_hapus7ActionPerformed(evt);
-            }
-        });
-        panel_konfig.add(btn_hapus7, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, 83, 29));
-
-        btn_hapus8.setText("Bersihkan");
-        btn_hapus8.setkStartColor(new java.awt.Color(255, 102, 51));
-        btn_hapus8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_hapus8ActionPerformed(evt);
-            }
-        });
-        panel_konfig.add(btn_hapus8, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 83, 29));
+        panel_konfig.add(btn_tambah4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 83, 29));
 
         label10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label10.setText("Harga");
+        label10.setText("No Telepon");
         panel_konfig.add(label10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
 
-        txtHarga1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtHarga1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtHarga1ActionPerformed(evt);
-            }
-        });
-        panel_konfig.add(txtHarga1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 320, -1));
-
         label11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label11.setText("Nama Layanan");
+        label11.setText("Nama Perusahaan");
         panel_konfig.add(label11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
         label12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        label12.setText("Deskrpsi");
+        label12.setText("Alamat");
         panel_konfig.add(label12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
-
-        txtLayanan1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtLayanan1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLayanan1ActionPerformed(evt);
-            }
-        });
-        panel_konfig.add(txtLayanan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 320, -1));
-
-        txtDeskripsi1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtDeskripsi1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDeskripsi1ActionPerformed(evt);
-            }
-        });
-        panel_konfig.add(txtDeskripsi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 320, -1));
 
         jButton5.setBackground(new java.awt.Color(0, 102, 102));
         jButton5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -1166,6 +1100,38 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
         panel_konfig.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
+
+        txtNamaPerusahaanKonfigurasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNamaPerusahaanKonfigurasiActionPerformed(evt);
+            }
+        });
+        panel_konfig.add(txtNamaPerusahaanKonfigurasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, 320, -1));
+
+        txtAlamatKonfigurasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAlamatKonfigurasiActionPerformed(evt);
+            }
+        });
+        panel_konfig.add(txtAlamatKonfigurasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 320, -1));
+
+        txtNoTeleponKonfigurasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNoTeleponKonfigurasiActionPerformed(evt);
+            }
+        });
+        panel_konfig.add(txtNoTeleponKonfigurasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 320, -1));
+
+        label19.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label19.setText("Email");
+        panel_konfig.add(label19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
+
+        txtEmailKonfigurasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailKonfigurasiActionPerformed(evt);
+            }
+        });
+        panel_konfig.add(txtEmailKonfigurasi, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 320, -1));
 
         getContentPane().add(panel_konfig, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -1312,30 +1278,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_panel_layananMousePressed
 
-    private void btn_edit4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_edit4ActionPerformed
-
-    private void btn_hapus7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_hapus7ActionPerformed
-
-    private void btn_hapus8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_hapus8ActionPerformed
-
-    private void txtHarga1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHarga1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtHarga1ActionPerformed
-
-    private void txtLayanan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLayanan1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtLayanan1ActionPerformed
-
-    private void txtDeskripsi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDeskripsi1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDeskripsi1ActionPerformed
-
     private void panel_konfigMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_konfigMouseDragged
         // TODO add your handling code here:
     }//GEN-LAST:event_panel_konfigMouseDragged
@@ -1367,23 +1309,23 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailAdminActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        System.exit(0);
+        logout();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        System.exit(0);
+        logout();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        System.exit(0);
+        logout();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        System.exit(0);
+        logout();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        System.exit(0);
+        logout();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void tbl_adminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_adminMouseClicked
@@ -1514,6 +1456,38 @@ public class AdminDashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHargaLayananActionPerformed
 
+    private void txtNamaPerusahaanKonfigurasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaPerusahaanKonfigurasiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNamaPerusahaanKonfigurasiActionPerformed
+
+    private void txtAlamatKonfigurasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAlamatKonfigurasiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAlamatKonfigurasiActionPerformed
+
+    private void txtNoTeleponKonfigurasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoTeleponKonfigurasiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNoTeleponKonfigurasiActionPerformed
+
+    private void txtEmailKonfigurasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailKonfigurasiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailKonfigurasiActionPerformed
+
+    private void btn_tambah4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah4ActionPerformed
+        model.InformasiPerusahaan info = new model.InformasiPerusahaan();
+        info.setNamaPerusahaan(txtNamaPerusahaanKonfigurasi.getText());
+        info.setAlamat(txtAlamatKonfigurasi.getText());
+        info.setNoTlp(txtNoTeleponKonfigurasi.getText());
+        info.setEmail(txtEmailKonfigurasi.getText());
+        try {
+            informasiPerusahaanRepository.update(info.toMap(), Map.of("id", infoId));
+            selectMenu("konfig");
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data Informasi Perusahaan! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btn_tambah4ActionPerformed
+
     int xx ,xy;
     
        
@@ -1572,7 +1546,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel Indicator3;
     private javax.swing.JPanel Indicator4;
     private com.k33ptoo.components.KButton btn_edit1;
-    private com.k33ptoo.components.KButton btn_edit4;
     private com.k33ptoo.components.KButton btn_edit5;
     private com.k33ptoo.components.KButton btn_edit6;
     private com.k33ptoo.components.KButton btn_hapus1;
@@ -1580,8 +1553,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton btn_hapus11;
     private com.k33ptoo.components.KButton btn_hapus12;
     private com.k33ptoo.components.KButton btn_hapus2;
-    private com.k33ptoo.components.KButton btn_hapus7;
-    private com.k33ptoo.components.KButton btn_hapus8;
     private com.k33ptoo.components.KButton btn_hapus9;
     private javax.swing.JPanel btn_nav_admin;
     private javax.swing.JPanel btn_nav_konfig;
@@ -1628,6 +1599,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private java.awt.Label label16;
     private java.awt.Label label17;
     private java.awt.Label label18;
+    private java.awt.Label label19;
     private java.awt.Label label2;
     private java.awt.Label label3;
     private javax.swing.JLabel lbl_layanan;
@@ -1643,21 +1615,20 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane panel_tabel1;
     private javax.swing.JScrollPane panel_tabel2;
     private javax.swing.JScrollPane panel_tabel3;
-    private javax.swing.JScrollPane panel_tabel4;
     private javax.swing.JTable tbl_admin;
-    private javax.swing.JTable tbl_konfig;
     private javax.swing.JTable tbl_layanan;
     private javax.swing.JTable tbl_sales;
-    private java.awt.TextField txtDeskripsi1;
+    private javax.swing.JTextField txtAlamatKonfigurasi;
     private javax.swing.JTextField txtDeskripsiLayanan;
     private javax.swing.JTextField txtEmailAdmin;
+    private javax.swing.JTextField txtEmailKonfigurasi;
     private javax.swing.JTextField txtEmailSales;
-    private java.awt.TextField txtHarga1;
     private javax.swing.JTextField txtHargaLayanan;
-    private java.awt.TextField txtLayanan1;
     private javax.swing.JTextField txtNamaAdmin;
     private javax.swing.JTextField txtNamaLayanan;
+    private javax.swing.JTextField txtNamaPerusahaanKonfigurasi;
     private javax.swing.JTextField txtNamaSales;
+    private javax.swing.JTextField txtNoTeleponKonfigurasi;
     private javax.swing.JPasswordField txtPasswordAdmin;
     private javax.swing.JPasswordField txtPasswordSales;
     // End of variables declaration//GEN-END:variables

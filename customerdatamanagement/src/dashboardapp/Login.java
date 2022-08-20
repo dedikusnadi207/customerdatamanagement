@@ -15,7 +15,7 @@ import repository.SalesRepository;
  * @author Easternisme
  */
 public class Login extends javax.swing.JFrame {
-
+    public static int idSales;
     public Login() {
         initComponents();
     }
@@ -27,6 +27,7 @@ public class Login extends javax.swing.JFrame {
             SalesRepository sales = new SalesRepository();
             Sales data = sales.first(Map.of("email", mail, "password", pwd));
             if (data != null) {
+                idSales = data.getIdSales();
                 JOptionPane.showMessageDialog(null, "Login Berhasil! Selamat Datang "+data.getNama());
                 this.setVisible(false);
                 new Home().setVisible(true);

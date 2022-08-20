@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
 import Koneksi.Koneksi;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -78,6 +79,8 @@ public abstract class Repository<T extends BaseModel> {
         String sql = "INSERT INTO "+tableName()+" SET "+preparedFields();
         PreparedStatement ps = Koneksi.koneksidb().prepareStatement(sql);
         ps = this.setPreparedStatement(ps, values);
+        System.out.println(sql);
+        System.out.println(values);
         return ps.executeUpdate();
     }
     
@@ -146,14 +149,20 @@ public abstract class Repository<T extends BaseModel> {
         return result;
     }
     
-    public T first() throws Exception {
-        String sql = "SELECT * FROM "+tableName();
-        Statement st = Koneksi.koneksidb().createStatement();
-        ResultSet rs = st.executeQuery(sql);
-        if (rs.next()) {
-            T obj = model().getDeclaredConstructor().newInstance();
-            obj.fillData(rs);
-            return obj;
+    public T first() {
+        try {
+            String sql = "SELECT * FROM "+tableName();
+            Statement st = Koneksi.koneksidb().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                T obj = model().getDeclaredConstructor().newInstance();
+                obj.fillData(rs);
+                return obj;
+            }
+            return null;
+        } catch (Exception e) {
+            System.out.println("ERROR : "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Gagal menampilkan data!", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
