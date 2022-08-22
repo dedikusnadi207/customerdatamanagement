@@ -102,16 +102,12 @@ public class Home extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btn_nav_layanan = new javax.swing.JPanel();
-        Indicator1 = new javax.swing.JPanel();
         lbl_layanan = new javax.swing.JLabel();
         btn_nav_pelanggan = new javax.swing.JPanel();
-        Indicator2 = new javax.swing.JPanel();
         lbl_pelanggan = new javax.swing.JLabel();
         btn_nav_tansaksi = new javax.swing.JPanel();
-        Indicator3 = new javax.swing.JPanel();
         lbl_transaksi = new javax.swing.JLabel();
         btn_nav_report = new javax.swing.JPanel();
-        Indicator4 = new javax.swing.JPanel();
         lbl_report = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -209,20 +205,6 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        Indicator1.setBackground(new java.awt.Color(204, 0, 204));
-        Indicator1.setOpaque(false);
-
-        javax.swing.GroupLayout Indicator1Layout = new javax.swing.GroupLayout(Indicator1);
-        Indicator1.setLayout(Indicator1Layout);
-        Indicator1Layout.setHorizontalGroup(
-            Indicator1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 8, Short.MAX_VALUE)
-        );
-        Indicator1Layout.setVerticalGroup(
-            Indicator1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         lbl_layanan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_layanan.setText("Layanan");
         lbl_layanan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -236,14 +218,12 @@ public class Home extends javax.swing.JFrame {
         btn_nav_layananLayout.setHorizontalGroup(
             btn_nav_layananLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_nav_layananLayout.createSequentialGroup()
-                .addComponent(Indicator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addGap(59, 59, 59)
                 .addComponent(lbl_layanan)
                 .addGap(0, 83, Short.MAX_VALUE))
         );
         btn_nav_layananLayout.setVerticalGroup(
             btn_nav_layananLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Indicator1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_layananLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbl_layanan, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
@@ -266,20 +246,6 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        Indicator2.setBackground(new java.awt.Color(204, 0, 204));
-        Indicator2.setOpaque(false);
-
-        javax.swing.GroupLayout Indicator2Layout = new javax.swing.GroupLayout(Indicator2);
-        Indicator2.setLayout(Indicator2Layout);
-        Indicator2Layout.setHorizontalGroup(
-            Indicator2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 8, Short.MAX_VALUE)
-        );
-        Indicator2Layout.setVerticalGroup(
-            Indicator2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         lbl_pelanggan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_pelanggan.setText("Pelanggan");
         lbl_pelanggan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -293,14 +259,12 @@ public class Home extends javax.swing.JFrame {
         btn_nav_pelangganLayout.setHorizontalGroup(
             btn_nav_pelangganLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_nav_pelangganLayout.createSequentialGroup()
-                .addComponent(Indicator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addGap(59, 59, 59)
                 .addComponent(lbl_pelanggan)
                 .addGap(0, 70, Short.MAX_VALUE))
         );
         btn_nav_pelangganLayout.setVerticalGroup(
             btn_nav_pelangganLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Indicator2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_pelangganLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbl_pelanggan, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
@@ -323,20 +287,6 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        Indicator3.setBackground(new java.awt.Color(204, 0, 204));
-        Indicator3.setOpaque(false);
-
-        javax.swing.GroupLayout Indicator3Layout = new javax.swing.GroupLayout(Indicator3);
-        Indicator3.setLayout(Indicator3Layout);
-        Indicator3Layout.setHorizontalGroup(
-            Indicator3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 8, Short.MAX_VALUE)
-        );
-        Indicator3Layout.setVerticalGroup(
-            Indicator3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         lbl_transaksi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_transaksi.setText("Transaksi");
         lbl_transaksi.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -350,14 +300,12 @@ public class Home extends javax.swing.JFrame {
         btn_nav_tansaksiLayout.setHorizontalGroup(
             btn_nav_tansaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_nav_tansaksiLayout.createSequentialGroup()
-                .addComponent(Indicator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addGap(59, 59, 59)
                 .addComponent(lbl_transaksi)
                 .addGap(0, 76, Short.MAX_VALUE))
         );
         btn_nav_tansaksiLayout.setVerticalGroup(
             btn_nav_tansaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Indicator3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_tansaksiLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbl_transaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
@@ -380,20 +328,6 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        Indicator4.setBackground(new java.awt.Color(204, 0, 204));
-        Indicator4.setOpaque(false);
-
-        javax.swing.GroupLayout Indicator4Layout = new javax.swing.GroupLayout(Indicator4);
-        Indicator4.setLayout(Indicator4Layout);
-        Indicator4Layout.setHorizontalGroup(
-            Indicator4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 8, Short.MAX_VALUE)
-        );
-        Indicator4Layout.setVerticalGroup(
-            Indicator4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         lbl_report.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_report.setText("Report");
         lbl_report.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -407,14 +341,12 @@ public class Home extends javax.swing.JFrame {
         btn_nav_reportLayout.setHorizontalGroup(
             btn_nav_reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_nav_reportLayout.createSequentialGroup()
-                .addComponent(Indicator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addGap(59, 59, 59)
                 .addComponent(lbl_report)
                 .addGap(0, 88, Short.MAX_VALUE))
         );
         btn_nav_reportLayout.setVerticalGroup(
             btn_nav_reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Indicator4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_reportLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbl_report, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
@@ -591,7 +523,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nav_panelLayout.createSequentialGroup()
                         .addGap(58, 58, 58)
@@ -718,7 +650,6 @@ public class Home extends javax.swing.JFrame {
         jButton8.setText("X ");
         jButton8.setBorder(null);
         jButton8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton8.setOpaque(true);
         jButton8.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -888,7 +819,6 @@ public class Home extends javax.swing.JFrame {
         jButton9.setText("X ");
         jButton9.setBorder(null);
         jButton9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton9.setOpaque(true);
         jButton9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1013,7 +943,6 @@ public class Home extends javax.swing.JFrame {
         jButton10.setText("X ");
         jButton10.setBorder(null);
         jButton10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton10.setOpaque(true);
         jButton10.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1082,7 +1011,6 @@ public class Home extends javax.swing.JFrame {
         jButton11.setText("X ");
         jButton11.setBorder(null);
         jButton11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton11.setOpaque(true);
         jButton11.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1469,10 +1397,6 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Indicator1;
-    private javax.swing.JPanel Indicator2;
-    private javax.swing.JPanel Indicator3;
-    private javax.swing.JPanel Indicator4;
     private com.k33ptoo.components.KButton btn_clear_pelanggan;
     private com.k33ptoo.components.KButton btn_clear_pelanggan1;
     private com.k33ptoo.components.KButton btn_clear_pelanggan2;

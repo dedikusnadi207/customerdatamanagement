@@ -97,16 +97,12 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btn_nav_admin = new javax.swing.JPanel();
-        Indicator1 = new javax.swing.JPanel();
-        lbl_layanan = new javax.swing.JLabel();
+        lbl_admin = new javax.swing.JLabel();
         btn_nav_sales = new javax.swing.JPanel();
-        Indicator2 = new javax.swing.JPanel();
         lbl_pelanggan = new javax.swing.JLabel();
         btn_nav_layanan = new javax.swing.JPanel();
-        Indicator3 = new javax.swing.JPanel();
         lbl_transaksi = new javax.swing.JLabel();
         btn_nav_konfig = new javax.swing.JPanel();
-        Indicator4 = new javax.swing.JPanel();
         lbl_report = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -211,25 +207,11 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-        Indicator1.setBackground(new java.awt.Color(204, 0, 204));
-        Indicator1.setOpaque(false);
-
-        javax.swing.GroupLayout Indicator1Layout = new javax.swing.GroupLayout(Indicator1);
-        Indicator1.setLayout(Indicator1Layout);
-        Indicator1Layout.setHorizontalGroup(
-            Indicator1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 8, Short.MAX_VALUE)
-        );
-        Indicator1Layout.setVerticalGroup(
-            Indicator1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        lbl_layanan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbl_layanan.setText("Admin");
-        lbl_layanan.addMouseListener(new java.awt.event.MouseAdapter() {
+        lbl_admin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbl_admin.setText("Admin");
+        lbl_admin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbl_layananMouseClicked(evt);
+                lbl_adminMouseClicked(evt);
             }
         });
 
@@ -238,17 +220,15 @@ public class AdminDashboard extends javax.swing.JFrame {
         btn_nav_adminLayout.setHorizontalGroup(
             btn_nav_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_nav_adminLayout.createSequentialGroup()
-                .addComponent(Indicator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
-                .addComponent(lbl_layanan)
-                .addGap(0, 86, Short.MAX_VALUE))
+                .addGap(59, 59, 59)
+                .addComponent(lbl_admin)
+                .addGap(0, 91, Short.MAX_VALUE))
         );
         btn_nav_adminLayout.setVerticalGroup(
             btn_nav_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Indicator1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_adminLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbl_layanan, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addComponent(lbl_admin, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -268,20 +248,6 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-        Indicator2.setBackground(new java.awt.Color(204, 0, 204));
-        Indicator2.setOpaque(false);
-
-        javax.swing.GroupLayout Indicator2Layout = new javax.swing.GroupLayout(Indicator2);
-        Indicator2.setLayout(Indicator2Layout);
-        Indicator2Layout.setHorizontalGroup(
-            Indicator2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 8, Short.MAX_VALUE)
-        );
-        Indicator2Layout.setVerticalGroup(
-            Indicator2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         lbl_pelanggan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_pelanggan.setText("Sales");
         lbl_pelanggan.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -295,14 +261,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         btn_nav_salesLayout.setHorizontalGroup(
             btn_nav_salesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_nav_salesLayout.createSequentialGroup()
-                .addComponent(Indicator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addGap(59, 59, 59)
                 .addComponent(lbl_pelanggan)
-                .addGap(0, 95, Short.MAX_VALUE))
+                .addGap(0, 99, Short.MAX_VALUE))
         );
         btn_nav_salesLayout.setVerticalGroup(
             btn_nav_salesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Indicator2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_salesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbl_pelanggan, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
@@ -325,20 +289,6 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-        Indicator3.setBackground(new java.awt.Color(204, 0, 204));
-        Indicator3.setOpaque(false);
-
-        javax.swing.GroupLayout Indicator3Layout = new javax.swing.GroupLayout(Indicator3);
-        Indicator3.setLayout(Indicator3Layout);
-        Indicator3Layout.setHorizontalGroup(
-            Indicator3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 8, Short.MAX_VALUE)
-        );
-        Indicator3Layout.setVerticalGroup(
-            Indicator3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         lbl_transaksi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_transaksi.setText("Layanan");
         lbl_transaksi.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -352,14 +302,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         btn_nav_layananLayout.setHorizontalGroup(
             btn_nav_layananLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_nav_layananLayout.createSequentialGroup()
-                .addComponent(Indicator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addGap(59, 59, 59)
                 .addComponent(lbl_transaksi)
-                .addGap(0, 76, Short.MAX_VALUE))
+                .addGap(0, 83, Short.MAX_VALUE))
         );
         btn_nav_layananLayout.setVerticalGroup(
             btn_nav_layananLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Indicator3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_layananLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbl_transaksi, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
@@ -382,20 +330,6 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-        Indicator4.setBackground(new java.awt.Color(204, 0, 204));
-        Indicator4.setOpaque(false);
-
-        javax.swing.GroupLayout Indicator4Layout = new javax.swing.GroupLayout(Indicator4);
-        Indicator4.setLayout(Indicator4Layout);
-        Indicator4Layout.setHorizontalGroup(
-            Indicator4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 8, Short.MAX_VALUE)
-        );
-        Indicator4Layout.setVerticalGroup(
-            Indicator4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         lbl_report.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbl_report.setText("Konfigurasi");
         lbl_report.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -409,14 +343,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         btn_nav_konfigLayout.setHorizontalGroup(
             btn_nav_konfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btn_nav_konfigLayout.createSequentialGroup()
-                .addComponent(Indicator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addGap(59, 59, 59)
                 .addComponent(lbl_report)
-                .addGap(0, 54, Short.MAX_VALUE))
+                .addGap(0, 64, Short.MAX_VALUE))
         );
         btn_nav_konfigLayout.setVerticalGroup(
             btn_nav_konfigLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Indicator4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_konfigLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbl_report, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
@@ -635,7 +567,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton9.setText("X ");
         jButton9.setBorder(null);
         jButton9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton9.setOpaque(true);
         jButton9.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -767,7 +698,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton8.setText("X ");
         jButton8.setBorder(null);
         jButton8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton8.setOpaque(true);
         jButton8.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -837,7 +767,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton7.setText("X ");
         jButton7.setBorder(null);
         jButton7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton7.setOpaque(true);
         jButton7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -969,7 +898,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton6.setText("X ");
         jButton6.setBorder(null);
         jButton6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton6.setOpaque(true);
         jButton6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1092,7 +1020,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         jButton5.setText("X ");
         jButton5.setBorder(null);
         jButton5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton5.setOpaque(true);
         jButton5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1204,9 +1131,9 @@ public class AdminDashboard extends javax.swing.JFrame {
         this.setLocation(x-xx,y-xy);
     }//GEN-LAST:event_panel_dashboardMouseDragged
 
-    private void lbl_layananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_layananMouseClicked
+    private void lbl_adminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_adminMouseClicked
        
-    }//GEN-LAST:event_lbl_layananMouseClicked
+    }//GEN-LAST:event_lbl_adminMouseClicked
 
     private void lbl_pelangganMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_pelangganMouseClicked
         
@@ -1541,10 +1468,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Indicator1;
-    private javax.swing.JPanel Indicator2;
-    private javax.swing.JPanel Indicator3;
-    private javax.swing.JPanel Indicator4;
     private com.k33ptoo.components.KButton btn_edit1;
     private com.k33ptoo.components.KButton btn_edit5;
     private com.k33ptoo.components.KButton btn_edit6;
@@ -1602,7 +1525,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private java.awt.Label label19;
     private java.awt.Label label2;
     private java.awt.Label label3;
-    private javax.swing.JLabel lbl_layanan;
+    private javax.swing.JLabel lbl_admin;
     private javax.swing.JLabel lbl_pelanggan;
     private javax.swing.JLabel lbl_report;
     private javax.swing.JLabel lbl_transaksi;
