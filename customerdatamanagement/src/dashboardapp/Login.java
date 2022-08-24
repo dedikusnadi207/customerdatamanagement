@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import model.Sales;
 import repository.SalesRepository;
+import utils.MapCustom;
 /**
  *
  * @author Easternisme
@@ -25,7 +26,7 @@ public class Login extends javax.swing.JFrame {
             String mail = txt_email.getText();
             String pwd = new String(txt_password.getPassword());
             SalesRepository sales = new SalesRepository();
-            Sales data = sales.first(Map.of("email", mail, "password", pwd));
+            Sales data = sales.first(MapCustom.of("email", mail, "password", pwd));
             if (data != null) {
                 idSales = data.getIdSales();
                 JOptionPane.showMessageDialog(null, "Login Berhasil! Selamat Datang "+data.getNama());

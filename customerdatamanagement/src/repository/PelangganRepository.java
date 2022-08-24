@@ -3,6 +3,7 @@ package repository;
 import java.sql.Types;
 import java.util.Map;
 import model.Pelanggan;
+import utils.MapCustom;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -22,7 +23,7 @@ public class PelangganRepository extends Repository<Pelanggan> {
 
     @Override
     public Map<String, Integer> fields() {
-        return Map.of(
+        return MapCustom.of(
             "id_pelanggan", Types.INTEGER,
             "nik", Types.VARCHAR,
             "nama_pic", Types.VARCHAR,

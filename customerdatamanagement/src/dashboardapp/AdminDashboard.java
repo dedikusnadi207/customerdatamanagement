@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import repository.*;
+import utils.MapCustom;
 
 /**
  *
@@ -35,16 +36,16 @@ public class AdminDashboard extends javax.swing.JFrame {
     int infoId;
     private void selectMenu(String menu) {
         panel_dashboard.setVisible(menu.equals("dashboard"));
-        Map<String, JPanel> mapPanel = Map.of("admin", panel_admin, "sales", panel_sales, "layanan", panel_layanan, "konfig", panel_konfig);
-        Map<String, JPanel> mapBtnNav = Map.of("admin", btn_nav_admin, "sales", btn_nav_sales, "layanan", btn_nav_layanan, "konfig", btn_nav_konfig);
-        Map<String, JPanel> mapIndicator = Map.of("admin", Indicator1, "sales", Indicator2, "layanan", Indicator3, "konfig", Indicator4);
-        Map<String, Repository> mapRepositories = Map.of("admin", adminRepository, "sales", salesRepository, "layanan", layananRepository, "konfig", informasiPerusahaanRepository);
-        Map<String, JTable> mapTable = Map.of("admin", tbl_admin, "sales", tbl_sales, "layanan", tbl_layanan);
+        Map<String, JPanel> mapPanel = MapCustom.of("admin", panel_admin, "sales", panel_sales, "layanan", panel_layanan, "konfig", panel_konfig);
+        Map<String, JPanel> mapBtnNav = MapCustom.of("admin", btn_nav_admin, "sales", btn_nav_sales, "layanan", btn_nav_layanan, "konfig", btn_nav_konfig);
+//        Map<String, JPanel> mapIndicator = MapCustom.of("admin", Indicator1, "sales", Indicator2, "layanan", Indicator3, "konfig", Indicator4);
+        Map<String, Repository> mapRepositories = MapCustom.of("admin", adminRepository, "sales", salesRepository, "layanan", layananRepository, "konfig", informasiPerusahaanRepository);
+        Map<String, JTable> mapTable = MapCustom.of("admin", tbl_admin, "sales", tbl_sales, "layanan", tbl_layanan);
         for (String key : mapPanel.keySet()) {
             if (key.equals(menu)) {
                 mapPanel.get(key).setVisible(true);
                 onClick(mapBtnNav.get(key));
-                mapIndicator.get(key).setOpaque(true);
+//                mapIndicator.get(key).setOpaque(true);
                 if (key.equals("konfig")) {
                     model.InformasiPerusahaan info = (model.InformasiPerusahaan) mapRepositories.get(key).first();
                     if (info != null) {
@@ -60,7 +61,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             } else {
                 mapPanel.get(key).setVisible(false);
                 onLeaveClick(mapBtnNav.get(key));
-                mapIndicator.get(key).setOpaque(false);
+//                mapIndicator.get(key).setOpaque(false);
             }
         }
     }
@@ -663,7 +664,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 btn_hapus2ActionPerformed(evt);
             }
         });
-        panel_admin.add(btn_hapus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 200, 83, 29));
+        panel_admin.add(btn_hapus2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 83, 29));
 
         label1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label1.setText("Password");
@@ -1158,7 +1159,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         admin.setEmail(txtEmailAdmin.getText());
         admin.setPassword(new String(txtPasswordAdmin.getPassword()));
         try {
-            adminRepository.update(admin.toMap(), Map.of("id_admin", adminRepository.selectedData(tbl_admin).getIdAdmin()));
+            adminRepository.update(admin.toMap(), MapCustom.of("id_admin", adminRepository.selectedData(tbl_admin).getIdAdmin()));
             clearFormAdmin();
             selectMenu("admin");
         } catch (Exception ex) {
@@ -1168,7 +1169,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void btn_hapus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus1ActionPerformed
         try {
-            adminRepository.delete(Map.of("id_admin", adminRepository.selectedData(tbl_admin).getIdAdmin()));
+            adminRepository.delete(MapCustom.of("id_admin", adminRepository.selectedData(tbl_admin).getIdAdmin()));
             clearFormAdmin();
             selectMenu("admin");
         } catch (Exception ex) {
@@ -1297,7 +1298,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         sales.setEmail(txtEmailSales.getText());
         sales.setPassword(new String(txtPasswordSales.getPassword()));
         try {
-            salesRepository.update(sales.toMap(), Map.of("id_sales", salesRepository.selectedData(tbl_sales).getIdSales()));
+            salesRepository.update(sales.toMap(), MapCustom.of("id_sales", salesRepository.selectedData(tbl_sales).getIdSales()));
             clearFormSales();
             selectMenu("sales");
         } catch (Exception ex) {
@@ -1308,7 +1309,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void btn_hapus9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus9ActionPerformed
         try {
-            salesRepository.delete(Map.of("id_sales", salesRepository.selectedData(tbl_sales).getIdSales()));
+            salesRepository.delete(MapCustom.of("id_sales", salesRepository.selectedData(tbl_sales).getIdSales()));
             clearFormSales();
             selectMenu("sales");
         } catch (Exception ex) {
@@ -1349,7 +1350,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         layanan.setDeskripsi(txtDeskripsiLayanan.getText());
         try {
             layanan.setHarga(Integer.parseInt(txtHargaLayanan.getText()));
-            layananRepository.update(layanan.toMap(), Map.of("id_layanan", layananRepository.selectedData(tbl_layanan).getIdLayanan()));
+            layananRepository.update(layanan.toMap(), MapCustom.of("id_layanan", layananRepository.selectedData(tbl_layanan).getIdLayanan()));
             clearFormLayanan();
             selectMenu("layanan");
         } catch (Exception ex) {
@@ -1359,7 +1360,7 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void btn_hapus11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus11ActionPerformed
         try {
-            layananRepository.delete(Map.of("id_layanan", layananRepository.selectedData(tbl_layanan).getIdLayanan()));
+            layananRepository.delete(MapCustom.of("id_layanan", layananRepository.selectedData(tbl_layanan).getIdLayanan()));
             clearFormLayanan();
             selectMenu("layanan");
         } catch (Exception ex) {
@@ -1406,7 +1407,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         info.setNoTlp(txtNoTeleponKonfigurasi.getText());
         info.setEmail(txtEmailKonfigurasi.getText());
         try {
-            informasiPerusahaanRepository.update(info.toMap(), Map.of("id", infoId));
+            informasiPerusahaanRepository.update(info.toMap(), MapCustom.of("id", infoId));
             selectMenu("konfig");
             JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
         } catch (Exception ex) {

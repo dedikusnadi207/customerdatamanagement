@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.BaseModel;
+import utils.MapCustom;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -36,7 +37,12 @@ public abstract class Repository<T extends BaseModel> {
     private DefaultTableModel model;
     private ArrayList<T> rows;
     public void renderDataTable(JTable table){
-        model = new DefaultTableModel(null, tableHeaders());
+        model = new DefaultTableModel(null, tableHeaders()){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+               return false;
+            }
+        };
         table.setModel(model);
         try {
             rows = all();
@@ -62,7 +68,7 @@ public abstract class Repository<T extends BaseModel> {
     private String preparedConds() { return this.conds.keySet().stream().collect(Collectors.joining("=? AND ", "","=?")); }
     
     private PreparedStatement setPreparedStatement(PreparedStatement ps, Map<String, Object> data) throws SQLException {
-        return setPreparedStatement(ps, data, Map.of());
+        return setPreparedStatement(ps, data, MapCustom.of());
     }
     private PreparedStatement setPreparedStatement(PreparedStatement ps, Map<String, Object> data, Map<String, Object> conds) throws SQLException {
         int index = 1;

@@ -4,6 +4,7 @@ import java.sql.Types;
 import java.util.Map;
 import model.InformasiPerusahaan;
 import model.Layanan;
+import utils.MapCustom;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -23,7 +24,7 @@ public class InformasiPerusahaanRepository extends Repository<InformasiPerusahaa
 
     @Override
     public Map<String, Integer> fields() {
-        return Map.of(
+        return MapCustom.of(
             "id", Types.INTEGER,
             "nama_perusahaan", Types.VARCHAR,
             "alamat", Types.VARCHAR,

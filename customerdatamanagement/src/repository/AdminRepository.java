@@ -3,6 +3,7 @@ package repository;
 import java.util.Map;
 import model.Admin;
 import java.sql.Types;
+import utils.MapCustom;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -27,7 +28,7 @@ public class AdminRepository extends Repository<Admin>{
 
     @Override
     public Map<String, Integer> fields() {
-        return Map.of(
+        return MapCustom.of(
                 "id_admin", Types.INTEGER,
                 "nama", Types.VARCHAR,
                 "email", Types.VARCHAR,

@@ -6,9 +6,11 @@
 package dashboardapp;
 
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import repository.AdminRepository;
+import utils.MapCustom;
 
 /**
  *
@@ -24,7 +26,7 @@ public class Admin extends javax.swing.JFrame {
             String pwd = new String(txt_pwd.getPassword());
             String mail = txt_email.getText();
             AdminRepository admin = new AdminRepository();
-            if (admin.first(Map.of("email", mail, "password", pwd)) != null) {
+            if (admin.first(MapCustom.of("email", mail, "password", pwd)) != null) {
                 JOptionPane.showMessageDialog(null, "Login Berhasil");
                 this.setVisible(false);
                 new AdminDashboard().setVisible(true);

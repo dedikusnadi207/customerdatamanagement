@@ -3,6 +3,7 @@ package repository;
 import java.sql.Types;
 import java.util.Map;
 import model.Sales;
+import utils.MapCustom;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -22,7 +23,7 @@ public class SalesRepository extends Repository<Sales> {
 
     @Override
     public Map<String, Integer> fields() {
-        return Map.of(
+        return MapCustom.of(
             "id_sales", Types.INTEGER,
             "nama", Types.VARCHAR,
             "email", Types.VARCHAR,

@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import model.Layanan;
 import model.Pelanggan;
 import repository.*;
+import utils.MapCustom;
 
 /**
  *
@@ -42,11 +43,11 @@ public class Home extends javax.swing.JFrame {
     }
     private void selectMenu(String menu) {
         panel_dashboard.setVisible(menu.equals("dashboard"));
-        Map<String, JPanel> mapPanel = Map.of("layanan", panel_layanan, "pelanggan", panel_pelanggan, "transaksi", panel_transaksi, "report", panel_report);
-        Map<String, JPanel> mapBtnNav = Map.of("layanan", btn_nav_layanan, "pelanggan", btn_nav_pelanggan, "transaksi", btn_nav_tansaksi, "report", btn_nav_report);
-        Map<String, JPanel> mapIndicator = Map.of("layanan", Indicator1, "pelanggan", Indicator2, "transaksi", Indicator3, "report", Indicator4);
-        Map<String, Repository> mapRepositories = Map.of("layanan", layananRepository, "pelanggan", pelangganRepository, "transaksi", transaksiRepository, "report", pelangganRepository);
-        Map<String, JTable> mapTable = Map.of("layanan", tabel_layanan, "pelanggan", tabel_pelanggan, "transaksi", tabel_transaksi);
+        Map<String, JPanel> mapPanel = MapCustom.of("layanan", panel_layanan, "pelanggan", panel_pelanggan, "transaksi", panel_transaksi, "report", panel_report);
+        Map<String, JPanel> mapBtnNav = MapCustom.of("layanan", btn_nav_layanan, "pelanggan", btn_nav_pelanggan, "transaksi", btn_nav_tansaksi, "report", btn_nav_report);
+//        Map<String, JPanel> mapIndicator = MapCustom.of("layanan", Indicator1, "pelanggan", Indicator2, "transaksi", Indicator3, "report", Indicator4);
+        Map<String, Repository> mapRepositories = MapCustom.of("layanan", layananRepository, "pelanggan", pelangganRepository, "transaksi", transaksiRepository, "report", pelangganRepository);
+        Map<String, JTable> mapTable = MapCustom.of("layanan", tabel_layanan, "pelanggan", tabel_pelanggan, "transaksi", tabel_transaksi);
         if (menu.equals("transaksi")) {
             try {
                 pelangganOptions = pelangganRepository.all();
@@ -66,12 +67,12 @@ public class Home extends javax.swing.JFrame {
             if (key.equals(menu)) {
                 mapPanel.get(key).setVisible(true);
                 onClick(mapBtnNav.get(key));
-                mapIndicator.get(key).setOpaque(true);
+//                mapIndicator.get(key).setOpaque(true);
                 mapRepositories.get(key).renderDataTable(mapTable.get(key));
             } else {
                 mapPanel.get(key).setVisible(false);
                 onLeaveClick(mapBtnNav.get(key));
-                mapIndicator.get(key).setOpaque(false);
+//                mapIndicator.get(key).setOpaque(false);
             }
         }
     }
@@ -251,6 +252,9 @@ public class Home extends javax.swing.JFrame {
         lbl_pelanggan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl_pelangganMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbl_pelangganMouseEntered(evt);
             }
         });
 
@@ -523,7 +527,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, Short.MAX_VALUE))
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nav_panelLayout.createSequentialGroup()
                         .addGap(58, 58, 58)
@@ -561,6 +565,11 @@ public class Home extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(0, 51, 153));
         jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel8MouseClicked(evt);
+            }
+        });
 
         btn_close.setBackground(new java.awt.Color(96, 83, 150));
         btn_close.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -1026,7 +1035,7 @@ public class Home extends javax.swing.JFrame {
 
     private void btn_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_closeMouseClicked
         // TODO add your handling code here:
-        System.exit(0);
+        logout();
     }//GEN-LAST:event_btn_closeMouseClicked
 
     private void btn_nav_layananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_layananMouseClicked
@@ -1095,19 +1104,19 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_panel_dashboardMouseDragged
 
     private void lbl_layananMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_layananMouseClicked
-        
+        selectMenu("layanan");
     }//GEN-LAST:event_lbl_layananMouseClicked
 
     private void lbl_pelangganMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_pelangganMouseClicked
-       
+       selectMenu("pelanggan");
     }//GEN-LAST:event_lbl_pelangganMouseClicked
 
     private void lbl_transaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_transaksiMouseClicked
-         
+         selectMenu("transaksi");
     }//GEN-LAST:event_lbl_transaksiMouseClicked
 
     private void lbl_reportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_reportMouseClicked
-        
+        selectMenu("report");
     }//GEN-LAST:event_lbl_reportMouseClicked
 
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
@@ -1159,7 +1168,7 @@ public class Home extends javax.swing.JFrame {
         pelanggan.setNoTlp(txtTeleponPelanggan.getText());
         pelanggan.setEmail(txtEmailPelanggan.getText());
         try {
-            pelangganRepository.update(pelanggan.toMap(), Map.of("id_pelanggan", pelangganRepository.selectedData(tabel_pelanggan).getIdPelanggan()));
+            pelangganRepository.update(pelanggan.toMap(), MapCustom.of("id_pelanggan", pelangganRepository.selectedData(tabel_pelanggan).getIdPelanggan()));
             clearFormPelanggan();
             selectMenu("pelanggan");
         } catch (Exception ex) {
@@ -1174,7 +1183,7 @@ public class Home extends javax.swing.JFrame {
 
     private void btn_hapus_pelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus_pelangganActionPerformed
         try {
-            pelangganRepository.delete(Map.of("id_pelanggan", pelangganRepository.selectedData(tabel_pelanggan).getIdPelanggan()));
+            pelangganRepository.delete(MapCustom.of("id_pelanggan", pelangganRepository.selectedData(tabel_pelanggan).getIdPelanggan()));
             clearFormPelanggan();
             selectMenu("pelanggan");
         } catch (Exception ex) {
@@ -1212,7 +1221,7 @@ public class Home extends javax.swing.JFrame {
         transaksi.setIdSales(Login.idSales);
         transaksi.setTotalHarga(layananOptions.get(cLayanan.getSelectedIndex()).getHarga());
         try {
-            transaksiRepository.update(transaksi.toMap(), Map.of("id_transaksi", transaksiRepository.selectedData(tabel_transaksi).getIdTransaksi()));
+            transaksiRepository.update(transaksi.toMap(), MapCustom.of("id_transaksi", transaksiRepository.selectedData(tabel_transaksi).getIdTransaksi()));
             clearFormTransaksi();
             selectMenu("transaksi");
         } catch (Exception ex) {
@@ -1226,7 +1235,7 @@ public class Home extends javax.swing.JFrame {
 
     private void btn_hapus_pelanggan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus_pelanggan1ActionPerformed
         try {
-            transaksiRepository.delete(Map.of("id_transaksi", transaksiRepository.selectedData(tabel_transaksi).getIdTransaksi()));
+            transaksiRepository.delete(MapCustom.of("id_transaksi", transaksiRepository.selectedData(tabel_transaksi).getIdTransaksi()));
             clearFormTransaksi();
             selectMenu("transaksi");
         } catch (Exception ex) {
@@ -1340,6 +1349,14 @@ public class Home extends javax.swing.JFrame {
 //        txtTeleponPelanggan.setText(pelanggan.getNoTlp());
 //        txtEmailPelanggan.setText(pelanggan.getEmail());
     }//GEN-LAST:event_tabel_transaksiMouseClicked
+
+    private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
+        logout();
+    }//GEN-LAST:event_jPanel8MouseClicked
+
+    private void lbl_pelangganMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_pelangganMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbl_pelangganMouseEntered
 
     int xx ,xy;
     

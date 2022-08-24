@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 import model.Transaksi;
+import utils.MapCustom;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -29,7 +30,7 @@ public class TransaksiRepository extends Repository<Transaksi> {
 
     @Override
     public Map<String, Integer> fields() {
-        return Map.of(
+        return MapCustom.of(
             "id_transaksi", Types.INTEGER,
             "tanggal_mulai", Types.VARCHAR,
             "tanggal_selesai", Types.VARCHAR,
