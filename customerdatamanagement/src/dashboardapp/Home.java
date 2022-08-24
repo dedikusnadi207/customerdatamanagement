@@ -1031,6 +1031,7 @@ public class Home extends javax.swing.JFrame {
         getContentPane().add(panel_report, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_closeMouseClicked
