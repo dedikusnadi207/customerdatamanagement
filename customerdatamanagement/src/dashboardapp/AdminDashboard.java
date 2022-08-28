@@ -6,10 +6,15 @@
 package dashboardapp;
 
 import java.awt.Color;
+import java.io.File;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 import repository.*;
 import utils.MapCustom;
 
@@ -31,6 +36,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         salesRepository = new SalesRepository();
         layananRepository = new LayananRepository();
         informasiPerusahaanRepository = new InformasiPerusahaanRepository();
+        btn_nav_konfig.setVisible(false);
         selectMenu("dashboard");
     }
     int infoId;
@@ -140,6 +146,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         txtNamaAdmin = new javax.swing.JTextField();
         txtEmailAdmin = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
+        btn_tambah_pelanggan4 = new com.k33ptoo.components.KButton();
         panel_sales = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         panel_tabel2 = new javax.swing.JScrollPane();
@@ -155,6 +162,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         txtPasswordSales = new javax.swing.JPasswordField();
         txtNamaSales = new javax.swing.JTextField();
         txtEmailSales = new javax.swing.JTextField();
+        btn_tambah_pelanggan5 = new com.k33ptoo.components.KButton();
         panel_layanan = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         panel_tabel3 = new javax.swing.JScrollPane();
@@ -170,6 +178,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         txtNamaLayanan = new javax.swing.JTextField();
         txtDeskripsiLayanan = new javax.swing.JTextField();
         txtHargaLayanan = new javax.swing.JTextField();
+        btn_tambah_pelanggan6 = new com.k33ptoo.components.KButton();
         panel_konfig = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         btn_tambah4 = new com.k33ptoo.components.KButton();
@@ -629,7 +638,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
         panel_tabel1.setViewportView(tbl_admin);
 
-        panel_admin.add(panel_tabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 710, 280));
+        panel_admin.add(panel_tabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 710, 240));
 
         btn_tambah1.setText("Tambah");
         btn_tambah1.addActionListener(new java.awt.event.ActionListener() {
@@ -707,6 +716,15 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
         panel_admin.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
 
+        btn_tambah_pelanggan4.setText("Cetak");
+        btn_tambah_pelanggan4.setkStartColor(new java.awt.Color(204, 0, 204));
+        btn_tambah_pelanggan4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambah_pelanggan4ActionPerformed(evt);
+            }
+        });
+        panel_admin.add(btn_tambah_pelanggan4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, 83, 29));
+
         getContentPane().add(panel_admin, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
         panel_sales.setBackground(new java.awt.Color(247, 247, 247));
@@ -760,7 +778,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
         panel_tabel2.setViewportView(tbl_sales);
 
-        panel_sales.add(panel_tabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 710, 350));
+        panel_sales.add(panel_tabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 710, 320));
 
         jButton7.setBackground(new java.awt.Color(0, 102, 102));
         jButton7.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -838,6 +856,15 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
         panel_sales.add(txtEmailSales, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 320, -1));
 
+        btn_tambah_pelanggan5.setText("Cetak");
+        btn_tambah_pelanggan5.setkStartColor(new java.awt.Color(204, 0, 204));
+        btn_tambah_pelanggan5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambah_pelanggan5ActionPerformed(evt);
+            }
+        });
+        panel_sales.add(btn_tambah_pelanggan5, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, 83, 29));
+
         getContentPane().add(panel_sales, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
         panel_layanan.setBackground(new java.awt.Color(247, 247, 247));
@@ -891,7 +918,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         });
         panel_tabel3.setViewportView(tbl_layanan);
 
-        panel_layanan.add(panel_tabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 710, 360));
+        panel_layanan.add(panel_tabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 710, 320));
 
         jButton6.setBackground(new java.awt.Color(0, 102, 102));
         jButton6.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -974,6 +1001,15 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
         panel_layanan.add(txtHargaLayanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 320, -1));
+
+        btn_tambah_pelanggan6.setText("Cetak");
+        btn_tambah_pelanggan6.setkStartColor(new java.awt.Color(204, 0, 204));
+        btn_tambah_pelanggan6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambah_pelanggan6ActionPerformed(evt);
+            }
+        });
+        panel_layanan.add(btn_tambah_pelanggan6, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, 83, 29));
 
         getContentPane().add(panel_layanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -1416,6 +1452,36 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_tambah4ActionPerformed
 
+    private void btn_tambah_pelanggan4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan4ActionPerformed
+        try {
+            File pelanggan = new File("src/report/admin.jasper");
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), null, Koneksi.Koneksi.koneksidb());
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btn_tambah_pelanggan4ActionPerformed
+
+    private void btn_tambah_pelanggan5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan5ActionPerformed
+        try {
+            File pelanggan = new File("src/report/sales.jasper");
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), null, Koneksi.Koneksi.koneksidb());
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btn_tambah_pelanggan5ActionPerformed
+
+    private void btn_tambah_pelanggan6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan6ActionPerformed
+        try {
+            File pelanggan = new File("src/report/layanan.jasper");
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), null, Koneksi.Koneksi.koneksidb());
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btn_tambah_pelanggan6ActionPerformed
+
     int xx ,xy;
     
        
@@ -1486,6 +1552,9 @@ public class AdminDashboard extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton btn_tambah4;
     private com.k33ptoo.components.KButton btn_tambah5;
     private com.k33ptoo.components.KButton btn_tambah6;
+    private com.k33ptoo.components.KButton btn_tambah_pelanggan4;
+    private com.k33ptoo.components.KButton btn_tambah_pelanggan5;
+    private com.k33ptoo.components.KButton btn_tambah_pelanggan6;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;

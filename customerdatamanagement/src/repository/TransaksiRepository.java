@@ -1,6 +1,7 @@
 package repository;
 
 import Koneksi.Koneksi;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -66,6 +67,25 @@ public class TransaksiRepository extends Repository<Transaksi> {
                 + "INNER JOIN sales on sales.id_sales = transaksi.id_sales";
         Statement st = Koneksi.koneksidb().createStatement();
         ResultSet rs = st.executeQuery(sql);
+        ArrayList<Transaksi> result = new ArrayList<>();
+        while (rs.next()) {
+            Transaksi obj = new Transaksi();
+            obj.fillData(rs);
+            result.add(obj);
+        }
+        return result;
+    }
+    
+    public ArrayList<Transaksi> all(String startDate, String endDate) throws Exception {
+        String sql = "SELECT * FROM transaksi "
+                + "INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan "
+                + "INNER JOIN layanan on layanan.id_layanan = transaksi.id_layanan "
+                + "INNER JOIN sales on sales.id_sales = transaksi.id_sales "
+                + "WHERE tanggal_mulai >= ? AND tanggal_selesai <= ?";
+        PreparedStatement st = Koneksi.koneksidb().prepareStatement(sql);
+        st.setString(1, startDate);
+        st.setString(2, endDate);
+        ResultSet rs = st.executeQuery();
         ArrayList<Transaksi> result = new ArrayList<>();
         while (rs.next()) {
             Transaksi obj = new Transaksi();

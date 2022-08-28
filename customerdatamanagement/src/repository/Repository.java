@@ -37,6 +37,31 @@ public abstract class Repository<T extends BaseModel> {
     private DefaultTableModel model;
     private ArrayList<T> rows;
     public void renderDataTable(JTable table){
+//        model = new DefaultTableModel(null, tableHeaders()){
+//            @Override
+//            public boolean isCellEditable(int row, int column) {
+//               return false;
+//            }
+//        };
+//        table.setModel(model);
+//        try {
+//            rows = all();
+//            rows.forEach((item) -> {
+//                model.addRow(renderItem(item));
+//            });
+//        } catch (Exception ex) {
+//            System.out.println("ERROR : "+ex.getMessage());
+//            JOptionPane.showMessageDialog(null, "Gagal menampilkan data!", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+        try {
+            renderDataTable(table, all());
+        } catch (Exception ex) {
+            System.out.println("ERROR : "+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Gagal menampilkan data!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void renderDataTable(JTable table, ArrayList<T> rows){
         model = new DefaultTableModel(null, tableHeaders()){
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -45,10 +70,10 @@ public abstract class Repository<T extends BaseModel> {
         };
         table.setModel(model);
         try {
-            rows = all();
-            for (T item : rows) {
+            this.rows = rows;
+            rows.forEach((item) -> {
                 model.addRow(renderItem(item));
-            }
+            });
         } catch (Exception ex) {
             System.out.println("ERROR : "+ex.getMessage());
             JOptionPane.showMessageDialog(null, "Gagal menampilkan data!", "Error", JOptionPane.ERROR_MESSAGE);

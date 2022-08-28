@@ -6,17 +6,25 @@
 package dashboardapp;
 
 import java.awt.Color;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import model.Layanan;
 import model.Pelanggan;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+import org.apache.commons.lang.time.DateUtils;
 import repository.*;
 import utils.MapCustom;
 
@@ -32,6 +40,7 @@ public class Home extends javax.swing.JFrame {
     LayananRepository layananRepository;
     PelangganRepository pelangganRepository;
     TransaksiRepository transaksiRepository;
+    TransaksiRepository reportRepository;
     ArrayList<model.Pelanggan> pelangganOptions;
     ArrayList<model.Layanan> layananOptions;
     public Home() {
@@ -39,44 +48,56 @@ public class Home extends javax.swing.JFrame {
         layananRepository = new LayananRepository();
         pelangganRepository = new PelangganRepository();
         transaksiRepository = new TransaksiRepository();
+        reportRepository = new TransaksiRepository();
         selectMenu("dashboard");
     }
     private void selectMenu(String menu) {
         panel_dashboard.setVisible(menu.equals("dashboard"));
         Map<String, JPanel> mapPanel = MapCustom.of("layanan", panel_layanan, "pelanggan", panel_pelanggan, "transaksi", panel_transaksi, "report", panel_report);
         Map<String, JPanel> mapBtnNav = MapCustom.of("layanan", btn_nav_layanan, "pelanggan", btn_nav_pelanggan, "transaksi", btn_nav_tansaksi, "report", btn_nav_report);
-//        Map<String, JPanel> mapIndicator = MapCustom.of("layanan", Indicator1, "pelanggan", Indicator2, "transaksi", Indicator3, "report", Indicator4);
-        Map<String, Repository> mapRepositories = MapCustom.of("layanan", layananRepository, "pelanggan", pelangganRepository, "transaksi", transaksiRepository, "report", pelangganRepository);
-        Map<String, JTable> mapTable = MapCustom.of("layanan", tabel_layanan, "pelanggan", tabel_pelanggan, "transaksi", tabel_transaksi);
+        Map<String, Repository> mapRepositories = MapCustom.of("layanan", layananRepository, "pelanggan", pelangganRepository, "transaksi", transaksiRepository, "report", reportRepository);
+        Map<String, JTable> mapTable = MapCustom.of("layanan", tabel_layanan, "pelanggan", tabel_pelanggan, "transaksi", tabel_transaksi, "report", tabel_report);
         if (menu.equals("transaksi")) {
             try {
                 pelangganOptions = pelangganRepository.all();
                 cPelanggan.removeAllItems();
-                for (Pelanggan pelangganOption : pelangganOptions) {
+                pelangganOptions.forEach((pelangganOption) -> {
                     cPelanggan.addItem(pelangganOption.getNamaPic()+" - "+pelangganOption.getNamaInstansi());
-                }
+                });
                 layananOptions = layananRepository.all();
                 cLayanan.removeAllItems();
-                for (Layanan layananOption : layananOptions) {
+                layananOptions.forEach((layananOption) -> {
                     cLayanan.addItem(layananOption.getNama()+" - Rp."+layananOption.getHarga());
-                }
+                });
             } catch (Exception e) {
             }
         }
-        for (String key : mapPanel.keySet()) {
+        mapPanel.keySet().forEach((key) -> {
             if (key.equals(menu)) {
                 mapPanel.get(key).setVisible(true);
                 onClick(mapBtnNav.get(key));
-//                mapIndicator.get(key).setOpaque(true);
-                mapRepositories.get(key).renderDataTable(mapTable.get(key));
+                if (menu.equals("report")) {
+                    tanggalMulaiReport.setDate(DateUtils.addDays(new Date(),-7));
+                    tanggalSelesaiReport.setDate(new Date());
+                    tampilReport();
+                } else {
+                    mapRepositories.get(key).renderDataTable(mapTable.get(key));
+                }
             } else {
                 mapPanel.get(key).setVisible(false);
                 onLeaveClick(mapBtnNav.get(key));
-//                mapIndicator.get(key).setOpaque(false);
             }
+        });
+    }
+    void tampilReport() {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            ArrayList<model.Transaksi> rows = reportRepository.all(simpleDateFormat.format(tanggalMulaiReport.getDate()), simpleDateFormat.format(tanggalSelesaiReport.getDate()));
+            reportRepository.renderDataTable(tabel_report, rows);
+        } catch (Exception ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
     void clearFormPelanggan(){
         txtNIKPelanggan.setText("");
         txtNamaPelanggan.setText("");
@@ -137,6 +158,7 @@ public class Home extends javax.swing.JFrame {
         panel_tabel4 = new javax.swing.JScrollPane();
         tabel_layanan = new javax.swing.JTable();
         jButton8 = new javax.swing.JButton();
+        btn_tambah_pelanggan4 = new com.k33ptoo.components.KButton();
         panel_pelanggan = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         panel_tabel1 = new javax.swing.JScrollPane();
@@ -156,6 +178,7 @@ public class Home extends javax.swing.JFrame {
         txtInstansiPelanggan = new javax.swing.JTextField();
         txtTeleponPelanggan = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
+        btn_tambah_pelanggan3 = new com.k33ptoo.components.KButton();
         panel_transaksi = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         panel_tabel2 = new javax.swing.JScrollPane();
@@ -176,10 +199,14 @@ public class Home extends javax.swing.JFrame {
         panel_report = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
         btn_tambah_pelanggan2 = new com.k33ptoo.components.KButton();
-        btn_edit_pelanggan2 = new com.k33ptoo.components.KButton();
-        btn_clear_pelanggan2 = new com.k33ptoo.components.KButton();
-        btn_hapus_pelanggan2 = new com.k33ptoo.components.KButton();
         jButton11 = new javax.swing.JButton();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        tanggalMulaiReport = new com.toedter.calendar.JDateChooser();
+        tanggalSelesaiReport = new com.toedter.calendar.JDateChooser();
+        btn_tambah_pelanggan5 = new com.k33ptoo.components.KButton();
+        panel_tabel5 = new javax.swing.JScrollPane();
+        tabel_report = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
@@ -333,7 +360,8 @@ public class Home extends javax.swing.JFrame {
         });
 
         lbl_report.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbl_report.setText("Report");
+        lbl_report.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_report.setText("Report Transaksi");
         lbl_report.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl_reportMouseClicked(evt);
@@ -344,10 +372,7 @@ public class Home extends javax.swing.JFrame {
         btn_nav_report.setLayout(btn_nav_reportLayout);
         btn_nav_reportLayout.setHorizontalGroup(
             btn_nav_reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btn_nav_reportLayout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(lbl_report)
-                .addGap(0, 88, Short.MAX_VALUE))
+            .addComponent(lbl_report, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
         );
         btn_nav_reportLayout.setVerticalGroup(
             btn_nav_reportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -527,7 +552,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nav_panelLayout.createSequentialGroup()
                         .addGap(58, 58, 58)
@@ -651,7 +676,7 @@ public class Home extends javax.swing.JFrame {
         tabel_layanan.setSelectionBackground(new java.awt.Color(96, 83, 150));
         panel_tabel4.setViewportView(tabel_layanan);
 
-        panel_layanan.add(panel_tabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 710, 260));
+        panel_layanan.add(panel_tabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 710, 260));
 
         jButton8.setBackground(new java.awt.Color(0, 51, 153));
         jButton8.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -666,6 +691,15 @@ public class Home extends javax.swing.JFrame {
             }
         });
         panel_layanan.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
+
+        btn_tambah_pelanggan4.setText("Cetak");
+        btn_tambah_pelanggan4.setkStartColor(new java.awt.Color(204, 0, 204));
+        btn_tambah_pelanggan4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambah_pelanggan4ActionPerformed(evt);
+            }
+        });
+        panel_layanan.add(btn_tambah_pelanggan4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 83, 29));
 
         getContentPane().add(panel_layanan, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -720,7 +754,7 @@ public class Home extends javax.swing.JFrame {
         });
         panel_tabel1.setViewportView(tabel_pelanggan);
 
-        panel_pelanggan.add(panel_tabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 710, 240));
+        panel_pelanggan.add(panel_tabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 710, 210));
 
         btn_tambah_pelanggan.setText("Tambah");
         btn_tambah_pelanggan.addActionListener(new java.awt.event.ActionListener() {
@@ -835,6 +869,15 @@ public class Home extends javax.swing.JFrame {
             }
         });
         panel_pelanggan.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
+
+        btn_tambah_pelanggan3.setText("Cetak");
+        btn_tambah_pelanggan3.setkStartColor(new java.awt.Color(204, 0, 204));
+        btn_tambah_pelanggan3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambah_pelanggan3ActionPerformed(evt);
+            }
+        });
+        panel_pelanggan.add(btn_tambah_pelanggan3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 270, 83, 29));
 
         getContentPane().add(panel_pelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -984,35 +1027,13 @@ public class Home extends javax.swing.JFrame {
         jLabel28.setText("LAPORAN APLIKASI");
         panel_report.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
 
-        btn_tambah_pelanggan2.setText("Tambah");
-        panel_report.add(btn_tambah_pelanggan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 83, 29));
-
-        btn_edit_pelanggan2.setText("Edit");
-        btn_edit_pelanggan2.setkStartColor(new java.awt.Color(0, 51, 153));
-        btn_edit_pelanggan2.addActionListener(new java.awt.event.ActionListener() {
+        btn_tambah_pelanggan2.setText("Tampilkan");
+        btn_tambah_pelanggan2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_edit_pelanggan2ActionPerformed(evt);
+                btn_tambah_pelanggan2ActionPerformed(evt);
             }
         });
-        panel_report.add(btn_edit_pelanggan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, 83, 29));
-
-        btn_clear_pelanggan2.setText("Bersihkan");
-        btn_clear_pelanggan2.setkStartColor(new java.awt.Color(255, 102, 51));
-        btn_clear_pelanggan2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_clear_pelanggan2ActionPerformed(evt);
-            }
-        });
-        panel_report.add(btn_clear_pelanggan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 240, 83, 29));
-
-        btn_hapus_pelanggan2.setText("Hapus");
-        btn_hapus_pelanggan2.setkStartColor(new java.awt.Color(255, 0, 0));
-        btn_hapus_pelanggan2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_hapus_pelanggan2ActionPerformed(evt);
-            }
-        });
-        panel_report.add(btn_hapus_pelanggan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 240, 83, 29));
+        panel_report.add(btn_tambah_pelanggan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 83, 29));
 
         jButton11.setBackground(new java.awt.Color(0, 51, 153));
         jButton11.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -1027,6 +1048,57 @@ public class Home extends javax.swing.JFrame {
             }
         });
         panel_report.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
+
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel22.setText("Tanggal Mulai");
+        panel_report.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 140, 30));
+
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel23.setText("Tanggal Selesai");
+        panel_report.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 140, 30));
+        panel_report.add(tanggalMulaiReport, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 370, -1));
+        panel_report.add(tanggalSelesaiReport, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 370, -1));
+
+        btn_tambah_pelanggan5.setText("Cetak");
+        btn_tambah_pelanggan5.setkStartColor(new java.awt.Color(204, 0, 204));
+        btn_tambah_pelanggan5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambah_pelanggan5ActionPerformed(evt);
+            }
+        });
+        panel_report.add(btn_tambah_pelanggan5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, 83, 29));
+
+        panel_tabel5.setBackground(new java.awt.Color(247, 247, 247));
+        panel_tabel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        tabel_report.setBackground(new java.awt.Color(247, 247, 247));
+        tabel_report.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tabel_report.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Allan", "XLS", "2hrs", "$200"},
+                {"Brian", "React", "1hr", "$100 per hr"},
+                {"Romeo", "C#", "3 Days", "$1000"},
+                {"Alex", "C++ ", "10 hrs", "$50 per hr"}
+            },
+            new String [] {
+                "Name", "Project", "Time", "Cost"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabel_report.setGridColor(new java.awt.Color(247, 247, 247));
+        tabel_report.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        panel_tabel5.setViewportView(tabel_report);
+
+        panel_report.add(panel_tabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 710, 320));
 
         getContentPane().add(panel_report, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -1245,18 +1317,6 @@ public class Home extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_hapus_pelanggan1ActionPerformed
 
-    private void btn_edit_pelanggan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_pelanggan2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_edit_pelanggan2ActionPerformed
-
-    private void btn_clear_pelanggan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clear_pelanggan2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_clear_pelanggan2ActionPerformed
-
-    private void btn_hapus_pelanggan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus_pelanggan2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_hapus_pelanggan2ActionPerformed
-
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         logout();
     }//GEN-LAST:event_jButton8ActionPerformed
@@ -1359,6 +1419,41 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lbl_pelangganMouseEntered
 
+    private void btn_tambah_pelanggan3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan3ActionPerformed
+        try {
+            File pelanggan = new File("src/report/pelanggan.jasper");
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), null, Koneksi.Koneksi.koneksidb());
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btn_tambah_pelanggan3ActionPerformed
+
+    private void btn_tambah_pelanggan4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan4ActionPerformed
+        try {
+            File pelanggan = new File("src/report/layanan.jasper");
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), null, Koneksi.Koneksi.koneksidb());
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btn_tambah_pelanggan4ActionPerformed
+
+    private void btn_tambah_pelanggan5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan5ActionPerformed
+        try {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            File pelanggan = new File("src/report/transaksi.jasper");
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), MapCustom.of("tanggalMulai", simpleDateFormat.format(tanggalMulaiReport.getDate()), "tanggalSelesai", simpleDateFormat.format(tanggalSelesaiReport.getDate())), Koneksi.Koneksi.koneksidb());
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btn_tambah_pelanggan5ActionPerformed
+
+    private void btn_tambah_pelanggan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan2ActionPerformed
+        tampilReport();
+    }//GEN-LAST:event_btn_tambah_pelanggan2ActionPerformed
+
     int xx ,xy;
     
     void logout(){
@@ -1417,14 +1512,11 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.k33ptoo.components.KButton btn_clear_pelanggan;
     private com.k33ptoo.components.KButton btn_clear_pelanggan1;
-    private com.k33ptoo.components.KButton btn_clear_pelanggan2;
     private javax.swing.JLabel btn_close;
     private com.k33ptoo.components.KButton btn_edit_pelanggan;
     private com.k33ptoo.components.KButton btn_edit_pelanggan1;
-    private com.k33ptoo.components.KButton btn_edit_pelanggan2;
     private com.k33ptoo.components.KButton btn_hapus_pelanggan;
     private com.k33ptoo.components.KButton btn_hapus_pelanggan1;
-    private com.k33ptoo.components.KButton btn_hapus_pelanggan2;
     private javax.swing.JPanel btn_nav_layanan;
     private javax.swing.JPanel btn_nav_pelanggan;
     private javax.swing.JPanel btn_nav_report;
@@ -1432,6 +1524,9 @@ public class Home extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton btn_tambah_pelanggan;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan1;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan2;
+    private com.k33ptoo.components.KButton btn_tambah_pelanggan3;
+    private com.k33ptoo.components.KButton btn_tambah_pelanggan4;
+    private com.k33ptoo.components.KButton btn_tambah_pelanggan5;
     private javax.swing.JComboBox<String> cLayanan;
     private javax.swing.JComboBox<String> cPelanggan;
     private javax.swing.JButton jButton10;
@@ -1450,6 +1545,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
@@ -1483,12 +1580,16 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane panel_tabel1;
     private javax.swing.JScrollPane panel_tabel2;
     private javax.swing.JScrollPane panel_tabel4;
+    private javax.swing.JScrollPane panel_tabel5;
     private javax.swing.JPanel panel_transaksi;
     private javax.swing.JTable tabel_layanan;
     private javax.swing.JTable tabel_pelanggan;
+    private javax.swing.JTable tabel_report;
     private javax.swing.JTable tabel_transaksi;
     private com.toedter.calendar.JDateChooser tanggalMulai;
+    private com.toedter.calendar.JDateChooser tanggalMulaiReport;
     private com.toedter.calendar.JDateChooser tanggalSelesai;
+    private com.toedter.calendar.JDateChooser tanggalSelesaiReport;
     private javax.swing.JTextField txtEmailPelanggan;
     private javax.swing.JTextField txtInstansiPelanggan;
     private javax.swing.JTextField txtNIKPelanggan;
