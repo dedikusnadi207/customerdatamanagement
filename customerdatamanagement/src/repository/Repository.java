@@ -37,22 +37,6 @@ public abstract class Repository<T extends BaseModel> {
     private DefaultTableModel model;
     private ArrayList<T> rows;
     public void renderDataTable(JTable table){
-//        model = new DefaultTableModel(null, tableHeaders()){
-//            @Override
-//            public boolean isCellEditable(int row, int column) {
-//               return false;
-//            }
-//        };
-//        table.setModel(model);
-//        try {
-//            rows = all();
-//            rows.forEach((item) -> {
-//                model.addRow(renderItem(item));
-//            });
-//        } catch (Exception ex) {
-//            System.out.println("ERROR : "+ex.getMessage());
-//            JOptionPane.showMessageDialog(null, "Gagal menampilkan data!", "Error", JOptionPane.ERROR_MESSAGE);
-//        }
         try {
             renderDataTable(table, all());
         } catch (Exception ex) {
@@ -79,7 +63,11 @@ public abstract class Repository<T extends BaseModel> {
             JOptionPane.showMessageDialog(null, "Gagal menampilkan data!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
     public T selectedData(JTable table){
+        if (table.getSelectedRow() == -1) {
+            return null;
+        }
         return this.rows.get(table.getSelectedRow());
     }
     
@@ -154,30 +142,31 @@ public abstract class Repository<T extends BaseModel> {
     
     public ArrayList<T> all() throws Exception {
         String sql = "SELECT * FROM "+tableName();
-        Statement st = Koneksi.koneksidb().createStatement();
-        ResultSet rs = st.executeQuery(sql);
-        ArrayList<T> result = new ArrayList<>();
-        while (rs.next()) {
-            T obj = model().getDeclaredConstructor().newInstance();
-            obj.fillData(rs);
-            result.add(obj);
-        }
-        return result;
+        return this.all(sql);
     }
     
-    public ArrayList<T> all(Map<String, Object> conds) throws Exception {
+    public ArrayList<T> all(String sql) throws Exception {
+        Statement st = Koneksi.koneksidb().createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        return this.generateResult(rs);
+    }
+    
+//    public ArrayList<T> all(Map<String, Object> conds) throws Exception {
+//        setConds(conds);
+//        String sql = "SELECT * FROM "+tableName()+" WHERE "+preparedConds();
+//        PreparedStatement ps = Koneksi.koneksidb().prepareStatement(sql);
+//        ps = this.setPreparedStatement(ps, conds);
+//        ResultSet rs = ps.executeQuery();
+//        return this.generateResult(rs);
+//    }
+    
+    public ArrayList<T> all(String sql, Map<String, Object> conds) throws Exception {
         setConds(conds);
-        String sql = "SELECT * FROM "+tableName()+" WHERE "+preparedConds();
+        sql += " WHERE "+preparedConds();
         PreparedStatement ps = Koneksi.koneksidb().prepareStatement(sql);
         ps = this.setPreparedStatement(ps, conds);
         ResultSet rs = ps.executeQuery();
-        ArrayList<T> result = new ArrayList<>();
-        while (rs.next()) {
-            T obj = model().getDeclaredConstructor().newInstance();
-            obj.fillData(rs);
-            result.add(obj);
-        }
-        return result;
+        return this.generateResult(rs);
     }
     
     public T first() {
@@ -209,5 +198,14 @@ public abstract class Repository<T extends BaseModel> {
             return obj;
         }
         return null;
+    }
+    public ArrayList<T> generateResult(ResultSet rs) throws Exception {
+        ArrayList<T> result = new ArrayList<>();
+        while (rs.next()) {
+            T obj = model().getDeclaredConstructor().newInstance();
+            obj.fillData(rs);
+            result.add(obj);
+        }
+        return result;
     }
 }

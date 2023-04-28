@@ -94,6 +94,21 @@ public class TransaksiRepository extends Repository<Transaksi> {
         }
         return result;
     }
+
+    public ArrayList<Transaksi> all(int idPelanggan, String startTime, String endTime) throws Exception {
+         String sql = "SELECT * FROM transaksi "
+                + "INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan "
+                + "INNER JOIN layanan on layanan.id_layanan = transaksi.id_layanan "
+                + "INNER JOIN sales on sales.id_sales = transaksi.id_sales "
+                + "WHERE transaksi.id_pelanggan = ? AND tanggal_mulai >= ? AND tanggal_selesai <= ?";
+        PreparedStatement st = Koneksi.koneksidb().prepareStatement(sql);
+        st.setInt(1, idPelanggan);
+        st.setString(2, startTime);
+        st.setString(3, endTime);
+        ResultSet rs = st.executeQuery();
+
+        return super.generateResult(rs);
+    }
     
     @Override
     public int save(Transaksi model) throws SQLException {

@@ -46,6 +46,16 @@ public class MapCustom {
         return data;
     }
     
+    public static <K, V> Map<K, V> of(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5) {
+        HashMap<K,V> data = new HashMap<>();
+        data.put(k1, v1);
+        data.put(k2, v2);
+        data.put(k3, v3);
+        data.put(k4, v4);
+        data.put(k5, v5);
+        return data;
+    }
+    
     public static <K, V> Map<K, V> of(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6) {
         HashMap<K,V> data = new HashMap<>();
         data.put(k1, v1);
@@ -56,6 +66,19 @@ public class MapCustom {
         data.put(k6, v6);
         return data;
     }
+    
+    public static <K, V> Map<K, V> of(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7) {
+        HashMap<K,V> data = new HashMap<>();
+        data.put(k1, v1);
+        data.put(k2, v2);
+        data.put(k3, v3);
+        data.put(k4, v4);
+        data.put(k5, v5);
+        data.put(k6, v6);
+        data.put(k7, v7);
+        return data;
+    }
+    
     public static <K, V> Map<K, V> of(K k1, V v1, K k2, V v2, K k3, V v3, K k4, V v4, K k5, V v5, K k6, V v6, K k7, V v7, K k8, V v8, K k9, V v9) {
         HashMap<K,V> data = new HashMap<>();
         data.put(k1, v1);

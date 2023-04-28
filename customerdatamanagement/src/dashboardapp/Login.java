@@ -16,7 +16,7 @@ import utils.MapCustom;
  * @author Easternisme
  */
 public class Login extends javax.swing.JFrame {
-    public static int idSales;
+    public static Sales sessionSales;
     public Login() {
         initComponents();
     }
@@ -28,7 +28,7 @@ public class Login extends javax.swing.JFrame {
             SalesRepository sales = new SalesRepository();
             Sales data = sales.first(MapCustom.of("email", mail, "password", pwd));
             if (data != null) {
-                idSales = data.getIdSales();
+                sessionSales = data;
                 JOptionPane.showMessageDialog(null, "Login Berhasil! Selamat Datang "+data.getNama());
                 this.setVisible(false);
                 new Home().setVisible(true);
@@ -149,9 +149,9 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(label_admin)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         kGradientPanel1.add(jPanel1);
@@ -167,7 +167,7 @@ public class Login extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("APLIKASI PENGELOLAAN DATA PELANGGAN");
         kGradientPanel1.add(jLabel11);
-        jLabel11.setBounds(160, 20, 550, 30);
+        jLabel11.setBounds(160, 20, 550, 32);
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardapp/images/grap.png"))); // NOI18N
         kGradientPanel1.add(jLabel9);
@@ -183,7 +183,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("*############################################################*");
         kGradientPanel1.add(jLabel2);
-        jLabel2.setBounds(150, 50, 560, 17);
+        jLabel2.setBounds(150, 50, 560, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -10,14 +10,13 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import model.Layanan;
 import model.Pelanggan;
 import net.sf.jasperreports.engine.JRException;
@@ -27,6 +26,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import org.apache.commons.lang.time.DateUtils;
 import repository.*;
 import utils.MapCustom;
+import utils.validator;
 
 /**
  *
@@ -41,6 +41,7 @@ public class Home extends javax.swing.JFrame {
     PelangganRepository pelangganRepository;
     TransaksiRepository transaksiRepository;
     TransaksiRepository reportRepository;
+    JadwalSalesRepository jadwalSalesRepository;
     ArrayList<model.Pelanggan> pelangganOptions;
     ArrayList<model.Layanan> layananOptions;
     public Home() {
@@ -49,14 +50,17 @@ public class Home extends javax.swing.JFrame {
         pelangganRepository = new PelangganRepository();
         transaksiRepository = new TransaksiRepository();
         reportRepository = new TransaksiRepository();
+        jadwalSalesRepository = new JadwalSalesRepository(false);
         selectMenu("dashboard");
+        JTextField[] fields = {txtNIKPelanggan, txtTeleponPelanggan};
+        validator.handleNumberOnly(fields);
     }
     private void selectMenu(String menu) {
         panel_dashboard.setVisible(menu.equals("dashboard"));
-        Map<String, JPanel> mapPanel = MapCustom.of("layanan", panel_layanan, "pelanggan", panel_pelanggan, "transaksi", panel_transaksi, "report", panel_report);
-        Map<String, JPanel> mapBtnNav = MapCustom.of("layanan", btn_nav_layanan, "pelanggan", btn_nav_pelanggan, "transaksi", btn_nav_tansaksi, "report", btn_nav_report);
-        Map<String, Repository> mapRepositories = MapCustom.of("layanan", layananRepository, "pelanggan", pelangganRepository, "transaksi", transaksiRepository, "report", reportRepository);
-        Map<String, JTable> mapTable = MapCustom.of("layanan", tabel_layanan, "pelanggan", tabel_pelanggan, "transaksi", tabel_transaksi, "report", tabel_report);
+        Map<String, JPanel> mapPanel = MapCustom.of("layanan", panel_layanan, "pelanggan", panel_pelanggan, "transaksi", panel_transaksi, "report", panel_report, "jadwal", panel_jadwal);
+        Map<String, JPanel> mapBtnNav = MapCustom.of("layanan", btn_nav_layanan, "pelanggan", btn_nav_pelanggan, "transaksi", btn_nav_tansaksi, "report", btn_nav_report, "jadwal", btn_nav_jadwal);
+        Map<String, Repository> mapRepositories = MapCustom.of("layanan", layananRepository, "pelanggan", pelangganRepository, "transaksi", transaksiRepository, "report", reportRepository, "jadwal", jadwalSalesRepository);
+        Map<String, JTable> mapTable = MapCustom.of("layanan", tabel_layanan, "pelanggan", tabel_pelanggan, "transaksi", tabel_transaksi, "report", tabel_report, "jadwal", tabel_jadwal);
         if (menu.equals("transaksi")) {
             try {
                 pelangganOptions = pelangganRepository.all();
@@ -72,6 +76,16 @@ public class Home extends javax.swing.JFrame {
             } catch (Exception e) {
             }
         }
+        if (menu.equals("jadwal")) {
+            try {
+                pelangganOptions = pelangganRepository.all();
+                cPelangganJadwal.removeAllItems();
+                pelangganOptions.forEach((pelangganOption) -> {
+                    cPelangganJadwal.addItem(pelangganOption.getNamaPic()+" - "+pelangganOption.getNamaInstansi());
+                });
+            } catch (Exception e) {
+            }
+        }
         mapPanel.keySet().forEach((key) -> {
             if (key.equals(menu)) {
                 mapPanel.get(key).setVisible(true);
@@ -80,6 +94,10 @@ public class Home extends javax.swing.JFrame {
                     tanggalMulaiReport.setDate(DateUtils.addDays(new Date(),-7));
                     tanggalSelesaiReport.setDate(new Date());
                     tampilReport();
+                } else if (menu.equals("jadwal")){
+                    tanggalMulaiJadwal.setDate(DateUtils.addDays(new Date(),-30));
+                    tanggalSelesaiJadwal.setDate(new Date());
+                    tampilJadwal();
                 } else {
                     mapRepositories.get(key).renderDataTable(mapTable.get(key));
                 }
@@ -89,6 +107,18 @@ public class Home extends javax.swing.JFrame {
             }
         });
     }
+    
+    void tampilJadwal() {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String startTime = simpleDateFormat.format(tanggalMulaiJadwal.getDate());
+            String endTime = simpleDateFormat.format(tanggalSelesaiJadwal.getDate());
+            jadwalSalesRepository.renderDataTable(tabel_jadwal, jadwalSalesRepository.all(Login.sessionSales.getIdSales(), startTime, endTime));
+        } catch (Exception ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     void tampilReport() {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -98,18 +128,29 @@ public class Home extends javax.swing.JFrame {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     void clearFormPelanggan(){
         txtNIKPelanggan.setText("");
         txtNamaPelanggan.setText("");
         txtInstansiPelanggan.setText("");
         txtTeleponPelanggan.setText("");
         txtEmailPelanggan.setText("");
+        tabel_pelanggan.clearSelection();
     }
+    
     void clearFormTransaksi(){
         tanggalMulai.setDate(new Date());
         tanggalSelesai.setDate(new Date());
         cPelanggan.setSelectedIndex(0);
         cLayanan.setSelectedIndex(0);
+        tabel_transaksi.clearSelection();
+    }
+    
+    void clearFormJadwal(){
+        cPelangganJadwal.setSelectedIndex(0);
+        txtKegiatanJadwal.setText("");
+        tanggalJadwal.setDate(new Date());
+        tabel_jadwal.clearSelection();
     }
 
 
@@ -131,6 +172,10 @@ public class Home extends javax.swing.JFrame {
         lbl_transaksi = new javax.swing.JLabel();
         btn_nav_report = new javax.swing.JPanel();
         lbl_report = new javax.swing.JLabel();
+        btn_nav_jadwal = new javax.swing.JPanel();
+        lbl_jadwal = new javax.swing.JLabel();
+        btn_nav_pembayaran = new javax.swing.JPanel();
+        lbl_pembayaran = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
@@ -207,6 +252,36 @@ public class Home extends javax.swing.JFrame {
         btn_tambah_pelanggan5 = new com.k33ptoo.components.KButton();
         panel_tabel5 = new javax.swing.JScrollPane();
         tabel_report = new javax.swing.JTable();
+        panel_jadwal = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        panel_tabel3 = new javax.swing.JScrollPane();
+        tabel_jadwal = new javax.swing.JTable();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        btn_tambah_jadwal = new com.k33ptoo.components.KButton();
+        btn_edit_jadwal = new com.k33ptoo.components.KButton();
+        btn_clear_jadwal = new com.k33ptoo.components.KButton();
+        btn_hapus_jadwal = new com.k33ptoo.components.KButton();
+        jButton12 = new javax.swing.JButton();
+        cPelangganJadwal = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtKegiatanJadwal = new javax.swing.JTextArea();
+        jLabel41 = new javax.swing.JLabel();
+        tanggalJadwal = new com.toedter.calendar.JDateChooser();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        tanggalSelesaiJadwal = new com.toedter.calendar.JDateChooser();
+        tanggalMulaiJadwal = new com.toedter.calendar.JDateChooser();
+        btn_tampilkan_jadwal = new com.k33ptoo.components.KButton();
+        panel_pembayaran = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        panel_tabel6 = new javax.swing.JScrollPane();
+        tabel_pembayaran = new javax.swing.JTable();
+        jLabel43 = new javax.swing.JLabel();
+        btn_cari_pembayaran = new com.k33ptoo.components.KButton();
+        btn_clear_pembayaran = new com.k33ptoo.components.KButton();
+        jButton13 = new javax.swing.JButton();
+        cPelanggan2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
@@ -382,7 +457,88 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.add(btn_nav_report, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 190, -1));
+        jPanel1.add(btn_nav_report, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 190, -1));
+
+        btn_nav_jadwal.setBackground(new java.awt.Color(255, 255, 255));
+        btn_nav_jadwal.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_nav_jadwal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_nav_jadwalMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_nav_jadwalMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_nav_jadwalMouseExited(evt);
+            }
+        });
+
+        lbl_jadwal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbl_jadwal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_jadwal.setText("Jadwal Kegiatan");
+        lbl_jadwal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_jadwalMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_nav_jadwalLayout = new javax.swing.GroupLayout(btn_nav_jadwal);
+        btn_nav_jadwal.setLayout(btn_nav_jadwalLayout);
+        btn_nav_jadwalLayout.setHorizontalGroup(
+            btn_nav_jadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_nav_jadwalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_jadwal, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        btn_nav_jadwalLayout.setVerticalGroup(
+            btn_nav_jadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_jadwalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_jadwal, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel1.add(btn_nav_jadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 190, -1));
+
+        btn_nav_pembayaran.setBackground(new java.awt.Color(255, 255, 255));
+        btn_nav_pembayaran.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_nav_pembayaran.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_nav_pembayaranMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_nav_pembayaranMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_nav_pembayaranMouseExited(evt);
+            }
+        });
+
+        lbl_pembayaran.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbl_pembayaran.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_pembayaran.setText("Status Pembayaran");
+        lbl_pembayaran.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_pembayaranMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_nav_pembayaranLayout = new javax.swing.GroupLayout(btn_nav_pembayaran);
+        btn_nav_pembayaran.setLayout(btn_nav_pembayaranLayout);
+        btn_nav_pembayaranLayout.setHorizontalGroup(
+            btn_nav_pembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbl_pembayaran, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+        );
+        btn_nav_pembayaranLayout.setVerticalGroup(
+            btn_nav_pembayaranLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btn_nav_pembayaranLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_pembayaran, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel1.add(btn_nav_pembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 190, -1));
         jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 39, -1, -1));
 
         jLabel21.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
@@ -854,6 +1010,17 @@ public class Home extends javax.swing.JFrame {
                 txtTeleponPelangganActionPerformed(evt);
             }
         });
+        txtTeleponPelanggan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTeleponPelangganKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTeleponPelangganKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTeleponPelangganKeyTyped(evt);
+            }
+        });
         panel_pelanggan.add(txtTeleponPelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, 370, 30));
 
         jButton9.setBackground(new java.awt.Color(0, 51, 153));
@@ -1102,6 +1269,246 @@ public class Home extends javax.swing.JFrame {
 
         getContentPane().add(panel_report, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
+        panel_jadwal.setBackground(new java.awt.Color(247, 247, 247));
+        panel_jadwal.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panel_jadwalMouseDragged(evt);
+            }
+        });
+        panel_jadwal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panel_jadwalMousePressed(evt);
+            }
+        });
+        panel_jadwal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel24.setText("JADWAL KEGIATAN");
+        panel_jadwal.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
+
+        panel_tabel3.setBackground(new java.awt.Color(247, 247, 247));
+        panel_tabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        tabel_jadwal.setBackground(new java.awt.Color(247, 247, 247));
+        tabel_jadwal.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tabel_jadwal.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Allan", "XLS", "2hrs", "$200"},
+                {"Brian", "React", "1hr", "$100 per hr"},
+                {"Romeo", "C#", "3 Days", "$1000"},
+                {"Alex", "C++ ", "10 hrs", "$50 per hr"}
+            },
+            new String [] {
+                "Name", "Project", "Time", "Cost"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabel_jadwal.setGridColor(new java.awt.Color(247, 247, 247));
+        tabel_jadwal.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        tabel_jadwal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_jadwalMouseClicked(evt);
+            }
+        });
+        panel_tabel3.setViewportView(tabel_jadwal);
+
+        panel_jadwal.add(panel_tabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 710, 220));
+
+        jLabel39.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel39.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel39.setText("Pelanggan");
+        panel_jadwal.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 140, 30));
+
+        jLabel40.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel40.setText("-");
+        panel_jadwal.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 20, 20));
+
+        btn_tambah_jadwal.setText("Tambah");
+        btn_tambah_jadwal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambah_jadwalActionPerformed(evt);
+            }
+        });
+        panel_jadwal.add(btn_tambah_jadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 80, 83, 29));
+
+        btn_edit_jadwal.setText("Edit");
+        btn_edit_jadwal.setkStartColor(new java.awt.Color(0, 51, 153));
+        btn_edit_jadwal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_edit_jadwalActionPerformed(evt);
+            }
+        });
+        panel_jadwal.add(btn_edit_jadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, 83, 29));
+
+        btn_clear_jadwal.setText("Bersihkan");
+        btn_clear_jadwal.setkStartColor(new java.awt.Color(255, 102, 51));
+        btn_clear_jadwal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clear_jadwalActionPerformed(evt);
+            }
+        });
+        panel_jadwal.add(btn_clear_jadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 200, 83, 29));
+
+        btn_hapus_jadwal.setText("Hapus");
+        btn_hapus_jadwal.setkStartColor(new java.awt.Color(255, 0, 0));
+        btn_hapus_jadwal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus_jadwalActionPerformed(evt);
+            }
+        });
+        panel_jadwal.add(btn_hapus_jadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 160, 83, 29));
+
+        jButton12.setBackground(new java.awt.Color(0, 51, 153));
+        jButton12.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton12.setForeground(new java.awt.Color(255, 255, 255));
+        jButton12.setText("X ");
+        jButton12.setBorder(null);
+        jButton12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton12.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+        panel_jadwal.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
+        panel_jadwal.add(cPelangganJadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 370, -1));
+
+        txtKegiatanJadwal.setColumns(20);
+        txtKegiatanJadwal.setRows(5);
+        jScrollPane1.setViewportView(txtKegiatanJadwal);
+
+        panel_jadwal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 370, -1));
+
+        jLabel41.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel41.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel41.setText("Kegiatan");
+        panel_jadwal.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 140, 30));
+        panel_jadwal.add(tanggalJadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, 370, -1));
+
+        jLabel44.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel44.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel44.setText("Waktu");
+        panel_jadwal.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 140, 30));
+
+        jLabel45.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel45.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel45.setText("Filter : ");
+        panel_jadwal.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 50, 20));
+        panel_jadwal.add(tanggalSelesaiJadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 130, -1));
+        panel_jadwal.add(tanggalMulaiJadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, 130, -1));
+
+        btn_tampilkan_jadwal.setText("Tampilkan");
+        btn_tampilkan_jadwal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tampilkan_jadwalActionPerformed(evt);
+            }
+        });
+        panel_jadwal.add(btn_tampilkan_jadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, 83, 29));
+
+        getContentPane().add(panel_jadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
+
+        panel_pembayaran.setBackground(new java.awt.Color(247, 247, 247));
+        panel_pembayaran.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panel_pembayaranMouseDragged(evt);
+            }
+        });
+        panel_pembayaran.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panel_pembayaranMousePressed(evt);
+            }
+        });
+        panel_pembayaran.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel25.setText("DATA PEMBAYARAN");
+        panel_pembayaran.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
+
+        panel_tabel6.setBackground(new java.awt.Color(247, 247, 247));
+        panel_tabel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        tabel_pembayaran.setBackground(new java.awt.Color(247, 247, 247));
+        tabel_pembayaran.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tabel_pembayaran.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Allan", "XLS", "2hrs", "$200"},
+                {"Brian", "React", "1hr", "$100 per hr"},
+                {"Romeo", "C#", "3 Days", "$1000"},
+                {"Alex", "C++ ", "10 hrs", "$50 per hr"}
+            },
+            new String [] {
+                "Name", "Project", "Time", "Cost"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabel_pembayaran.setGridColor(new java.awt.Color(247, 247, 247));
+        tabel_pembayaran.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        tabel_pembayaran.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_pembayaranMouseClicked(evt);
+            }
+        });
+        panel_tabel6.setViewportView(tabel_pembayaran);
+
+        panel_pembayaran.add(panel_tabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 710, 280));
+
+        jLabel43.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel43.setText("Pelanggan");
+        panel_pembayaran.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 140, 30));
+
+        btn_cari_pembayaran.setText("Cari");
+        btn_cari_pembayaran.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cari_pembayaranActionPerformed(evt);
+            }
+        });
+        panel_pembayaran.add(btn_cari_pembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 83, 29));
+
+        btn_clear_pembayaran.setText("Bersihkan");
+        btn_clear_pembayaran.setkStartColor(new java.awt.Color(255, 102, 51));
+        btn_clear_pembayaran.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clear_pembayaranActionPerformed(evt);
+            }
+        });
+        panel_pembayaran.add(btn_clear_pembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, 83, 29));
+
+        jButton13.setBackground(new java.awt.Color(0, 51, 153));
+        jButton13.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton13.setForeground(new java.awt.Color(255, 255, 255));
+        jButton13.setText("X ");
+        jButton13.setBorder(null);
+        jButton13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton13.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+        panel_pembayaran.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
+        panel_pembayaran.add(cPelanggan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 370, -1));
+
+        getContentPane().add(panel_pembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -1291,7 +1698,7 @@ public class Home extends javax.swing.JFrame {
         transaksi.setTanggalSelesai(simpleDateFormat.format(tanggalSelesai.getDate()));
         transaksi.setIdPelanggan(pelangganOptions.get(cPelanggan.getSelectedIndex()).getIdPelanggan());
         transaksi.setIdLayanan(layananOptions.get(cLayanan.getSelectedIndex()).getIdLayanan());
-        transaksi.setIdSales(Login.idSales);
+        transaksi.setIdSales(Login.sessionSales.getIdSales());
         transaksi.setTotalHarga(layananOptions.get(cLayanan.getSelectedIndex()).getHarga());
         try {
             transaksiRepository.update(transaksi.toMap(), MapCustom.of("id_transaksi", transaksiRepository.selectedData(tabel_transaksi).getIdTransaksi()));
@@ -1365,7 +1772,7 @@ public class Home extends javax.swing.JFrame {
         transaksi.setTanggalSelesai(simpleDateFormat.format(tanggalSelesai.getDate()));
         transaksi.setIdPelanggan(pelangganOptions.get(cPelanggan.getSelectedIndex()).getIdPelanggan());
         transaksi.setIdLayanan(layananOptions.get(cLayanan.getSelectedIndex()).getIdLayanan());
-        transaksi.setIdSales(Login.idSales);
+        transaksi.setIdSales(Login.sessionSales.getIdSales());
         transaksi.setTotalHarga(layananOptions.get(cLayanan.getSelectedIndex()).getHarga());
         try {
             transaksiRepository.save(transaksi);
@@ -1454,6 +1861,159 @@ public class Home extends javax.swing.JFrame {
         tampilReport();
     }//GEN-LAST:event_btn_tambah_pelanggan2ActionPerformed
 
+    private void btn_nav_jadwalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_jadwalMouseClicked
+        selectMenu("jadwal");
+    }//GEN-LAST:event_btn_nav_jadwalMouseClicked
+
+    private void btn_nav_jadwalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_jadwalMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_nav_jadwalMouseEntered
+
+    private void btn_nav_jadwalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_jadwalMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_nav_jadwalMouseExited
+
+    private void lbl_pembayaranMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_pembayaranMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbl_pembayaranMouseClicked
+
+    private void btn_nav_pembayaranMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_pembayaranMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_nav_pembayaranMouseClicked
+
+    private void btn_nav_pembayaranMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_pembayaranMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_nav_pembayaranMouseEntered
+
+    private void btn_nav_pembayaranMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_pembayaranMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_nav_pembayaranMouseExited
+
+    private void tabel_jadwalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_jadwalMouseClicked
+        try {
+            model.JadwalSales jadwal = jadwalSalesRepository.selectedData(tabel_jadwal);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            int indexPelanggan = 0;
+            for (int i = 0; i < pelangganOptions.size(); i++) {
+                Pelanggan get = pelangganOptions.get(i);
+                if (get.getIdPelanggan() == jadwal.getIdPelanggan()) {
+                    indexPelanggan = i;
+                    break;
+                }
+            }
+            cPelangganJadwal.setSelectedIndex(indexPelanggan);
+            txtKegiatanJadwal.setText(jadwal.getKegiatan());
+            tanggalJadwal.setDate(simpleDateFormat.parse(jadwal.getWaktu()));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_tabel_jadwalMouseClicked
+
+    private void btn_tambah_jadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_jadwalActionPerformed
+        model.JadwalSales jadwal = new model.JadwalSales();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        jadwal.setIdPelanggan(pelangganOptions.get(cPelangganJadwal.getSelectedIndex()).getIdPelanggan());
+        jadwal.setIdSales(Login.sessionSales.getIdSales());
+        jadwal.setKegiatan(txtKegiatanJadwal.getText());
+        jadwal.setWaktu(simpleDateFormat.format(tanggalJadwal.getDate()));
+        try {
+            jadwalSalesRepository.save(jadwal);
+            clearFormJadwal();
+            selectMenu("jadwal");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data Jadwal! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_tambah_jadwalActionPerformed
+
+    private void btn_edit_jadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit_jadwalActionPerformed
+        model.JadwalSales jadwal = new model.JadwalSales();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        jadwal.setIdPelanggan(pelangganOptions.get(cPelangganJadwal.getSelectedIndex()).getIdPelanggan());
+        jadwal.setIdSales(Login.sessionSales.getIdSales());
+        jadwal.setKegiatan(txtKegiatanJadwal.getText());
+        jadwal.setWaktu(simpleDateFormat.format(tanggalJadwal.getDate()));
+        try {
+            jadwalSalesRepository.update(jadwal.toMap(), MapCustom.of("id_jadwal", jadwalSalesRepository.selectedData(tabel_jadwal).getIdJadwal()));
+            clearFormJadwal();
+            selectMenu("jadwal");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data Jadwal! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_edit_jadwalActionPerformed
+
+    private void btn_clear_jadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clear_jadwalActionPerformed
+        clearFormJadwal();
+    }//GEN-LAST:event_btn_clear_jadwalActionPerformed
+
+    private void btn_hapus_jadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus_jadwalActionPerformed
+        try {
+            jadwalSalesRepository.delete(MapCustom.of("id_jadwal", jadwalSalesRepository.selectedData(tabel_jadwal).getIdJadwal()));
+            clearFormJadwal();
+            selectMenu("jadwal");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus data Jadwal! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_hapus_jadwalActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        logout();
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void panel_jadwalMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_jadwalMouseDragged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_jadwalMouseDragged
+
+    private void panel_jadwalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_jadwalMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_jadwalMousePressed
+
+    private void tabel_pembayaranMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_pembayaranMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabel_pembayaranMouseClicked
+
+    private void btn_cari_pembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cari_pembayaranActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_cari_pembayaranActionPerformed
+
+    private void btn_clear_pembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clear_pembayaranActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_clear_pembayaranActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void panel_pembayaranMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_pembayaranMouseDragged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_pembayaranMouseDragged
+
+    private void panel_pembayaranMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_pembayaranMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_pembayaranMousePressed
+
+    private void txtTeleponPelangganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTeleponPelangganKeyPressed
+
+    }//GEN-LAST:event_txtTeleponPelangganKeyPressed
+
+    private void txtTeleponPelangganKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTeleponPelangganKeyTyped
+//        String[] numbers = {"0","1","2","3","4","5","6","7","8","9"};
+//        if (!ArrayUtils.contains(numbers, evt.getKeyChar()+"")) {
+//            evt.consume();
+//        }
+    }//GEN-LAST:event_txtTeleponPelangganKeyTyped
+
+    private void txtTeleponPelangganKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTeleponPelangganKeyReleased
+
+    }//GEN-LAST:event_txtTeleponPelangganKeyReleased
+
+    private void lbl_jadwalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_jadwalMouseClicked
+        selectMenu("jadwal");
+    }//GEN-LAST:event_lbl_jadwalMouseClicked
+
+    private void btn_tampilkan_jadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tampilkan_jadwalActionPerformed
+        tampilJadwal();
+    }//GEN-LAST:event_btn_tampilkan_jadwalActionPerformed
+
     int xx ,xy;
     
     void logout(){
@@ -1510,27 +2070,40 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.k33ptoo.components.KButton btn_cari_pembayaran;
+    private com.k33ptoo.components.KButton btn_clear_jadwal;
     private com.k33ptoo.components.KButton btn_clear_pelanggan;
     private com.k33ptoo.components.KButton btn_clear_pelanggan1;
+    private com.k33ptoo.components.KButton btn_clear_pembayaran;
     private javax.swing.JLabel btn_close;
+    private com.k33ptoo.components.KButton btn_edit_jadwal;
     private com.k33ptoo.components.KButton btn_edit_pelanggan;
     private com.k33ptoo.components.KButton btn_edit_pelanggan1;
+    private com.k33ptoo.components.KButton btn_hapus_jadwal;
     private com.k33ptoo.components.KButton btn_hapus_pelanggan;
     private com.k33ptoo.components.KButton btn_hapus_pelanggan1;
+    private javax.swing.JPanel btn_nav_jadwal;
     private javax.swing.JPanel btn_nav_layanan;
     private javax.swing.JPanel btn_nav_pelanggan;
+    private javax.swing.JPanel btn_nav_pembayaran;
     private javax.swing.JPanel btn_nav_report;
     private javax.swing.JPanel btn_nav_tansaksi;
+    private com.k33ptoo.components.KButton btn_tambah_jadwal;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan1;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan2;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan3;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan4;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan5;
+    private com.k33ptoo.components.KButton btn_tampilkan_jadwal;
     private javax.swing.JComboBox<String> cLayanan;
     private javax.swing.JComboBox<String> cPelanggan;
+    private javax.swing.JComboBox<String> cPelanggan2;
+    private javax.swing.JComboBox<String> cPelangganJadwal;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel10;
@@ -1547,12 +2120,20 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1568,30 +2149,43 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_jadwal;
     private javax.swing.JLabel lbl_layanan;
     private javax.swing.JLabel lbl_pelanggan;
+    private javax.swing.JLabel lbl_pembayaran;
     private javax.swing.JLabel lbl_report;
     private javax.swing.JLabel lbl_transaksi;
     private javax.swing.JPanel nav_panel;
     private javax.swing.JPanel panel_dashboard;
+    private javax.swing.JPanel panel_jadwal;
     private javax.swing.JPanel panel_layanan;
     private javax.swing.JPanel panel_pelanggan;
+    private javax.swing.JPanel panel_pembayaran;
     private javax.swing.JPanel panel_report;
     private javax.swing.JScrollPane panel_tabel1;
     private javax.swing.JScrollPane panel_tabel2;
+    private javax.swing.JScrollPane panel_tabel3;
     private javax.swing.JScrollPane panel_tabel4;
     private javax.swing.JScrollPane panel_tabel5;
+    private javax.swing.JScrollPane panel_tabel6;
     private javax.swing.JPanel panel_transaksi;
+    private javax.swing.JTable tabel_jadwal;
     private javax.swing.JTable tabel_layanan;
     private javax.swing.JTable tabel_pelanggan;
+    private javax.swing.JTable tabel_pembayaran;
     private javax.swing.JTable tabel_report;
     private javax.swing.JTable tabel_transaksi;
+    private com.toedter.calendar.JDateChooser tanggalJadwal;
     private com.toedter.calendar.JDateChooser tanggalMulai;
+    private com.toedter.calendar.JDateChooser tanggalMulaiJadwal;
     private com.toedter.calendar.JDateChooser tanggalMulaiReport;
     private com.toedter.calendar.JDateChooser tanggalSelesai;
+    private com.toedter.calendar.JDateChooser tanggalSelesaiJadwal;
     private com.toedter.calendar.JDateChooser tanggalSelesaiReport;
     private javax.swing.JTextField txtEmailPelanggan;
     private javax.swing.JTextField txtInstansiPelanggan;
+    private javax.swing.JTextArea txtKegiatanJadwal;
     private javax.swing.JTextField txtNIKPelanggan;
     private javax.swing.JTextField txtNamaPelanggan;
     private javax.swing.JTextField txtTeleponPelanggan;
