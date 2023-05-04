@@ -38,13 +38,6 @@
 					</textElement>
 					<text><![CDATA[Data Pelanggan]]></text>
 				</staticText>
-				<staticText>
-					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="b42091e8-a1f1-4425-9873-b42ea2e3b5ea"/>
-					<textElement textAlignment="Right">
-						<font size="14" isBold="false"/>
-					</textElement>
-					<text><![CDATA[]]></text>
-				</staticText>
 			</frame>
 		</band>
 	</title>

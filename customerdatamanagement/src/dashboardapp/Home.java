@@ -41,6 +41,8 @@ public class Home extends javax.swing.JFrame {
     PelangganRepository pelangganRepository;
     TransaksiRepository transaksiRepository;
     TransaksiRepository reportRepository;
+    TransaksiRepository pembayaranRepository;
+    PembayaranRepository pembayaranDetailRepository;
     JadwalSalesRepository jadwalSalesRepository;
     ArrayList<model.Pelanggan> pelangganOptions;
     ArrayList<model.Layanan> layananOptions;
@@ -50,6 +52,8 @@ public class Home extends javax.swing.JFrame {
         pelangganRepository = new PelangganRepository();
         transaksiRepository = new TransaksiRepository();
         reportRepository = new TransaksiRepository();
+        pembayaranRepository = new TransaksiRepository();
+        pembayaranDetailRepository = new PembayaranRepository();
         jadwalSalesRepository = new JadwalSalesRepository(false);
         selectMenu("dashboard");
         JTextField[] fields = {txtNIKPelanggan, txtTeleponPelanggan};
@@ -57,26 +61,34 @@ public class Home extends javax.swing.JFrame {
     }
     private void selectMenu(String menu) {
         panel_dashboard.setVisible(menu.equals("dashboard"));
-        Map<String, JPanel> mapPanel = MapCustom.of("layanan", panel_layanan, "pelanggan", panel_pelanggan, "transaksi", panel_transaksi, "report", panel_report, "jadwal", panel_jadwal);
-        Map<String, JPanel> mapBtnNav = MapCustom.of("layanan", btn_nav_layanan, "pelanggan", btn_nav_pelanggan, "transaksi", btn_nav_tansaksi, "report", btn_nav_report, "jadwal", btn_nav_jadwal);
-        Map<String, Repository> mapRepositories = MapCustom.of("layanan", layananRepository, "pelanggan", pelangganRepository, "transaksi", transaksiRepository, "report", reportRepository, "jadwal", jadwalSalesRepository);
-        Map<String, JTable> mapTable = MapCustom.of("layanan", tabel_layanan, "pelanggan", tabel_pelanggan, "transaksi", tabel_transaksi, "report", tabel_report, "jadwal", tabel_jadwal);
-        if (menu.equals("transaksi")) {
+        Map<String, JPanel> mapPanel = MapCustom.of("layanan", panel_layanan, "pelanggan", panel_pelanggan, "transaksi", panel_transaksi, "report", panel_report, "jadwal", panel_jadwal, "pembayaran", panel_pembayaran);
+        Map<String, JPanel> mapBtnNav = MapCustom.of("layanan", btn_nav_layanan, "pelanggan", btn_nav_pelanggan, "transaksi", btn_nav_tansaksi, "report", btn_nav_report, "jadwal", btn_nav_jadwal, "pembayaran", btn_nav_pembayaran);
+        Map<String, Repository> mapRepositories = MapCustom.of("layanan", layananRepository, "pelanggan", pelangganRepository, "transaksi", transaksiRepository, "report", reportRepository, "jadwal", jadwalSalesRepository, "pembayaran", pembayaranRepository);
+        Map<String, JTable> mapTable = MapCustom.of("layanan", tabel_layanan, "pelanggan", tabel_pelanggan, "transaksi", tabel_transaksi, "report", tabel_report, "jadwal", tabel_jadwal, "pembayaran", tabel_pembayaran);
+        if (menu.equals("transaksi") || menu.equals("pembayaran")) {
             try {
                 pelangganOptions = pelangganRepository.all();
-                cPelanggan.removeAllItems();
+                if (menu.equals("transaksi")) {
+                    cPelanggan.removeAllItems();
+
+                    layananOptions = layananRepository.all();
+                    cLayanan.removeAllItems();
+                    layananOptions.forEach((layananOption) -> {
+                        cLayanan.addItem(layananOption.getNama()+" - Rp."+layananOption.getHarga());
+                    });
+                } else {
+                    cPelangganPembayaran.removeAllItems();
+                }
                 pelangganOptions.forEach((pelangganOption) -> {
-                    cPelanggan.addItem(pelangganOption.getNamaPic()+" - "+pelangganOption.getNamaInstansi());
-                });
-                layananOptions = layananRepository.all();
-                cLayanan.removeAllItems();
-                layananOptions.forEach((layananOption) -> {
-                    cLayanan.addItem(layananOption.getNama()+" - Rp."+layananOption.getHarga());
+                    if (menu.equals("transaksi")) { 
+                        cPelanggan.addItem(pelangganOption.getNamaPic()+" - "+pelangganOption.getNamaInstansi());
+                    } else {
+                        cPelangganPembayaran.addItem(pelangganOption.getNamaPic()+" - "+pelangganOption.getNamaInstansi());
+                    }
                 });
             } catch (Exception e) {
             }
-        }
-        if (menu.equals("jadwal")) {
+        } else if (menu.equals("jadwal")) {
             try {
                 pelangganOptions = pelangganRepository.all();
                 cPelangganJadwal.removeAllItems();
@@ -98,6 +110,8 @@ public class Home extends javax.swing.JFrame {
                     tanggalMulaiJadwal.setDate(DateUtils.addDays(new Date(),-30));
                     tanggalSelesaiJadwal.setDate(new Date());
                     tampilJadwal();
+                } else if (menu.equals("pembayaran")){
+                    tampilPembayaran();
                 } else {
                     mapRepositories.get(key).renderDataTable(mapTable.get(key));
                 }
@@ -124,6 +138,19 @@ public class Home extends javax.swing.JFrame {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             ArrayList<model.Transaksi> rows = reportRepository.all(simpleDateFormat.format(tanggalMulaiReport.getDate()), simpleDateFormat.format(tanggalSelesaiReport.getDate()));
             reportRepository.renderDataTable(tabel_report, rows);
+        } catch (Exception ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    void tampilPembayaran() {
+        try {
+            pembayaranDetailRepository.renderDataTable(tabel_pembayaran_detail, new ArrayList<model.Pembayaran>());
+            if (cPelangganPembayaran.getSelectedIndex() >= 0) {
+                int idPelanggan = pelangganOptions.get(cPelangganPembayaran.getSelectedIndex()).getIdPelanggan();
+                ArrayList<model.Transaksi> rows = pembayaranRepository.all(idPelanggan);
+                pembayaranRepository.renderDataTable(tabel_pembayaran, rows);
+            }
         } catch (Exception ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -264,8 +291,6 @@ public class Home extends javax.swing.JFrame {
         btn_hapus_jadwal = new com.k33ptoo.components.KButton();
         jButton12 = new javax.swing.JButton();
         cPelangganJadwal = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtKegiatanJadwal = new javax.swing.JTextArea();
         jLabel41 = new javax.swing.JLabel();
         tanggalJadwal = new com.toedter.calendar.JDateChooser();
         jLabel44 = new javax.swing.JLabel();
@@ -273,15 +298,20 @@ public class Home extends javax.swing.JFrame {
         tanggalSelesaiJadwal = new com.toedter.calendar.JDateChooser();
         tanggalMulaiJadwal = new com.toedter.calendar.JDateChooser();
         btn_tampilkan_jadwal = new com.k33ptoo.components.KButton();
+        txtKegiatanJadwal = new javax.swing.JTextField();
+        btn_cetak_jadwal = new com.k33ptoo.components.KButton();
         panel_pembayaran = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         panel_tabel6 = new javax.swing.JScrollPane();
-        tabel_pembayaran = new javax.swing.JTable();
+        tabel_pembayaran_detail = new javax.swing.JTable();
         jLabel43 = new javax.swing.JLabel();
-        btn_cari_pembayaran = new com.k33ptoo.components.KButton();
-        btn_clear_pembayaran = new com.k33ptoo.components.KButton();
         jButton13 = new javax.swing.JButton();
-        cPelanggan2 = new javax.swing.JComboBox<>();
+        cPelangganPembayaran = new javax.swing.JComboBox<>();
+        btn_cetak_pembayaran = new com.k33ptoo.components.KButton();
+        panel_tabel7 = new javax.swing.JScrollPane();
+        tabel_pembayaran = new javax.swing.JTable();
+        jLabel46 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("APLIKASI CUSTOMER DATA MANAGEMENT");
@@ -457,7 +487,7 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.add(btn_nav_report, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 190, -1));
+        jPanel1.add(btn_nav_report, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 383, 190, -1));
 
         btn_nav_jadwal.setBackground(new java.awt.Color(255, 255, 255));
         btn_nav_jadwal.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -1383,22 +1413,16 @@ public class Home extends javax.swing.JFrame {
         panel_jadwal.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
         panel_jadwal.add(cPelangganJadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 370, -1));
 
-        txtKegiatanJadwal.setColumns(20);
-        txtKegiatanJadwal.setRows(5);
-        jScrollPane1.setViewportView(txtKegiatanJadwal);
-
-        panel_jadwal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 370, -1));
-
         jLabel41.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel41.setForeground(new java.awt.Color(0, 51, 153));
         jLabel41.setText("Kegiatan");
         panel_jadwal.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 140, 30));
-        panel_jadwal.add(tanggalJadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, 370, -1));
+        panel_jadwal.add(tanggalJadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 370, -1));
 
         jLabel44.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel44.setForeground(new java.awt.Color(0, 51, 153));
         jLabel44.setText("Waktu");
-        panel_jadwal.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 140, 30));
+        panel_jadwal.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 140, 30));
 
         jLabel45.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel45.setForeground(new java.awt.Color(0, 51, 153));
@@ -1414,6 +1438,16 @@ public class Home extends javax.swing.JFrame {
             }
         });
         panel_jadwal.add(btn_tampilkan_jadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, 83, 29));
+        panel_jadwal.add(txtKegiatanJadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 370, -1));
+
+        btn_cetak_jadwal.setText("Cetak");
+        btn_cetak_jadwal.setkStartColor(new java.awt.Color(204, 0, 204));
+        btn_cetak_jadwal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cetak_jadwalActionPerformed(evt);
+            }
+        });
+        panel_jadwal.add(btn_cetak_jadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 260, 83, 29));
 
         getContentPane().add(panel_jadwal, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -1437,6 +1471,76 @@ public class Home extends javax.swing.JFrame {
 
         panel_tabel6.setBackground(new java.awt.Color(247, 247, 247));
         panel_tabel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        tabel_pembayaran_detail.setBackground(new java.awt.Color(247, 247, 247));
+        tabel_pembayaran_detail.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tabel_pembayaran_detail.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Allan", "XLS", "2hrs", "$200"},
+                {"Brian", "React", "1hr", "$100 per hr"},
+                {"Romeo", "C#", "3 Days", "$1000"},
+                {"Alex", "C++ ", "10 hrs", "$50 per hr"}
+            },
+            new String [] {
+                "Name", "Project", "Time", "Cost"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabel_pembayaran_detail.setGridColor(new java.awt.Color(247, 247, 247));
+        tabel_pembayaran_detail.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        tabel_pembayaran_detail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_pembayaran_detailMouseClicked(evt);
+            }
+        });
+        panel_tabel6.setViewportView(tabel_pembayaran_detail);
+
+        panel_pembayaran.add(panel_tabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 710, 190));
+
+        jLabel43.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel43.setText("Pelanggan");
+        panel_pembayaran.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 140, 20));
+
+        jButton13.setBackground(new java.awt.Color(0, 51, 153));
+        jButton13.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton13.setForeground(new java.awt.Color(255, 255, 255));
+        jButton13.setText("X ");
+        jButton13.setBorder(null);
+        jButton13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton13.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+        panel_pembayaran.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
+
+        cPelangganPembayaran.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cPelangganPembayaranActionPerformed(evt);
+            }
+        });
+        panel_pembayaran.add(cPelangganPembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 390, 30));
+
+        btn_cetak_pembayaran.setText("Cetak");
+        btn_cetak_pembayaran.setkStartColor(new java.awt.Color(204, 0, 204));
+        btn_cetak_pembayaran.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cetak_pembayaranActionPerformed(evt);
+            }
+        });
+        panel_pembayaran.add(btn_cetak_pembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 60, 83, 29));
+
+        panel_tabel7.setBackground(new java.awt.Color(247, 247, 247));
+        panel_tabel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         tabel_pembayaran.setBackground(new java.awt.Color(247, 247, 247));
         tabel_pembayaran.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
@@ -1466,46 +1570,19 @@ public class Home extends javax.swing.JFrame {
                 tabel_pembayaranMouseClicked(evt);
             }
         });
-        panel_tabel6.setViewportView(tabel_pembayaran);
+        panel_tabel7.setViewportView(tabel_pembayaran);
 
-        panel_pembayaran.add(panel_tabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 710, 280));
+        panel_pembayaran.add(panel_tabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 710, 190));
 
-        jLabel43.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel43.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel43.setText("Pelanggan");
-        panel_pembayaran.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 140, 30));
+        jLabel46.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel46.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel46.setText("Detail Pembayaran : ");
+        panel_pembayaran.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 130, 20));
 
-        btn_cari_pembayaran.setText("Cari");
-        btn_cari_pembayaran.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_cari_pembayaranActionPerformed(evt);
-            }
-        });
-        panel_pembayaran.add(btn_cari_pembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 83, 29));
-
-        btn_clear_pembayaran.setText("Bersihkan");
-        btn_clear_pembayaran.setkStartColor(new java.awt.Color(255, 102, 51));
-        btn_clear_pembayaran.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_clear_pembayaranActionPerformed(evt);
-            }
-        });
-        panel_pembayaran.add(btn_clear_pembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, 83, 29));
-
-        jButton13.setBackground(new java.awt.Color(0, 51, 153));
-        jButton13.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jButton13.setForeground(new java.awt.Color(255, 255, 255));
-        jButton13.setText("X ");
-        jButton13.setBorder(null);
-        jButton13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jButton13.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jButton13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton13ActionPerformed(evt);
-            }
-        });
-        panel_pembayaran.add(jButton13, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
-        panel_pembayaran.add(cPelanggan2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 370, -1));
+        jLabel47.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel47.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel47.setText("Transaksi : ");
+        panel_pembayaran.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 80, 20));
 
         getContentPane().add(panel_pembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -1874,11 +1951,11 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_nav_jadwalMouseExited
 
     private void lbl_pembayaranMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_pembayaranMouseClicked
-        // TODO add your handling code here:
+        selectMenu("pembayaran");
     }//GEN-LAST:event_lbl_pembayaranMouseClicked
 
     private void btn_nav_pembayaranMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_pembayaranMouseClicked
-        // TODO add your handling code here:
+        selectMenu("pembayaran");
     }//GEN-LAST:event_btn_nav_pembayaranMouseClicked
 
     private void btn_nav_pembayaranMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_nav_pembayaranMouseEntered
@@ -1967,20 +2044,12 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_panel_jadwalMousePressed
 
-    private void tabel_pembayaranMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_pembayaranMouseClicked
+    private void tabel_pembayaran_detailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_pembayaran_detailMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_tabel_pembayaranMouseClicked
-
-    private void btn_cari_pembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cari_pembayaranActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_cari_pembayaranActionPerformed
-
-    private void btn_clear_pembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clear_pembayaranActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_clear_pembayaranActionPerformed
+    }//GEN-LAST:event_tabel_pembayaran_detailMouseClicked
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
+        logout();
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void panel_pembayaranMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_pembayaranMouseDragged
@@ -2013,6 +2082,60 @@ public class Home extends javax.swing.JFrame {
     private void btn_tampilkan_jadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tampilkan_jadwalActionPerformed
         tampilJadwal();
     }//GEN-LAST:event_btn_tampilkan_jadwalActionPerformed
+
+    private void btn_cetak_jadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetak_jadwalActionPerformed
+        try {
+            File jadwalSales = new File("src/report/jadwal_sales.jasper");
+            int idSales = Login.sessionSales.getIdSales();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String startTime = simpleDateFormat.format(tanggalMulaiJadwal.getDate());
+            String endTime = simpleDateFormat.format(tanggalSelesaiJadwal.getDate());
+            JasperPrint jp = JasperFillManager.fillReport(jadwalSales.getPath(), MapCustom.of(
+                    "param_id_sales", idSales,
+                    "param_start_date", startTime,
+                    "param_end_date", endTime
+            ), Koneksi.Koneksi.koneksidb());
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btn_cetak_jadwalActionPerformed
+
+    private void btn_cetak_pembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetak_pembayaranActionPerformed
+        if (tabel_pembayaran.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Harap pilih data transaksi terlebih dahulu");
+        } else {
+            try {
+                File jadwalSales = new File("src/report/pembayaran.jasper");
+                model.Transaksi data = pembayaranRepository.selectedData(tabel_pembayaran);
+                JasperPrint jp = JasperFillManager.fillReport(jadwalSales.getPath(), MapCustom.of(
+                        "id_transaksi", data.getIdTransaksi(),
+                        "tanggal_mulai", data.getTanggalMulai(),
+                        "tanggal_selesai", data.getTanggalSelesai(),
+                        "pelanggan", data.getPelanggan().getNamaPic()+" - "+data.getPelanggan().getNamaInstansi(),
+                        "layanan", data.getLayanan().getNama(),
+                        "total_harga", data.getTotalHarga()
+                ), Koneksi.Koneksi.koneksidb());
+                JasperViewer.viewReport(jp, false);
+            } catch (JRException e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }//GEN-LAST:event_btn_cetak_pembayaranActionPerformed
+
+    private void tabel_pembayaranMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_pembayaranMouseClicked
+        try {
+            model.Transaksi data = pembayaranRepository.selectedData(tabel_pembayaran);
+            ArrayList<model.Pembayaran> rows = pembayaranDetailRepository.all(data.getIdTransaksi());
+            pembayaranDetailRepository.renderDataTable(tabel_pembayaran_detail, rows);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_tabel_pembayaranMouseClicked
+
+    private void cPelangganPembayaranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cPelangganPembayaranActionPerformed
+        tampilPembayaran();
+    }//GEN-LAST:event_cPelangganPembayaranActionPerformed
 
     int xx ,xy;
     
@@ -2070,11 +2193,11 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.k33ptoo.components.KButton btn_cari_pembayaran;
+    private com.k33ptoo.components.KButton btn_cetak_jadwal;
+    private com.k33ptoo.components.KButton btn_cetak_pembayaran;
     private com.k33ptoo.components.KButton btn_clear_jadwal;
     private com.k33ptoo.components.KButton btn_clear_pelanggan;
     private com.k33ptoo.components.KButton btn_clear_pelanggan1;
-    private com.k33ptoo.components.KButton btn_clear_pembayaran;
     private javax.swing.JLabel btn_close;
     private com.k33ptoo.components.KButton btn_edit_jadwal;
     private com.k33ptoo.components.KButton btn_edit_pelanggan;
@@ -2098,8 +2221,8 @@ public class Home extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton btn_tampilkan_jadwal;
     private javax.swing.JComboBox<String> cLayanan;
     private javax.swing.JComboBox<String> cPelanggan;
-    private javax.swing.JComboBox<String> cPelanggan2;
     private javax.swing.JComboBox<String> cPelangganJadwal;
+    private javax.swing.JComboBox<String> cPelangganPembayaran;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -2134,6 +2257,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -2149,7 +2274,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_jadwal;
     private javax.swing.JLabel lbl_layanan;
     private javax.swing.JLabel lbl_pelanggan;
@@ -2169,11 +2293,13 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane panel_tabel4;
     private javax.swing.JScrollPane panel_tabel5;
     private javax.swing.JScrollPane panel_tabel6;
+    private javax.swing.JScrollPane panel_tabel7;
     private javax.swing.JPanel panel_transaksi;
     private javax.swing.JTable tabel_jadwal;
     private javax.swing.JTable tabel_layanan;
     private javax.swing.JTable tabel_pelanggan;
     private javax.swing.JTable tabel_pembayaran;
+    private javax.swing.JTable tabel_pembayaran_detail;
     private javax.swing.JTable tabel_report;
     private javax.swing.JTable tabel_transaksi;
     private com.toedter.calendar.JDateChooser tanggalJadwal;
@@ -2185,7 +2311,7 @@ public class Home extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser tanggalSelesaiReport;
     private javax.swing.JTextField txtEmailPelanggan;
     private javax.swing.JTextField txtInstansiPelanggan;
-    private javax.swing.JTextArea txtKegiatanJadwal;
+    private javax.swing.JTextField txtKegiatanJadwal;
     private javax.swing.JTextField txtNIKPelanggan;
     private javax.swing.JTextField txtNamaPelanggan;
     private javax.swing.JTextField txtTeleponPelanggan;

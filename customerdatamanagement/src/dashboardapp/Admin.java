@@ -17,6 +17,7 @@ import utils.MapCustom;
  * @author Easternisme
  */
 public class Admin extends javax.swing.JFrame {
+    public static model.Admin sessionAdmin;
 
     public Admin() {
         initComponents();
@@ -26,7 +27,9 @@ public class Admin extends javax.swing.JFrame {
             String pwd = new String(txt_pwd.getPassword());
             String mail = txt_email.getText();
             AdminRepository admin = new AdminRepository();
-            if (admin.first(MapCustom.of("email", mail, "password", pwd)) != null) {
+            model.Admin data = admin.first(MapCustom.of("email", mail, "password", pwd));
+            if (data != null) {
+                sessionAdmin = data;
                 JOptionPane.showMessageDialog(null, "Login Berhasil");
                 this.setVisible(false);
                 new AdminDashboard().setVisible(true);

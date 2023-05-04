@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="12b0f0e1-770b-4c51-a4fe-bca5e19336e6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="75024c8a-1a47-401a-b66c-efd69d234c23"/>
+	<subDataset name="dataset1" uuid="9d955066-84f5-451b-a8c1-d72c96b54004"/>
+	<parameter name="tanggal_mulai" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tanggal_selesai" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pelanggan" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="layanan" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="total_harga" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_transaksi" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     pembayaran.`tgl_bayar` AS tanggal_bayar,
+     pembayaran.`jumlah_pembayaran` AS jumlah_bayar,
+     pembayaran.`keterangan` AS keterangan
+FROM
+     `pembayaran` pembayaran
+WHERE pembayaran.id_transaksi = $P{id_transaksi}]]>
+	</queryString>
+	<field name="tanggal_bayar" class="java.sql.Date"/>
+	<field name="jumlah_bayar" class="java.lang.Integer"/>
+	<field name="keterangan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="78ef119b-81e0-46d3-a2ad-a5798900a08d"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="7ef944cc-be38-49e1-ad4e-b2314013da98"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Pembayaran]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="127">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="12" width="110" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="063e9cbc-8563-49b7-8997-27a11a1d7fae"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal Mulai]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="32" width="110" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="82501914-3e17-4172-a575-e7ad10175c62"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal Selesai]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="52" width="110" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="8c8276d3-2331-486a-9113-979d50d4ed8c"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pelanggan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="72" width="110" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="7fb48152-6aa6-4eab-bc2e-f19c282450b8"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Layanan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="92" width="110" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="b536e374-c39f-4295-a86d-17231677fc9e"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Harga]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="124" y="72" width="431" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="a834a60d-280e-4a7d-add9-af6654d1fe78"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{layanan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="124" y="92" width="431" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="9a00f671-7fd1-4fbc-b0ab-a96925927eaa"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{total_harga}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="124" y="52" width="431" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="4f738059-740b-4202-95f4-d3f8e0d10fbe"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pelanggan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="124" y="12" width="431" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="a8d28541-7ddb-4be4-80c2-033f49098ee3"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tanggal_mulai}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="124" y="32" width="431" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="9159c2c8-9bf1-49d6-a33f-423b7fd62f5e"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tanggal_selesai}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="b51d0fcb-cb24-4d61-b943-3eeefb34bd8a"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6b34fe14-9370-4e2e-a610-5b42d9c30fe2"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal Bayar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="279a9eae-f613-452a-a17e-5a10540e4914"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jumlah Bayar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="0c13d1b8-1119-4c17-a5d8-cad592f1bd6c"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Keterangan]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="0701b126-e07b-474f-93f4-51fec9f49055"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="185" height="20" uuid="1c9e50a7-5bc3-48ab-a4b4-558d2ba65595"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tanggal_bayar}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="185" y="0" width="185" height="20" uuid="e33f19c6-3ed3-46d5-a2b9-e97a5fcd30ec"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jumlah_bayar}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="370" y="0" width="185" height="20" uuid="128aa3cc-2a1b-4919-a89c-1c5a824603e2"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{keterangan}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="79360be6-15fa-49a3-a163-89ec798d6a79"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="8b92ea6e-88e7-449f-97a9-8966bf30b384"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="c085cd50-bdd4-46fb-b560-b453425539ab"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

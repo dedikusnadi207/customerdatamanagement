@@ -110,6 +110,19 @@ public class TransaksiRepository extends Repository<Transaksi> {
         return super.generateResult(rs);
     }
     
+    public ArrayList<Transaksi> all(int idPelanggan) throws Exception {
+         String sql = "SELECT * FROM transaksi "
+                + "INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan "
+                + "INNER JOIN layanan on layanan.id_layanan = transaksi.id_layanan "
+                + "INNER JOIN sales on sales.id_sales = transaksi.id_sales "
+                + "WHERE transaksi.id_pelanggan = ?";
+        PreparedStatement st = Koneksi.koneksidb().prepareStatement(sql);
+        st.setInt(1, idPelanggan);
+        ResultSet rs = st.executeQuery();
+
+        return super.generateResult(rs);
+    }
+    
     @Override
     public int save(Transaksi model) throws SQLException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

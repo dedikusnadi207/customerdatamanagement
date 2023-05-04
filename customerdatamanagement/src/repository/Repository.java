@@ -97,9 +97,9 @@ public abstract class Repository<T extends BaseModel> {
     public int save() throws SQLException {
         String sql = "INSERT INTO "+tableName()+" SET "+preparedFields();
         PreparedStatement ps = Koneksi.koneksidb().prepareStatement(sql);
-        ps = this.setPreparedStatement(ps, values);
         System.out.println(sql);
         System.out.println(values);
+        ps = this.setPreparedStatement(ps, values);
         return ps.executeUpdate();
     }
     

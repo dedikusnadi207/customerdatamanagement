@@ -15,4 +15,13 @@ import java.util.Map;
 public abstract class BaseModel {
     public abstract void fillData(ResultSet rs) throws SQLException;
     public abstract Map<String, Object> toMap();
+    
+    public boolean isColumnExist(ResultSet rs, String columnName) {
+        try {
+            rs.findColumn(columnName);
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }

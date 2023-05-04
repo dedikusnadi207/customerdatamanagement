@@ -32,13 +32,6 @@
 					</textElement>
 					<text><![CDATA[Data Layanan]]></text>
 				</staticText>
-				<staticText>
-					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="93e17a9f-c2a0-44fe-b519-51bfe4d13f2f"/>
-					<textElement textAlignment="Right">
-						<font size="14" isBold="false"/>
-					</textElement>
-					<text><![CDATA[]]></text>
-				</staticText>
 			</frame>
 		</band>
 	</title>

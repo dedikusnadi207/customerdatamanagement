@@ -7,6 +7,8 @@ package dashboardapp;
 
 import java.awt.Color;
 import java.io.File;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +44,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     PelangganRepository pelangganRepository;
     TransaksiRepository reportRepository;
     TransaksiRepository pembayaranRepository;
+    PembayaranRepository pembayaranDetailRepository;
     JadwalSalesRepository jadwalSalesRepository;
     ArrayList<model.Sales> salesOptions;
     ArrayList<model.Pelanggan> pelangganOptions;
@@ -54,19 +57,19 @@ public class AdminDashboard extends javax.swing.JFrame {
         pelangganRepository = new PelangganRepository();
         reportRepository = new TransaksiRepository();
         pembayaranRepository = new TransaksiRepository();
+        pembayaranDetailRepository = new PembayaranRepository();
         jadwalSalesRepository = new JadwalSalesRepository(true);
         selectMenu("dashboard");
-        JTextField[] fields = {txtHargaLayanan};
+        JTextField[] fields = {txtHargaLayanan, txtJumlahBayarPembayaranDetail};
         validator.handleNumberOnly(fields);
     }
     int infoId;
     private void selectMenu(String menu) {
         panel_dashboard.setVisible(menu.equals("dashboard"));
-        Map<String, JPanel> mapPanel = MapCustom.of("admin", panel_admin, "sales", panel_sales, "layanan", panel_layanan, "pelanggan", panel_pelanggan, "report", panel_report, "jadwal", panel_jadwal, "pembayaran", panel_pembayaran);
-        Map<String, JPanel> mapBtnNav = MapCustom.of("admin", btn_nav_admin, "sales", btn_nav_sales, "layanan", btn_nav_layanan, "pelanggan", btn_nav_pelanggan, "report", btn_nav_report, "jadwal", btn_nav_jadwal, "pembayaran", btn_nav_pembayaran);
-//        Map<String, JPanel> mapIndicator = MapCustom.of("admin", Indicator1, "sales", Indicator2, "layanan", Indicator3, "pembayaran", Indicator4);
-        Map<String, Repository> mapRepositories = MapCustom.of("admin", adminRepository, "sales", salesRepository, "layanan", layananRepository, "pelanggan", pelangganRepository, "report", reportRepository, "jadwal", jadwalSalesRepository, "pembayaran", informasiPerusahaanRepository);
-        Map<String, JTable> mapTable = MapCustom.of("admin", tbl_admin, "sales", tbl_sales, "layanan", tbl_layanan, "pelanggan", tabel_pelanggan, "report", tabel_report, "jadwal", tabel_jadwal);
+        Map<String, JPanel> mapPanel = MapCustom.of("admin", panel_admin, "sales", panel_sales, "layanan", panel_layanan, "pelanggan", panel_pelanggan, "report", panel_report, "jadwal", panel_jadwal, "pembayaran", panel_pembayaran, "pembayaran_detail", panel_pembayaran_detail);
+        Map<String, JPanel> mapBtnNav = MapCustom.of("admin", btn_nav_admin, "sales", btn_nav_sales, "layanan", btn_nav_layanan, "pelanggan", btn_nav_pelanggan, "report", btn_nav_report, "jadwal", btn_nav_jadwal, "pembayaran", btn_nav_pembayaran, "pembayaran_detail", btn_nav_pembayaran);
+        Map<String, Repository> mapRepositories = MapCustom.of("admin", adminRepository, "sales", salesRepository, "layanan", layananRepository, "pelanggan", pelangganRepository, "report", reportRepository, "jadwal", jadwalSalesRepository, "pembayaran", pembayaranRepository, "pembayaran_detail", pembayaranDetailRepository);
+        Map<String, JTable> mapTable = MapCustom.of("admin", tbl_admin, "sales", tbl_sales, "layanan", tbl_layanan, "pelanggan", tabel_pelanggan, "report", tabel_report, "jadwal", tabel_jadwal, "pembayaran", tabel_pembayaran, "pembayaran_detail", tabel_pembayaran_detail);
         try {
             if (menu.equals("jadwal")) {
                 salesOptions = salesRepository.all();
@@ -102,12 +105,23 @@ public class AdminDashboard extends javax.swing.JFrame {
                     tanggalMulaiPembayaran.setDate(DateUtils.addDays(new Date(),-30));
                     tanggalSelesaiPembayaran.setDate(new Date());
                     tampilPembayaran();
+                } else if (key.equals("pembayaran_detail")) {
+                    try {
+                        model.Transaksi data = pembayaranRepository.selectedData(tabel_pembayaran);
+                        ArrayList<model.Pembayaran> rows = pembayaranDetailRepository.all(data.getIdTransaksi());
+                        pembayaranDetailRepository.renderDataTable(tabel_pembayaran_detail, rows);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Gagal menampilkan data Pembayaran! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
                 } else {
                     mapRepositories.get(key).renderDataTable(mapTable.get(key));
                 }
             } else {
                 mapPanel.get(key).setVisible(false);
-                onLeaveClick(mapBtnNav.get(key));
+                if (!key.equals("pembayaran_detail")) {
+                    onLeaveClick(mapBtnNav.get(key));
+                }
             }
         });
     }
@@ -169,6 +183,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         txtEmailSales.setText("");
         txtPasswordSales.setText("");
         tbl_sales.clearSelection();
+    }
+    void clearFormPembayaranDetail(){
+        tanggalBayarPembayaranDetail.setDate(null);
+        txtJumlahBayarPembayaranDetail.setText("");
+        txtKeteranganPembayaranDetail.setText("");
+        tabel_pembayaran_detail.clearSelection();
     }
     void clearFormLayanan(){
         txtNamaLayanan.setText("");
@@ -285,6 +305,35 @@ public class AdminDashboard extends javax.swing.JFrame {
         panel_tabel8 = new javax.swing.JScrollPane();
         tabel_pembayaran = new javax.swing.JTable();
         btn_detail_pembayaran = new com.k33ptoo.components.KButton();
+        panel_pembayaran_detail = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        jButton12 = new javax.swing.JButton();
+        panel_tabel9 = new javax.swing.JScrollPane();
+        tabel_pembayaran_detail = new javax.swing.JTable();
+        lbl_kembali_pembayaran = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        btn_tambah2 = new com.k33ptoo.components.KButton();
+        btn_edit2 = new com.k33ptoo.components.KButton();
+        btn_hapus3 = new com.k33ptoo.components.KButton();
+        btn_hapus4 = new com.k33ptoo.components.KButton();
+        jLabel32 = new javax.swing.JLabel();
+        tanggalBayarPembayaranDetail = new com.toedter.calendar.JDateChooser();
+        jLabel33 = new javax.swing.JLabel();
+        txtJumlahBayarPembayaranDetail = new javax.swing.JTextField();
+        jLabel34 = new javax.swing.JLabel();
+        txtKeteranganPembayaranDetail = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        tanggalMulaiPembayaranDetail = new com.toedter.calendar.JDateChooser();
+        tanggalSelesaiPembayaranDetail = new com.toedter.calendar.JDateChooser();
+        txtTotalHargaPembayaranDetail = new javax.swing.JTextField();
+        txtPelangganPembayaranDetail = new javax.swing.JTextField();
+        txtLayananPembayaranDetail = new javax.swing.JTextField();
+        btn_tambah_pelanggan8 = new com.k33ptoo.components.KButton();
         panel_pelanggan = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
@@ -1278,7 +1327,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel19.setText("DATA PEMBAYARAN");
         panel_pembayaran.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
 
-        jButton10.setBackground(new java.awt.Color(0, 51, 153));
+        jButton10.setBackground(new java.awt.Color(0, 102, 102));
         jButton10.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jButton10.setForeground(new java.awt.Color(255, 255, 255));
         jButton10.setText("X ");
@@ -1363,6 +1412,314 @@ public class AdminDashboard extends javax.swing.JFrame {
         panel_pembayaran.add(btn_detail_pembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 500, 83, 29));
 
         getContentPane().add(panel_pembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 580));
+
+        panel_pembayaran_detail.setBackground(new java.awt.Color(247, 247, 247));
+        panel_pembayaran_detail.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panel_pembayaran_detailMouseDragged(evt);
+            }
+        });
+        panel_pembayaran_detail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panel_pembayaran_detailMousePressed(evt);
+            }
+        });
+        panel_pembayaran_detail.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel26.setText("DATA DETAIL PEMBAYARAN");
+        panel_pembayaran_detail.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 410, 20));
+
+        jButton12.setBackground(new java.awt.Color(0, 102, 102));
+        jButton12.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jButton12.setForeground(new java.awt.Color(255, 255, 255));
+        jButton12.setText("X ");
+        jButton12.setBorder(null);
+        jButton12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButton12.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+        panel_pembayaran_detail.add(jButton12, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 190, 40));
+
+        panel_tabel9.setBackground(new java.awt.Color(247, 247, 247));
+        panel_tabel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        tabel_pembayaran_detail.setBackground(new java.awt.Color(247, 247, 247));
+        tabel_pembayaran_detail.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tabel_pembayaran_detail.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Allan", "XLS", "2hrs", "$200"},
+                {"Brian", "React", "1hr", "$100 per hr"},
+                {"Romeo", "C#", "3 Days", "$1000"},
+                {"Alex", "C++ ", "10 hrs", "$50 per hr"}
+            },
+            new String [] {
+                "Name", "Project", "Time", "Cost"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabel_pembayaran_detail.setGridColor(new java.awt.Color(247, 247, 247));
+        tabel_pembayaran_detail.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        tabel_pembayaran_detail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_pembayaran_detailMouseClicked(evt);
+            }
+        });
+        panel_tabel9.setViewportView(tabel_pembayaran_detail);
+
+        panel_pembayaran_detail.add(panel_tabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 710, 230));
+
+        lbl_kembali_pembayaran.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbl_kembali_pembayaran.setForeground(new java.awt.Color(0, 0, 204));
+        lbl_kembali_pembayaran.setText("Kembali");
+        lbl_kembali_pembayaran.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbl_kembali_pembayaran.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_kembali_pembayaranMouseClicked(evt);
+            }
+        });
+        panel_pembayaran_detail.add(lbl_kembali_pembayaran, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Form Input"));
+
+        btn_tambah2.setText("Tambah");
+        btn_tambah2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambah2ActionPerformed(evt);
+            }
+        });
+
+        btn_edit2.setText("Edit");
+        btn_edit2.setkStartColor(new java.awt.Color(0, 51, 153));
+        btn_edit2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_edit2ActionPerformed(evt);
+            }
+        });
+
+        btn_hapus3.setText("Hapus");
+        btn_hapus3.setkStartColor(new java.awt.Color(255, 0, 0));
+        btn_hapus3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus3ActionPerformed(evt);
+            }
+        });
+
+        btn_hapus4.setText("Bersihkan");
+        btn_hapus4.setkStartColor(new java.awt.Color(255, 102, 51));
+        btn_hapus4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapus4ActionPerformed(evt);
+            }
+        });
+
+        jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel32.setText("Tanggal Bayar");
+
+        jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel33.setText("Jumlah Bayar");
+
+        txtJumlahBayarPembayaranDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtJumlahBayarPembayaranDetailActionPerformed(evt);
+            }
+        });
+
+        jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel34.setText("Keterangan");
+
+        txtKeteranganPembayaranDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtKeteranganPembayaranDetailActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(tanggalBayarPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtJumlahBayarPembayaranDetail)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtKeteranganPembayaranDetail)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_tambah2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_hapus3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_hapus4, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btn_tambah2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_edit2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtJumlahBayarPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11)
+                        .addComponent(btn_hapus3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
+                        .addComponent(btn_hapus4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(tanggalBayarPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtKeteranganPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 18, Short.MAX_VALUE))
+        );
+
+        panel_pembayaran_detail.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 380, 190));
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Transaksi"));
+
+        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel27.setText("Tanggal Mulai");
+
+        jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel29.setText("Tanggal Selesai");
+
+        jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel38.setText("Pelanggan");
+
+        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel30.setText("Layanan");
+
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel31.setText("Total Harga");
+
+        tanggalMulaiPembayaranDetail.setEnabled(false);
+
+        tanggalSelesaiPembayaranDetail.setEnabled(false);
+
+        txtTotalHargaPembayaranDetail.setEditable(false);
+        txtTotalHargaPembayaranDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalHargaPembayaranDetailActionPerformed(evt);
+            }
+        });
+
+        txtPelangganPembayaranDetail.setEditable(false);
+        txtPelangganPembayaranDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPelangganPembayaranDetailActionPerformed(evt);
+            }
+        });
+
+        txtLayananPembayaranDetail.setEditable(false);
+        txtLayananPembayaranDetail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLayananPembayaranDetailActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tanggalMulaiPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tanggalSelesaiPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPelangganPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtLayananPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTotalHargaPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(tanggalMulaiPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(tanggalSelesaiPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(txtPelangganPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(txtLayananPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(txtTotalHargaPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panel_pembayaran_detail.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 320, 190));
+
+        btn_tambah_pelanggan8.setText("Cetak");
+        btn_tambah_pelanggan8.setkStartColor(new java.awt.Color(204, 0, 204));
+        btn_tambah_pelanggan8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambah_pelanggan8ActionPerformed(evt);
+            }
+        });
+        panel_pembayaran_detail.add(btn_tambah_pelanggan8, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 520, 83, 29));
+
+        getContentPane().add(panel_pembayaran_detail, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 580));
 
         panel_pelanggan.setBackground(new java.awt.Color(247, 247, 247));
         panel_pelanggan.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -1712,7 +2069,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_layananMouseClicked
 
     private void lbl_pembayaranMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_pembayaranMouseClicked
-        
+        selectMenu("pembayaran");
     }//GEN-LAST:event_lbl_pembayaranMouseClicked
 
     private void jLabel21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseClicked
@@ -2079,7 +2436,24 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void btn_cetak_jadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetak_jadwalActionPerformed
-        // TODO add your handling code here:
+        try {
+            File jadwalSales = new File("src/report/jadwal_sales.jasper");
+            int idSales = 0;
+            if (cSalesJadwal.getSelectedIndex() > 0) {
+                idSales = salesOptions.get(cSalesJadwal.getSelectedIndex() - 1).getIdSales();
+            }
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String startTime = simpleDateFormat.format(tanggalMulaiJadwal.getDate());
+            String endTime = simpleDateFormat.format(tanggalSelesaiJadwal.getDate());
+            JasperPrint jp = JasperFillManager.fillReport(jadwalSales.getPath(), MapCustom.of(
+                    "param_id_sales", idSales,
+                    "param_start_date", startTime,
+                    "param_end_date", endTime
+            ), Koneksi.Koneksi.koneksidb());
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_btn_cetak_jadwalActionPerformed
 
     private void panel_jadwalMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_jadwalMouseDragged
@@ -2110,9 +2484,142 @@ public class AdminDashboard extends javax.swing.JFrame {
         if (tabel_pembayaran.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Pilih Data Transaksi Terlebih Dahulu");
         } else {
-            
+            try {
+                model.Transaksi data = pembayaranRepository.selectedData(tabel_pembayaran);
+                SimpleDateFormat sdfDb = new SimpleDateFormat("yyyy-MM-dd");
+                Date startDate = sdfDb.parse(data.getTanggalMulai());
+                Date endDate = sdfDb.parse(data.getTanggalSelesai());
+                tanggalMulaiPembayaranDetail.setDate(startDate);
+                tanggalSelesaiPembayaranDetail.setDate(endDate);
+                txtPelangganPembayaranDetail.setText(data.getPelanggan().getNamaPic()+" - "+data.getPelanggan().getNamaInstansi());
+                txtLayananPembayaranDetail.setText(data.getLayanan().getNama());
+                txtTotalHargaPembayaranDetail.setText(data.getTotalHarga()+"");
+                selectMenu("pembayaran_detail");
+            } catch (ParseException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
+            }
         }
     }//GEN-LAST:event_btn_detail_pembayaranActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        logout();
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void tabel_pembayaran_detailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_pembayaran_detailMouseClicked
+        try {
+            model.Pembayaran pembayaran = pembayaranDetailRepository.selectedData(tabel_pembayaran_detail);
+            SimpleDateFormat sdfDb = new SimpleDateFormat("yyyy-MM-dd");
+            Date tglBayar = sdfDb.parse(pembayaran.getTglBayar());
+            tanggalBayarPembayaranDetail.setDate(tglBayar);
+            txtJumlahBayarPembayaranDetail.setText(pembayaran.getJumlahPembayaran()+"");
+            txtKeteranganPembayaranDetail.setText(pembayaran.getKeterangan());
+        } catch (ParseException ex) {
+            Logger.getLogger(AdminDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_tabel_pembayaran_detailMouseClicked
+
+    private void panel_pembayaran_detailMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_pembayaran_detailMouseDragged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_pembayaran_detailMouseDragged
+
+    private void panel_pembayaran_detailMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel_pembayaran_detailMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_panel_pembayaran_detailMousePressed
+
+    private void lbl_kembali_pembayaranMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_kembali_pembayaranMouseClicked
+//        selectMenu("pembayaran");
+        panel_pembayaran_detail.setVisible(false);
+        panel_pembayaran.setVisible(true);
+    }//GEN-LAST:event_lbl_kembali_pembayaranMouseClicked
+
+    private void txtPelangganPembayaranDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPelangganPembayaranDetailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPelangganPembayaranDetailActionPerformed
+
+    private void txtLayananPembayaranDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLayananPembayaranDetailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLayananPembayaranDetailActionPerformed
+
+    private void txtTotalHargaPembayaranDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalHargaPembayaranDetailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalHargaPembayaranDetailActionPerformed
+
+    private void btn_tambah2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah2ActionPerformed
+        try {
+            model.Transaksi data = pembayaranRepository.selectedData(tabel_pembayaran);
+            model.Pembayaran pembayaran = new model.Pembayaran();
+            pembayaran.setIdAdmin(Admin.sessionAdmin.getIdAdmin());
+            pembayaran.setIdTransaksi(data.getIdTransaksi());
+            pembayaran.setJumlahPembayaran(Integer.parseInt(txtJumlahBayarPembayaranDetail.getText()));
+            pembayaran.setKeterangan(txtKeteranganPembayaranDetail.getText());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            pembayaran.setTglBayar(sdf.format(tanggalBayarPembayaranDetail.getDate()));
+            pembayaranDetailRepository.save(pembayaran);
+            clearFormPembayaranDetail();
+            selectMenu("pembayaran_detail");
+        } catch (NumberFormatException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data Pembayaran! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_tambah2ActionPerformed
+
+    private void btn_edit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_edit2ActionPerformed
+        try {
+            model.Transaksi data = pembayaranRepository.selectedData(tabel_pembayaran);
+            model.Pembayaran pembayaran = new model.Pembayaran();
+            pembayaran.setIdAdmin(Admin.sessionAdmin.getIdAdmin());
+            pembayaran.setIdTransaksi(data.getIdTransaksi());
+            pembayaran.setJumlahPembayaran(Integer.parseInt(txtJumlahBayarPembayaranDetail.getText()));
+            pembayaran.setKeterangan(txtKeteranganPembayaranDetail.getText());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            pembayaran.setTglBayar(sdf.format(tanggalBayarPembayaranDetail.getDate()));
+            pembayaranDetailRepository.update(pembayaran.toMap(), MapCustom.of("id_pembayaran", pembayaranDetailRepository.selectedData(tabel_pembayaran_detail).getIdPembayaran()));
+            clearFormPembayaranDetail();
+            selectMenu("pembayaran_detail");
+        } catch (NumberFormatException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menyimpan data Pembayaran! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_edit2ActionPerformed
+
+    private void btn_hapus3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus3ActionPerformed
+        try {
+            pembayaranDetailRepository.delete(MapCustom.of("id_pembayaran", pembayaranDetailRepository.selectedData(tabel_pembayaran_detail).getIdPembayaran()));
+            clearFormPembayaranDetail();
+            selectMenu("pembayaran_detail");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus data Pembayaran! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_hapus3ActionPerformed
+
+    private void btn_hapus4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapus4ActionPerformed
+        clearFormPembayaranDetail();
+    }//GEN-LAST:event_btn_hapus4ActionPerformed
+
+    private void txtJumlahBayarPembayaranDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJumlahBayarPembayaranDetailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtJumlahBayarPembayaranDetailActionPerformed
+
+    private void txtKeteranganPembayaranDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKeteranganPembayaranDetailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtKeteranganPembayaranDetailActionPerformed
+
+    private void btn_tambah_pelanggan8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan8ActionPerformed
+        try {
+            File jadwalSales = new File("src/report/pembayaran.jasper");
+            model.Transaksi data = pembayaranRepository.selectedData(tabel_pembayaran);
+            JasperPrint jp = JasperFillManager.fillReport(jadwalSales.getPath(), MapCustom.of(
+                    "id_transaksi", data.getIdTransaksi(),
+                    "tanggal_mulai", data.getTanggalMulai(),
+                    "tanggal_selesai", data.getTanggalSelesai(),
+                    "pelanggan", data.getPelanggan().getNamaPic()+" - "+data.getPelanggan().getNamaInstansi(),
+                    "layanan", data.getLayanan().getNama(),
+                    "total_harga", data.getTotalHarga()
+            ), Koneksi.Koneksi.koneksidb());
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btn_tambah_pelanggan8ActionPerformed
 
     int xx ,xy;
     
@@ -2171,6 +2678,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton btn_cetak_pelanggan;
     private com.k33ptoo.components.KButton btn_detail_pembayaran;
     private com.k33ptoo.components.KButton btn_edit1;
+    private com.k33ptoo.components.KButton btn_edit2;
     private com.k33ptoo.components.KButton btn_edit5;
     private com.k33ptoo.components.KButton btn_edit6;
     private com.k33ptoo.components.KButton btn_hapus1;
@@ -2178,6 +2686,8 @@ public class AdminDashboard extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton btn_hapus11;
     private com.k33ptoo.components.KButton btn_hapus12;
     private com.k33ptoo.components.KButton btn_hapus2;
+    private com.k33ptoo.components.KButton btn_hapus3;
+    private com.k33ptoo.components.KButton btn_hapus4;
     private com.k33ptoo.components.KButton btn_hapus9;
     private javax.swing.JPanel btn_nav_admin;
     private javax.swing.JPanel btn_nav_jadwal;
@@ -2187,6 +2697,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel btn_nav_report;
     private javax.swing.JPanel btn_nav_sales;
     private com.k33ptoo.components.KButton btn_tambah1;
+    private com.k33ptoo.components.KButton btn_tambah2;
     private com.k33ptoo.components.KButton btn_tambah5;
     private com.k33ptoo.components.KButton btn_tambah6;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan2;
@@ -2194,12 +2705,14 @@ public class AdminDashboard extends javax.swing.JFrame {
     private com.k33ptoo.components.KButton btn_tambah_pelanggan5;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan6;
     private com.k33ptoo.components.KButton btn_tambah_pelanggan7;
+    private com.k33ptoo.components.KButton btn_tambah_pelanggan8;
     private com.k33ptoo.components.KButton btn_tampilkan_jadwal;
     private com.k33ptoo.components.KButton btn_tampilkan_pembayaran;
     private javax.swing.JComboBox<String> cPelangganPembayaran;
     private javax.swing.JComboBox<String> cSalesJadwal;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton6;
@@ -2220,8 +2733,17 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
@@ -2236,9 +2758,11 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private java.awt.Label label1;
     private java.awt.Label label13;
     private java.awt.Label label14;
@@ -2250,6 +2774,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private java.awt.Label label3;
     private javax.swing.JLabel lbl_admin;
     private javax.swing.JLabel lbl_jadwal;
+    private javax.swing.JLabel lbl_kembali_pembayaran;
     private javax.swing.JLabel lbl_layanan;
     private javax.swing.JLabel lbl_pelanggan;
     private javax.swing.JLabel lbl_pembayaran;
@@ -2262,6 +2787,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel panel_layanan;
     private javax.swing.JPanel panel_pelanggan;
     private javax.swing.JPanel panel_pembayaran;
+    private javax.swing.JPanel panel_pembayaran_detail;
     private javax.swing.JPanel panel_report;
     private javax.swing.JPanel panel_sales;
     private javax.swing.JScrollPane panel_tabel1;
@@ -2271,15 +2797,20 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane panel_tabel5;
     private javax.swing.JScrollPane panel_tabel6;
     private javax.swing.JScrollPane panel_tabel8;
+    private javax.swing.JScrollPane panel_tabel9;
     private javax.swing.JTable tabel_jadwal;
     private javax.swing.JTable tabel_pelanggan;
     private javax.swing.JTable tabel_pembayaran;
+    private javax.swing.JTable tabel_pembayaran_detail;
     private javax.swing.JTable tabel_report;
+    private com.toedter.calendar.JDateChooser tanggalBayarPembayaranDetail;
     private com.toedter.calendar.JDateChooser tanggalMulaiJadwal;
     private com.toedter.calendar.JDateChooser tanggalMulaiPembayaran;
+    private com.toedter.calendar.JDateChooser tanggalMulaiPembayaranDetail;
     private com.toedter.calendar.JDateChooser tanggalMulaiReport;
     private com.toedter.calendar.JDateChooser tanggalSelesaiJadwal;
     private com.toedter.calendar.JDateChooser tanggalSelesaiPembayaran;
+    private com.toedter.calendar.JDateChooser tanggalSelesaiPembayaranDetail;
     private com.toedter.calendar.JDateChooser tanggalSelesaiReport;
     private javax.swing.JTable tbl_admin;
     private javax.swing.JTable tbl_layanan;
@@ -2288,10 +2819,15 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmailAdmin;
     private javax.swing.JTextField txtEmailSales;
     private javax.swing.JTextField txtHargaLayanan;
+    private javax.swing.JTextField txtJumlahBayarPembayaranDetail;
+    private javax.swing.JTextField txtKeteranganPembayaranDetail;
+    private javax.swing.JTextField txtLayananPembayaranDetail;
     private javax.swing.JTextField txtNamaAdmin;
     private javax.swing.JTextField txtNamaLayanan;
     private javax.swing.JTextField txtNamaSales;
     private javax.swing.JPasswordField txtPasswordAdmin;
     private javax.swing.JPasswordField txtPasswordSales;
+    private javax.swing.JTextField txtPelangganPembayaranDetail;
+    private javax.swing.JTextField txtTotalHargaPembayaranDetail;
     // End of variables declaration//GEN-END:variables
 }
