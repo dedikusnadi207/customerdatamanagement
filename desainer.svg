@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg
+PUBLIC "-//W3C//DTD SVG 1.1//EN"
+       "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg viewBox="56 39 868 692" width="812px" height="653px" xmlns="http://www.w3.org/2000/svg" version="1.1">
+   <line x1="372" y1="221" x2="362" y2="221" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="190" y1="429" x2="180" y2="429" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="362" y1="221" x2="190" y2="429" style="stroke:#b0b;stroke-width:1;"/>
+   <line x1="364.5" y1="221" x2="368.03553390593" y2="224.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="364.5" y1="221" x2="368.03553390593" y2="217.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="185" y1="429" x2="188.53553390593" y2="432.53553390593" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="185" y1="429" x2="188.53553390593" y2="425.46446609407" style="stroke:#b0b;stroke-width:2;"/>
+   <line x1="372" y1="241" x2="362" y2="241" style="stroke:#333;stroke-width:1;"/>
+   <line x1="173" y1="264" x2="163" y2="264" style="stroke:#333;stroke-width:1;"/>
+   <line x1="362" y1="241" x2="173" y2="264" style="stroke:#333;stroke-width:1;"/>
+   <line x1="364.5" y1="241" x2="368.03553390593" y2="244.53553390593" style="stroke:#333;stroke-width:2;"/>
+   <line x1="364.5" y1="241" x2="368.03553390593" y2="237.46446609407" style="stroke:#333;stroke-width:2;"/>
+   <line x1="168" y1="264" x2="171.53553390593" y2="267.53553390593" style="stroke:#333;stroke-width:2;"/>
+   <line x1="168" y1="264" x2="171.53553390593" y2="260.46446609407" style="stroke:#333;stroke-width:2;"/>
+   <line x1="372" y1="261" x2="362" y2="261" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="174" y1="112" x2="164" y2="112" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="362" y1="261" x2="174" y2="112" style="stroke:#c00;stroke-width:1;"/>
+   <line x1="364.5" y1="261" x2="368.03553390593" y2="264.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="364.5" y1="261" x2="368.03553390593" y2="257.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="169" y1="112" x2="172.53553390593" y2="115.53553390593" style="stroke:#c00;stroke-width:2;"/>
+   <line x1="169" y1="112" x2="172.53553390593" y2="108.46446609407" style="stroke:#c00;stroke-width:2;"/>
+   <rect width="78" height="20" x="679" y="277" style="fill:#007;stroke:black;"/>
+   <text width="78" height="20" x="684" y="291" style="fill:#fff;" font-family="Arial" font-size="16px"> admin</text>
+   <rect width="78" height="20" x="679" y="297" style="fill:#aea;stroke:black;"/>
+   <text width="78" height="20" x="684" y="311" style="fill:black;" font-family="Arial" font-size="16px">id_admin</text>
+   <rect width="78" height="20" x="679" y="317" style="fill:none;stroke:black;"/>
+   <text width="78" height="20" x="684" y="331" style="fill:black;" font-family="Arial" font-size="16px">nama</text>
+   <rect width="78" height="20" x="679" y="337" style="fill:none;stroke:black;"/>
+   <text width="78" height="20" x="684" y="351" style="fill:black;" font-family="Arial" font-size="16px">email</text>
+   <rect width="78" height="20" x="679" y="357" style="fill:none;stroke:black;"/>
+   <text width="78" height="20" x="684" y="371" style="fill:black;" font-family="Arial" font-size="16px">password</text>
+   <rect width="161" height="20" x="379" y="537" style="fill:#007;stroke:black;"/>
+   <text width="161" height="20" x="384" y="551" style="fill:#fff;" font-family="Arial" font-size="16px"> informasi_perusahaan</text>
+   <rect width="161" height="20" x="379" y="557" style="fill:#aea;stroke:black;"/>
+   <text width="161" height="20" x="384" y="571" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="161" height="20" x="379" y="577" style="fill:none;stroke:black;"/>
+   <text width="161" height="20" x="384" y="591" style="fill:black;" font-family="Arial" font-size="16px">nama_perusahaan</text>
+   <rect width="161" height="20" x="379" y="597" style="fill:none;stroke:black;"/>
+   <text width="161" height="20" x="384" y="611" style="fill:black;" font-family="Arial" font-size="16px">alamat</text>
+   <rect width="161" height="20" x="379" y="617" style="fill:none;stroke:black;"/>
+   <text width="161" height="20" x="384" y="631" style="fill:black;" font-family="Arial" font-size="16px">no_tlp</text>
+   <rect width="161" height="20" x="379" y="637" style="fill:none;stroke:black;"/>
+   <text width="161" height="20" x="384" y="651" style="fill:black;" font-family="Arial" font-size="16px">email</text>
+   <rect width="161" height="20" x="379" y="657" style="fill:none;stroke:black;"/>
+   <text width="161" height="20" x="384" y="671" style="fill:black;" font-family="Arial" font-size="16px">logo</text>
+   <rect width="102" height="20" x="751" y="464" style="fill:#007;stroke:black;"/>
+   <text width="102" height="20" x="756" y="478" style="fill:#fff;" font-family="Arial" font-size="16px"> jadwal_sales</text>
+   <rect width="102" height="20" x="751" y="484" style="fill:#aea;stroke:black;"/>
+   <text width="102" height="20" x="756" y="498" style="fill:black;" font-family="Arial" font-size="16px">id_jadwal</text>
+   <rect width="102" height="20" x="751" y="504" style="fill:none;stroke:black;"/>
+   <text width="102" height="20" x="756" y="518" style="fill:black;" font-family="Arial" font-size="16px">id_sales</text>
+   <rect width="102" height="20" x="751" y="524" style="fill:none;stroke:black;"/>
+   <text width="102" height="20" x="756" y="538" style="fill:black;" font-family="Arial" font-size="16px">id_pelanggan</text>
+   <rect width="102" height="20" x="751" y="544" style="fill:none;stroke:black;"/>
+   <text width="102" height="20" x="756" y="558" style="fill:black;" font-family="Arial" font-size="16px">kegiatan</text>
+   <rect width="102" height="20" x="751" y="564" style="fill:none;stroke:black;"/>
+   <text width="102" height="20" x="756" y="578" style="fill:black;" font-family="Arial" font-size="16px">waktu</text>
+   <rect width="83" height="20" x="80" y="234" style="fill:#007;stroke:black;"/>
+   <text width="83" height="20" x="85" y="248" style="fill:#fff;" font-family="Arial" font-size="16px"> layanan</text>
+   <rect width="83" height="20" x="80" y="254" style="fill:#aea;stroke:black;"/>
+   <text width="83" height="20" x="85" y="268" style="fill:black;" font-family="Arial" font-size="16px">id_layanan</text>
+   <rect width="83" height="20" x="80" y="274" style="fill:none;stroke:black;"/>
+   <text width="83" height="20" x="85" y="288" style="fill:black;" font-family="Arial" font-size="16px">nama</text>
+   <rect width="83" height="20" x="80" y="294" style="fill:none;stroke:black;"/>
+   <text width="83" height="20" x="85" y="308" style="fill:black;" font-family="Arial" font-size="16px">deskripsi</text>
+   <rect width="83" height="20" x="80" y="314" style="fill:none;stroke:black;"/>
+   <text width="83" height="20" x="85" y="328" style="fill:black;" font-family="Arial" font-size="16px">harga</text>
+   <rect width="109" height="20" x="71" y="399" style="fill:#007;stroke:black;"/>
+   <text width="109" height="20" x="76" y="413" style="fill:#fff;" font-family="Arial" font-size="16px"> pelanggan</text>
+   <rect width="109" height="20" x="71" y="419" style="fill:#aea;stroke:black;"/>
+   <text width="109" height="20" x="76" y="433" style="fill:black;" font-family="Arial" font-size="16px">id_pelanggan</text>
+   <rect width="109" height="20" x="71" y="439" style="fill:none;stroke:black;"/>
+   <text width="109" height="20" x="76" y="453" style="fill:black;" font-family="Arial" font-size="16px">nik</text>
+   <rect width="109" height="20" x="71" y="459" style="fill:none;stroke:black;"/>
+   <text width="109" height="20" x="76" y="473" style="fill:black;" font-family="Arial" font-size="16px">nama_pic</text>
+   <rect width="109" height="20" x="71" y="479" style="fill:none;stroke:black;"/>
+   <text width="109" height="20" x="76" y="493" style="fill:black;" font-family="Arial" font-size="16px">nama_instansi</text>
+   <rect width="109" height="20" x="71" y="499" style="fill:none;stroke:black;"/>
+   <text width="109" height="20" x="76" y="513" style="fill:black;" font-family="Arial" font-size="16px">no_tlp</text>
+   <rect width="109" height="20" x="71" y="519" style="fill:none;stroke:black;"/>
+   <text width="109" height="20" x="76" y="533" style="fill:black;" font-family="Arial" font-size="16px">email</text>
+   <rect width="152" height="20" x="655" y="54" style="fill:#007;stroke:black;"/>
+   <text width="152" height="20" x="660" y="68" style="fill:#fff;" font-family="Arial" font-size="16px"> pembayaran</text>
+   <rect width="152" height="20" x="655" y="74" style="fill:#aea;stroke:black;"/>
+   <text width="152" height="20" x="660" y="88" style="fill:black;" font-family="Arial" font-size="16px">id_pembayaran</text>
+   <rect width="152" height="20" x="655" y="94" style="fill:none;stroke:black;"/>
+   <text width="152" height="20" x="660" y="108" style="fill:black;" font-family="Arial" font-size="16px">id_transaksi</text>
+   <rect width="152" height="20" x="655" y="114" style="fill:none;stroke:black;"/>
+   <text width="152" height="20" x="660" y="128" style="fill:black;" font-family="Arial" font-size="16px">jumlah_pembayaran</text>
+   <rect width="152" height="20" x="655" y="134" style="fill:none;stroke:black;"/>
+   <text width="152" height="20" x="660" y="148" style="fill:black;" font-family="Arial" font-size="16px">tgl_bayar</text>
+   <rect width="152" height="20" x="655" y="154" style="fill:none;stroke:black;"/>
+   <text width="152" height="20" x="660" y="168" style="fill:black;" font-family="Arial" font-size="16px">keterangan</text>
+   <rect width="152" height="20" x="655" y="174" style="fill:none;stroke:black;"/>
+   <text width="152" height="20" x="660" y="188" style="fill:black;" font-family="Arial" font-size="16px">id_admin</text>
+   <rect width="78" height="20" x="86" y="82" style="fill:#007;stroke:black;"/>
+   <text width="78" height="20" x="91" y="96" style="fill:#fff;" font-family="Arial" font-size="16px"> sales</text>
+   <rect width="78" height="20" x="86" y="102" style="fill:#aea;stroke:black;"/>
+   <text width="78" height="20" x="91" y="116" style="fill:black;" font-family="Arial" font-size="16px">id_sales</text>
+   <rect width="78" height="20" x="86" y="122" style="fill:none;stroke:black;"/>
+   <text width="78" height="20" x="91" y="136" style="fill:black;" font-family="Arial" font-size="16px">nama</text>
+   <rect width="78" height="20" x="86" y="142" style="fill:none;stroke:black;"/>
+   <text width="78" height="20" x="91" y="156" style="fill:black;" font-family="Arial" font-size="16px">email</text>
+   <rect width="78" height="20" x="86" y="162" style="fill:none;stroke:black;"/>
+   <text width="78" height="20" x="91" y="176" style="fill:black;" font-family="Arial" font-size="16px">password</text>
+   <rect width="118" height="20" x="372" y="131" style="fill:#007;stroke:black;"/>
+   <text width="118" height="20" x="377" y="145" style="fill:#fff;" font-family="Arial" font-size="16px"> transaksi</text>
+   <rect width="118" height="20" x="372" y="151" style="fill:#aea;stroke:black;"/>
+   <text width="118" height="20" x="377" y="165" style="fill:black;" font-family="Arial" font-size="16px">id_transaksi</text>
+   <rect width="118" height="20" x="372" y="171" style="fill:none;stroke:black;"/>
+   <text width="118" height="20" x="377" y="185" style="fill:black;" font-family="Arial" font-size="16px">tanggal_mulai</text>
+   <rect width="118" height="20" x="372" y="191" style="fill:none;stroke:black;"/>
+   <text width="118" height="20" x="377" y="205" style="fill:black;" font-family="Arial" font-size="16px">tanggal_selesai</text>
+   <rect width="118" height="20" x="372" y="211" style="fill:none;stroke:black;"/>
+   <text width="118" height="20" x="377" y="225" style="fill:black;" font-family="Arial" font-size="16px">id_pelanggan</text>
+   <rect width="118" height="20" x="372" y="231" style="fill:none;stroke:black;"/>
+   <text width="118" height="20" x="377" y="245" style="fill:black;" font-family="Arial" font-size="16px">id_layanan</text>
+   <rect width="118" height="20" x="372" y="251" style="fill:none;stroke:black;"/>
+   <text width="118" height="20" x="377" y="265" style="fill:black;" font-family="Arial" font-size="16px">id_sales</text>
+   <rect width="118" height="20" x="372" y="271" style="fill:none;stroke:black;"/>
+   <text width="118" height="20" x="377" y="285" style="fill:black;" font-family="Arial" font-size="16px">total_harga</text>
+   <rect width="118" height="20" x="372" y="291" style="fill:none;stroke:black;"/>
+   <text width="118" height="20" x="377" y="305" style="fill:black;" font-family="Arial" font-size="16px">status</text>
+   <rect width="118" height="20" x="372" y="311" style="fill:none;stroke:black;"/>
+   <text width="118" height="20" x="377" y="325" style="fill:black;" font-family="Arial" font-size="16px">created_at</text>
+   <rect width="118" height="20" x="372" y="331" style="fill:none;stroke:black;"/>
+   <text width="118" height="20" x="377" y="345" style="fill:black;" font-family="Arial" font-size="16px">updated_at</text>
+</svg>
