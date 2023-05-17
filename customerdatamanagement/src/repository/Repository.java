@@ -208,4 +208,19 @@ public abstract class Repository<T extends BaseModel> {
         }
         return result;
     }
+    
+    public int count() {
+        try {
+            String sql = "SELECT COUNT(1) FROM "+tableName();
+            Statement st = Koneksi.koneksidb().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PelangganRepository.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+        return 0;
+    }
 }

@@ -14,6 +14,9 @@
   * @author dedikusnadi
   */
  public class Transaksi extends BaseModel{
+    public static String STATUS_PROSES = "PROSES";
+    public static String STATUS_LUNAS = "LUNAS";
+     
      private int idTransaksi;
      private String tanggalMulai;
      private String tanggalSelesai;
@@ -24,6 +27,7 @@
      private int idSales;
      private Sales sales;
      private int totalHarga;
+     private String status;
      private String createdAt;
      private String updatedAt;
  
@@ -36,6 +40,7 @@
         this.idLayanan = rs.getInt("id_layanan");
         this.idSales = rs.getInt("id_sales");
         this.totalHarga = rs.getInt("total_harga");
+        this.status = rs.getString("status");
         this.createdAt = rs.getString("created_at");
         this.updatedAt = rs.getString("updated_at");
         
@@ -62,6 +67,7 @@
      public int getIdSales(){ return this.idSales; };
      public Sales getSales(){ return this.sales; };
      public int getTotalHarga(){ return this.totalHarga; };
+     public String getStatus(){ return this.status; };
      public String getCreatedAt(){ return this.createdAt; };
      public String getUpdatedAt(){ return this.updatedAt; };
  
@@ -72,6 +78,7 @@
      public void setIdLayanan(int idLayanan){ this.idLayanan = idLayanan; }
      public void setIdSales(int idSales){ this.idSales = idSales; }
      public void setTotalHarga(int totalHarga){ this.totalHarga = totalHarga; }
+     public void setStatus(String status){ this.status = status; }
      public void setCreatedAt(String createdAt){ this.createdAt = createdAt; }
      public void setUpdatedAt(String updatedAt){ this.updatedAt = updatedAt; }
  
@@ -85,6 +92,7 @@
          if (this.idLayanan != 0) { result.put("id_layanan", this.idLayanan); }
          if (this.idSales != 0) { result.put("id_sales", this.idSales); }
          if (this.totalHarga != 0) { result.put("total_harga", this.totalHarga); }
+         if (this.status != null && !this.status.equals("")) { result.put("status", this.status); }
          if (this.createdAt != null && !this.createdAt.equals("")) { result.put("created_at", this.createdAt); }
          if (this.updatedAt != null && !this.updatedAt.equals("")) { result.put("updated_at", this.updatedAt); }
          return result;

@@ -10,7 +10,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Transaksi;
+import org.apache.commons.lang.time.DateUtils;
 import utils.MapCustom;
 
 /*
@@ -138,5 +141,19 @@ public class TransaksiRepository extends Repository<Transaksi> {
         setValues(values);
         setConds(conds);
         return update();
+    }
+    
+    public ArrayList<Transaksi> endInDays(int days) throws Exception {
+        String sql = "SELECT * FROM transaksi "
+                + "INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan "
+                + "INNER JOIN layanan on layanan.id_layanan = transaksi.id_layanan "
+                + "INNER JOIN sales on sales.id_sales = transaksi.id_sales "
+                + "WHERE tanggal_selesai >= ? AND tanggal_selesai <= ?";
+        PreparedStatement st = Koneksi.koneksidb().prepareStatement(sql);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        st.setString(1, sdf.format(new Date()));
+        st.setString(2, sdf.format(DateUtils.addDays(new Date(),days)));
+        ResultSet rs = st.executeQuery();
+        return this.generateResult(rs);
     }
 }

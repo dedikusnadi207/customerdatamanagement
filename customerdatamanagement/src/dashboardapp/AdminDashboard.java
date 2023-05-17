@@ -71,7 +71,10 @@ public class AdminDashboard extends javax.swing.JFrame {
         Map<String, Repository> mapRepositories = MapCustom.of("admin", adminRepository, "sales", salesRepository, "layanan", layananRepository, "pelanggan", pelangganRepository, "report", reportRepository, "jadwal", jadwalSalesRepository, "pembayaran", pembayaranRepository, "pembayaran_detail", pembayaranDetailRepository);
         Map<String, JTable> mapTable = MapCustom.of("admin", tbl_admin, "sales", tbl_sales, "layanan", tbl_layanan, "pelanggan", tabel_pelanggan, "report", tabel_report, "jadwal", tabel_jadwal, "pembayaran", tabel_pembayaran, "pembayaran_detail", tabel_pembayaran_detail);
         try {
-            if (menu.equals("jadwal")) {
+            if (menu.equals("dashboard")) {
+                lbl_dashboard_layanan.setText(layananRepository.count()+"");
+                lbl_dashboard_sales.setText(salesRepository.count()+"");
+            } else if (menu.equals("jadwal")) {
                 salesOptions = salesRepository.all();
                 cSalesJadwal.removeAllItems();
                 cSalesJadwal.addItem("--- Semua Sales ---");
@@ -233,16 +236,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         nav_panel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        lbl_dashboard_layanan = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        lbl_dashboard_sales = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jPanel12 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
         panel_admin = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -732,9 +731,9 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel8.setText("500");
+        lbl_dashboard_layanan.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbl_dashboard_layanan.setForeground(new java.awt.Color(0, 51, 153));
+        lbl_dashboard_layanan.setText("500");
 
         jPanel11.setBackground(new java.awt.Color(0, 204, 204));
 
@@ -756,7 +755,7 @@ public class AdminDashboard extends javax.swing.JFrame {
             .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_dashboard_layanan, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -765,17 +764,17 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_dashboard_layanan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(83, 83, 83))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel9.setText("50");
-        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 22, -1, -1));
+        lbl_dashboard_sales.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbl_dashboard_sales.setForeground(new java.awt.Color(0, 51, 153));
+        lbl_dashboard_sales.setText("50");
+        jPanel4.add(lbl_dashboard_sales, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 22, -1, -1));
 
         jPanel10.setBackground(new java.awt.Color(0, 204, 204));
 
@@ -796,33 +795,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(0, 51, 153));
         jLabel10.setText("Jumlah Sales");
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel11.setText("$2000");
-        jPanel5.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 21, 75, -1));
-
-        jPanel12.setBackground(new java.awt.Color(0, 204, 204));
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 130, Short.MAX_VALUE)
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
-        );
-
-        jPanel5.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 130, 10));
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel12.setText("Jumlah Admin");
-
         javax.swing.GroupLayout nav_panelLayout = new javax.swing.GroupLayout(nav_panel);
         nav_panel.setLayout(nav_panelLayout);
         nav_panelLayout.setHorizontalGroup(
@@ -839,21 +811,13 @@ public class AdminDashboard extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nav_panelLayout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(48, 48, 48)
-                .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
         nav_panelLayout.setVerticalGroup(
             nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nav_panelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(nav_panelLayout.createSequentialGroup()
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(nav_panelLayout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(7, 7, 7)
@@ -1661,18 +1625,23 @@ public class AdminDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
                         .addComponent(tanggalMulaiPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
                         .addComponent(tanggalSelesaiPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
                         .addComponent(txtPelangganPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
                         .addComponent(txtLayananPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
                         .addComponent(txtTotalHargaPembayaranDetail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -2720,8 +2689,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -2750,18 +2717,14 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private java.awt.Label label1;
     private java.awt.Label label13;
@@ -2773,6 +2736,8 @@ public class AdminDashboard extends javax.swing.JFrame {
     private java.awt.Label label2;
     private java.awt.Label label3;
     private javax.swing.JLabel lbl_admin;
+    private javax.swing.JLabel lbl_dashboard_layanan;
+    private javax.swing.JLabel lbl_dashboard_sales;
     private javax.swing.JLabel lbl_jadwal;
     private javax.swing.JLabel lbl_kembali_pembayaran;
     private javax.swing.JLabel lbl_layanan;

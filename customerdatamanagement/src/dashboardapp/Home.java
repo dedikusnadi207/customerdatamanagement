@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import model.Layanan;
 import model.Pelanggan;
+import model.Transaksi;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -65,7 +66,15 @@ public class Home extends javax.swing.JFrame {
         Map<String, JPanel> mapBtnNav = MapCustom.of("layanan", btn_nav_layanan, "pelanggan", btn_nav_pelanggan, "transaksi", btn_nav_tansaksi, "report", btn_nav_report, "jadwal", btn_nav_jadwal, "pembayaran", btn_nav_pembayaran);
         Map<String, Repository> mapRepositories = MapCustom.of("layanan", layananRepository, "pelanggan", pelangganRepository, "transaksi", transaksiRepository, "report", reportRepository, "jadwal", jadwalSalesRepository, "pembayaran", pembayaranRepository);
         Map<String, JTable> mapTable = MapCustom.of("layanan", tabel_layanan, "pelanggan", tabel_pelanggan, "transaksi", tabel_transaksi, "report", tabel_report, "jadwal", tabel_jadwal, "pembayaran", tabel_pembayaran);
-        if (menu.equals("transaksi") || menu.equals("pembayaran")) {
+        if (menu.equals("dashboard")) {
+            try {
+                lbl_dashboard_pelanggan.setText(pelangganRepository.count()+"");
+                lbl_dashboard_transaksi.setText(transaksiRepository.count()+"");
+                transaksiRepository.renderDataTable(tabel_dashboard_transaksi, transaksiRepository.endInDays(30));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Gagal menampilkan data! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (menu.equals("transaksi") || menu.equals("pembayaran")) {
             try {
                 pelangganOptions = pelangganRepository.all();
                 if (menu.equals("transaksi")) {
@@ -212,19 +221,18 @@ public class Home extends javax.swing.JFrame {
         nav_panel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        lbl_dashboard_pelanggan = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        lbl_dashboard_transaksi = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jPanel12 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         btn_close = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        panel_tabel8 = new javax.swing.JScrollPane();
+        tabel_dashboard_transaksi = new javax.swing.JTable();
         panel_layanan = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
         panel_tabel4 = new javax.swing.JScrollPane();
@@ -639,9 +647,9 @@ public class Home extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel8.setText("500");
+        lbl_dashboard_pelanggan.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbl_dashboard_pelanggan.setForeground(new java.awt.Color(0, 51, 153));
+        lbl_dashboard_pelanggan.setText("500");
 
         jPanel11.setBackground(new java.awt.Color(102, 153, 255));
 
@@ -663,7 +671,7 @@ public class Home extends javax.swing.JFrame {
             .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_dashboard_pelanggan, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -672,17 +680,17 @@ public class Home extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_dashboard_pelanggan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(83, 83, 83))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel9.setText("50");
-        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 22, -1, -1));
+        lbl_dashboard_transaksi.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbl_dashboard_transaksi.setForeground(new java.awt.Color(0, 51, 153));
+        lbl_dashboard_transaksi.setText("50");
+        jPanel4.add(lbl_dashboard_transaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 22, -1, -1));
 
         jPanel10.setBackground(new java.awt.Color(102, 153, 255));
 
@@ -703,42 +711,15 @@ public class Home extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(0, 51, 153));
         jLabel10.setText("Jumlah Transaksi");
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel11.setText("$2000");
-        jPanel5.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 21, 75, -1));
-
-        jPanel12.setBackground(new java.awt.Color(102, 153, 255));
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 130, Short.MAX_VALUE)
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
-        );
-
-        jPanel5.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 130, 10));
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel12.setText("Pemasukan");
-
         javax.swing.GroupLayout nav_panelLayout = new javax.swing.GroupLayout(nav_panel);
         nav_panel.setLayout(nav_panelLayout);
         nav_panelLayout.setHorizontalGroup(
             nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(nav_panelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nav_panelLayout.createSequentialGroup()
                         .addGap(58, 58, 58)
@@ -746,21 +727,13 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nav_panelLayout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(48, 48, 48)
-                .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(204, Short.MAX_VALUE))
         );
         nav_panelLayout.setVerticalGroup(
             nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nav_panelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(nav_panelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(nav_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(nav_panelLayout.createSequentialGroup()
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(nav_panelLayout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(7, 7, 7)
@@ -769,10 +742,10 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panel_dashboard.add(nav_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 480, 150));
+        panel_dashboard.add(nav_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 480, 150));
 
         jPanel8.setBackground(new java.awt.Color(0, 51, 153));
         jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -813,6 +786,46 @@ public class Home extends javax.swing.JFrame {
         jLabel42.setForeground(new java.awt.Color(0, 51, 153));
         jLabel42.setText("APLIKASI PENGELOLAAN DATA PELANGGAN");
         panel_dashboard.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 23, 410, 37));
+
+        jLabel48.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel48.setText("Notifikasi Transaksi :");
+        panel_dashboard.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 130, 20));
+
+        panel_tabel8.setBackground(new java.awt.Color(247, 247, 247));
+        panel_tabel8.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        tabel_dashboard_transaksi.setBackground(new java.awt.Color(247, 247, 247));
+        tabel_dashboard_transaksi.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        tabel_dashboard_transaksi.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {"Allan", "XLS", "2hrs", "$200"},
+                {"Brian", "React", "1hr", "$100 per hr"},
+                {"Romeo", "C#", "3 Days", "$1000"},
+                {"Alex", "C++ ", "10 hrs", "$50 per hr"}
+            },
+            new String [] {
+                "Name", "Project", "Time", "Cost"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabel_dashboard_transaksi.setGridColor(new java.awt.Color(247, 247, 247));
+        tabel_dashboard_transaksi.setSelectionBackground(new java.awt.Color(96, 83, 150));
+        tabel_dashboard_transaksi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_dashboard_transaksiMouseClicked(evt);
+            }
+        });
+        panel_tabel8.setViewportView(tabel_dashboard_transaksi);
+
+        panel_dashboard.add(panel_tabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 710, 190));
 
         getContentPane().add(panel_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 770, 530));
 
@@ -1851,6 +1864,7 @@ public class Home extends javax.swing.JFrame {
         transaksi.setIdLayanan(layananOptions.get(cLayanan.getSelectedIndex()).getIdLayanan());
         transaksi.setIdSales(Login.sessionSales.getIdSales());
         transaksi.setTotalHarga(layananOptions.get(cLayanan.getSelectedIndex()).getHarga());
+        transaksi.setStatus(Transaksi.STATUS_PROSES);
         try {
             transaksiRepository.save(transaksi);
             clearFormTransaksi();
@@ -2137,6 +2151,10 @@ public class Home extends javax.swing.JFrame {
         tampilPembayaran();
     }//GEN-LAST:event_cPelangganPembayaranActionPerformed
 
+    private void tabel_dashboard_transaksiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_dashboard_transaksiMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabel_dashboard_transaksiMouseClicked
+
     int xx ,xy;
     
     void logout(){
@@ -2230,8 +2248,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -2259,21 +2275,20 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JLabel lbl_dashboard_pelanggan;
+    private javax.swing.JLabel lbl_dashboard_transaksi;
     private javax.swing.JLabel lbl_jadwal;
     private javax.swing.JLabel lbl_layanan;
     private javax.swing.JLabel lbl_pelanggan;
@@ -2294,7 +2309,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane panel_tabel5;
     private javax.swing.JScrollPane panel_tabel6;
     private javax.swing.JScrollPane panel_tabel7;
+    private javax.swing.JScrollPane panel_tabel8;
     private javax.swing.JPanel panel_transaksi;
+    private javax.swing.JTable tabel_dashboard_transaksi;
     private javax.swing.JTable tabel_jadwal;
     private javax.swing.JTable tabel_layanan;
     private javax.swing.JTable tabel_pelanggan;
