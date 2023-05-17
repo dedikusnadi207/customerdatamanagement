@@ -1,6 +1,6 @@
 /*
-SQLyog Professional v12.5.1 (32 bit)
-MySQL - 10.4.24-MariaDB : Database - customerdatamanagement
+SQLyog Ultimate v12.5.1 (64 bit)
+MySQL - 10.4.20-MariaDB : Database - customerdatamanagement
 *********************************************************************
 */
 
@@ -61,14 +61,15 @@ CREATE TABLE `jadwal_sales` (
   `kegiatan` text DEFAULT NULL,
   `waktu` datetime DEFAULT NULL,
   PRIMARY KEY (`id_jadwal`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `jadwal_sales` */
 
 insert  into `jadwal_sales`(`id_jadwal`,`id_sales`,`id_pelanggan`,`kegiatan`,`waktu`) values 
 (1,1,1,'Iseng','2023-04-11 00:00:00'),
 (2,3,2,'Wadadaw','2023-04-18 00:00:00'),
-(3,1,2,'Apa yak','2023-04-14 00:00:00');
+(3,1,2,'Apa yak','2023-04-14 00:00:00'),
+(4,1,6,'Paparan Kesiapan Pelatihan CEH','2023-05-31 00:00:00');
 
 /*Table structure for table `layanan` */
 
@@ -80,13 +81,18 @@ CREATE TABLE `layanan` (
   `deskripsi` varchar(50) DEFAULT NULL,
   `harga` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_layanan`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `layanan` */
 
 insert  into `layanan`(`id_layanan`,`nama`,`deskripsi`,`harga`) values 
-(1,'Security Assessment','Jasa  Pengujian Sistem Informasi',35000000),
-(3,'Penetration Test','Mencari celah kemanan',50000000);
+(1,'Vulnerability Assessment','Jasa Penilaian Celah Kerentanan',35000000),
+(2,'Penetration Test','Jasa Pengujian Celah Kerentanan',50000000),
+(3,'SOC Small Business','Jasa Monitoring Keamanan Jaringan untuk selama sat',300000000),
+(4,'SOC Medium Business','Jasa Monitoring Keamanan Jaringan selama satu tahu',500000000),
+(5,'Game Bug Hunting','Jasa Pengujian Bug pada Game',100000000),
+(6,'Red Team','Jasa Pengujian Keamanan terhadap seluruh infrastru',150000000),
+(7,'Pelatihan dan Sertifikasi CEH','Jasa pelatihan dan sertifikasi CEH',35000000);
 
 /*Table structure for table `pelanggan` */
 
@@ -100,13 +106,17 @@ CREATE TABLE `pelanggan` (
   `no_tlp` varchar(13) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_pelanggan`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `pelanggan` */
 
 insert  into `pelanggan`(`id_pelanggan`,`nik`,`nama_pic`,`nama_instansi`,`no_tlp`,`email`) values 
-(1,'112233','Dedi','Google','081122334455','dedi@google.com'),
-(2,'12345','Hamdan','PT. Teknologi','0812','hamdan@gmail.com');
+(1,'3522241907910001','Dedi','PT Sinalum Abadi','081122334455','dedi@google.com'),
+(2,'3522240407540003','Hamdan','PT. Teknologi Mitra Mandiri','081278565890','hamdan@gmail.com'),
+(3,'3522245606830003','YETI MARIANA ','Kementerian Marves','087798495969','yeti@marves.go.id'),
+(4,'3522244309030001','ADELINA ADINDA PUTRI','Kementerian Keuangan','087798495969','adelina@kemenkeu.go.id'),
+(5,'3622242301150002 ','PANDU ','HiPajak','085687869876','pandu@hipajak.id'),
+(6,'3522242405970001','AHMAD SAIFUDIN ','Naval CSIRT','085647754488','ahmad@naval-csirt.id');
 
 /*Table structure for table `pembayaran` */
 
@@ -137,14 +147,16 @@ CREATE TABLE `sales` (
   `email` varchar(50) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_sales`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `sales` */
 
 insert  into `sales`(`id_sales`,`nama`,`email`,`password`) values 
-(1,'Sales','sales@gmail.com','sales'),
-(3,'Sales 2','sales2@gmail.com','sales2'),
-(4,'ferina','ferina@gmail.com','ferina');
+(1,'Hakim Aminudin','hakim@maxplus.com','sales'),
+(3,'Sandi Nugraha','sandi@maxplus.com','sales'),
+(4,'Idrus','idrus@maxplus.com','sales'),
+(5,'Faisal Hidayat','faisal@maxplus.com','sales'),
+(6,'Hamdan Maulani','hamdan@maxplus.com','sales');
 
 /*Table structure for table `transaksi` */
 
