@@ -64,7 +64,6 @@ public class Admin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -168,7 +167,7 @@ public class Admin extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("KELOMPOK 5 Y6B");
+        jLabel1.setText("PT. MAXPLUS");
         kGradientPanel1.add(jLabel1);
         jLabel1.setBounds(30, 200, 370, 48);
 
@@ -176,23 +175,17 @@ public class Admin extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("APLIKASI PENGELOLAAN DATA PELANGGAN");
         kGradientPanel1.add(jLabel11);
-        jLabel11.setBounds(160, 20, 550, 30);
+        jLabel11.setBounds(160, 20, 550, 32);
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dashboardapp/images/grap.png"))); // NOI18N
         kGradientPanel1.add(jLabel9);
         jLabel9.setBounds(30, 290, 360, 200);
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(204, 204, 0));
-        jLabel4.setText("TUGAS PEMROGRAMAN VISUAL");
-        kGradientPanel1.add(jLabel4);
-        jLabel4.setBounds(30, 170, 300, 40);
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("*############################################################*");
         kGradientPanel1.add(jLabel2);
-        jLabel2.setBounds(150, 50, 560, 17);
+        jLabel2.setBounds(150, 50, 560, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -269,7 +262,6 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
