@@ -12,6 +12,9 @@
 	<parameter name="param_end_date" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="tanggal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      jadwal_sales.`waktu` AS waktu,
@@ -39,20 +42,22 @@ WHERE waktu >= $P{param_start_date} AND waktu <= $P{param_end_date} AND jadwal_s
 	</background>
 	<title>
 		<band height="72">
-			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="5f62fb80-71b7-4a4a-9a82-5975e1447a10"/>
-				<staticText>
-					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="cbe0fb0a-21c9-4d57-bb8a-99c971ca6d34"/>
-					<textElement>
-						<font size="34" isBold="true"/>
-					</textElement>
-					<text><![CDATA[Jadwal Sales]]></text>
-				</staticText>
-			</frame>
+			<image scaleImage="RealHeight" hAlign="Center">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="72" uuid="a48c2f72-b054-450e-8262-1168c4939c97"/>
+				<imageExpression><![CDATA["C:\\Users\\labuser\\Documents\\GitHub\\customerdatamanagement\\customerdatamanagement\\src\\dashboardapp\\images\\kop_surat_maxplus.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="13"/>
+		<band height="24">
+			<staticText>
+				<reportElement x="0" y="0" width="172" height="24" forecolor="#006699" uuid="fcad272f-ce8d-4b13-b107-5c9ccf15deb9"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Jadwal Sales]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="21">
@@ -152,13 +157,25 @@ WHERE waktu >= $P{param_start_date} AND waktu <= $P{param_end_date} AND jadwal_s
 				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="ea6b440e-3638-4c4f-bd28-108d2011caca"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="6f457125-5fdb-4256-ad16-b559398e56ce"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band/>
+		<band height="120">
+			<staticText>
+				<reportElement x="370" y="34" width="185" height="20" uuid="80b0ad76-9d5a-43ee-8fe5-e7baa6d3f334"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Chief Marketing Officer]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="14" width="185" height="20" uuid="011db9f4-471a-4eaa-a358-648854f971a4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{tanggal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="100" width="185" height="20" uuid="cdecb3bb-d901-467e-90f7-59c78586c716"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tengku Mariani P]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>

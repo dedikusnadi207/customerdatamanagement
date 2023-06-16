@@ -9,9 +9,12 @@
 	<parameter name="tanggalSelesai" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="tanggal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT * FROM transaksi INNER JOIN pelanggan ON pelanggan.id_pelanggan = transaksi.id_pelanggan INNER JOIN layanan on layanan.id_layanan = transaksi.id_layanan INNER JOIN sales on sales.id_sales = transaksi.id_sales
-WHERE tanggal_mulai >= $P{tanggalMulai} AND tanggal_selesai<=$P{tanggalSelesai} ]]>
+WHERE tanggal_mulai >= $P{tanggalMulai} AND tanggal_selesai<=$P{tanggalSelesai}]]>
 	</queryString>
 	<field name="id_transaksi" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -72,25 +75,27 @@ WHERE tanggal_mulai >= $P{tanggalMulai} AND tanggal_selesai<=$P{tanggalSelesai} 
 	</background>
 	<title>
 		<band height="72">
-			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="841" height="92" backcolor="#006699" uuid="914e28d4-6de3-4287-ad96-b7a77305c40e"/>
-				<staticText>
-					<reportElement x="20" y="20" width="295" height="43" forecolor="#FFFFFF" uuid="c3568fa3-7776-4b94-b98c-b5578ffd439d"/>
-					<textElement>
-						<font size="34" isBold="true"/>
-					</textElement>
-					<text><![CDATA[Data Transaksi]]></text>
-				</staticText>
-			</frame>
+			<image scaleImage="RealHeight" hAlign="Center">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="72" uuid="a48c2f72-b054-450e-8262-1168c4939c97"/>
+				<imageExpression><![CDATA["C:\\Users\\labuser\\Documents\\GitHub\\customerdatamanagement\\customerdatamanagement\\src\\dashboardapp\\images\\kop_surat_maxplus.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="13"/>
+		<band height="24">
+			<staticText>
+				<reportElement x="0" y="0" width="157" height="24" forecolor="#006699" uuid="fcad272f-ce8d-4b13-b107-5c9ccf15deb9"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Transaksi]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="21">
 			<line>
-				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="8980fdec-fa60-4f92-8d9e-e02d709d2059"/>
+				<reportElement x="0" y="20" width="800" height="1" forecolor="#666666" uuid="8980fdec-fa60-4f92-8d9e-e02d709d2059"/>
 			</line>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="0" width="79" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="2ec155c8-cf55-41f3-9d4f-e9175854a6a8"/>
@@ -114,21 +119,21 @@ WHERE tanggal_mulai >= $P{tanggalMulai} AND tanggal_selesai<=$P{tanggalSelesai} 
 				<text><![CDATA[Tanggal Selesai]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="323" y="1" width="115" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="58b58c06-e48b-4c23-a154-ef21fc4a5dfa"/>
+				<reportElement mode="Opaque" x="323" y="0" width="115" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="58b58c06-e48b-4c23-a154-ef21fc4a5dfa"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PIC]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="438" y="1" width="137" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="9f23065c-b5fa-455f-9c3a-09cf063ff176"/>
+				<reportElement mode="Opaque" x="438" y="0" width="137" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="9f23065c-b5fa-455f-9c3a-09cf063ff176"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Instansi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="575" y="1" width="148" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5d7a02b0-8fa2-401b-a49d-7e8a3776b28d"/>
+				<reportElement mode="Opaque" x="575" y="0" width="148" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5d7a02b0-8fa2-401b-a49d-7e8a3776b28d"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -146,7 +151,7 @@ WHERE tanggal_mulai >= $P{tanggalMulai} AND tanggal_selesai<=$P{tanggalSelesai} 
 	<detail>
 		<band height="20">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="1b1e9d15-dab4-45fc-8cf0-78560aa10ca0"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="800" height="1" uuid="1b1e9d15-dab4-45fc-8cf0-78560aa10ca0"/>
 			</line>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="0" y="0" width="79" height="20" uuid="b2d93a08-63e9-4f5a-a792-dd21994d65e1"/>
@@ -213,13 +218,25 @@ WHERE tanggal_mulai >= $P{tanggalMulai} AND tanggal_selesai<=$P{tanggalSelesai} 
 				<reportElement mode="Opaque" x="762" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="78f56acf-005f-462e-abc6-c9f0f24d2310"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="2c94a7b8-940b-4bc9-b779-7cea3743e0df"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band/>
+		<band height="120">
+			<staticText>
+				<reportElement x="617" y="34" width="185" height="20" uuid="80b0ad76-9d5a-43ee-8fe5-e7baa6d3f334"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Chief Marketing Officer]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="617" y="14" width="185" height="20" uuid="011db9f4-471a-4eaa-a358-648854f971a4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{tanggal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="617" y="100" width="185" height="20" uuid="cdecb3bb-d901-467e-90f7-59c78586c716"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tengku Mariani P]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>

@@ -2278,7 +2278,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void btn_tambah_pelanggan4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan4ActionPerformed
         try {
             File pelanggan = new File("src/report/admin.jasper");
-            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), null, Koneksi.Koneksi.koneksidb());
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), MapCustom.of("tanggal", reportDate()), Koneksi.Koneksi.koneksidb());
             JasperViewer.viewReport(jp, false);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e);
@@ -2298,7 +2298,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void btn_tambah_pelanggan6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan6ActionPerformed
         try {
             File pelanggan = new File("src/report/layanan.jasper");
-            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), null, Koneksi.Koneksi.koneksidb());
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), MapCustom.of("tanggal", reportDate()), Koneksi.Koneksi.koneksidb());
             JasperViewer.viewReport(jp, false);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e);
@@ -2348,7 +2348,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void btn_cetak_pelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetak_pelangganActionPerformed
         try {
             File pelanggan = new File("src/report/pelanggan.jasper");
-            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), null, Koneksi.Koneksi.koneksidb());
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), MapCustom.of("tanggal", reportDate()), Koneksi.Koneksi.koneksidb());
             JasperViewer.viewReport(jp, false);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e);
@@ -2363,7 +2363,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             File pelanggan = new File("src/report/transaksi.jasper");
-            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), MapCustom.of("tanggalMulai", simpleDateFormat.format(tanggalMulaiReport.getDate()), "tanggalSelesai", simpleDateFormat.format(tanggalSelesaiReport.getDate())), Koneksi.Koneksi.koneksidb());
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), MapCustom.of("tanggalMulai", simpleDateFormat.format(tanggalMulaiReport.getDate()), "tanggalSelesai", simpleDateFormat.format(tanggalSelesaiReport.getDate()), "tanggal", reportDate()), Koneksi.Koneksi.koneksidb());
             JasperViewer.viewReport(jp, false);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e);
@@ -2427,7 +2427,8 @@ public class AdminDashboard extends javax.swing.JFrame {
             JasperPrint jp = JasperFillManager.fillReport(jadwalSales.getPath(), MapCustom.of(
                     "param_id_sales", idSales,
                     "param_start_date", startTime,
-                    "param_end_date", endTime
+                    "param_end_date", endTime,
+                    "tanggal", reportDate()
             ), Koneksi.Koneksi.koneksidb());
             JasperViewer.viewReport(jp, false);
         } catch (JRException e) {
@@ -2592,7 +2593,8 @@ public class AdminDashboard extends javax.swing.JFrame {
                     "tanggal_selesai", data.getTanggalSelesai(),
                     "pelanggan", data.getPelanggan().getNamaPic()+" - "+data.getPelanggan().getNamaInstansi(),
                     "layanan", data.getLayanan().getNama(),
-                    "total_harga", data.getTotalHarga()
+                    "total_harga", data.getTotalHarga(),
+                    "tanggal", reportDate()
             ), Koneksi.Koneksi.koneksidb());
             JasperViewer.viewReport(jp, false);
         } catch (JRException e) {

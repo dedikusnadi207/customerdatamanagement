@@ -43,6 +43,9 @@
 	<parameter name="id_transaksi" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="tanggal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      pembayaran.`tgl_bayar` AS tanggal_bayar,
@@ -62,16 +65,10 @@ WHERE pembayaran.id_transaksi = $P{id_transaksi}]]>
 	</background>
 	<title>
 		<band height="72">
-			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="78ef119b-81e0-46d3-a2ad-a5798900a08d"/>
-				<staticText>
-					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="7ef944cc-be38-49e1-ad4e-b2314013da98"/>
-					<textElement>
-						<font size="34" isBold="true"/>
-					</textElement>
-					<text><![CDATA[Pembayaran]]></text>
-				</staticText>
-			</frame>
+			<image scaleImage="RealHeight" hAlign="Center">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="72" uuid="a48c2f72-b054-450e-8262-1168c4939c97"/>
+				<imageExpression><![CDATA["C:\\Users\\labuser\\Documents\\GitHub\\customerdatamanagement\\customerdatamanagement\\src\\dashboardapp\\images\\kop_surat_maxplus.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -218,13 +215,25 @@ WHERE pembayaran.id_transaksi = $P{id_transaksi}]]>
 				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="8b92ea6e-88e7-449f-97a9-8966bf30b384"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="c085cd50-bdd4-46fb-b560-b453425539ab"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band/>
+		<band height="120">
+			<staticText>
+				<reportElement x="370" y="34" width="185" height="20" uuid="80b0ad76-9d5a-43ee-8fe5-e7baa6d3f334"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Chief Marketing Officer]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="14" width="185" height="20" uuid="011db9f4-471a-4eaa-a358-648854f971a4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{tanggal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="100" width="185" height="20" uuid="cdecb3bb-d901-467e-90f7-59c78586c716"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tengku Mariani P]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>

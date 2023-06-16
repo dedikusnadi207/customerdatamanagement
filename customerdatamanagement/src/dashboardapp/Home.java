@@ -10,7 +10,9 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -187,6 +189,14 @@ public class Home extends javax.swing.JFrame {
         txtKegiatanJadwal.setText("");
         tanggalJadwal.setDate(new Date());
         tabel_jadwal.clearSelection();
+    }
+    
+    String reportDate() {
+        Locale locale = new Locale("id", "ID");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy", locale);
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jakarta"));
+        
+        return "Jakarta, " + sdf.format(new Date());
     }
 
 
@@ -1920,7 +1930,7 @@ public class Home extends javax.swing.JFrame {
     private void btn_tambah_pelanggan3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan3ActionPerformed
         try {
             File pelanggan = new File("src/report/pelanggan.jasper");
-            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), null, Koneksi.Koneksi.koneksidb());
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), MapCustom.of("tanggal", reportDate()), Koneksi.Koneksi.koneksidb());
             JasperViewer.viewReport(jp, false);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e);
@@ -1930,7 +1940,7 @@ public class Home extends javax.swing.JFrame {
     private void btn_tambah_pelanggan4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan4ActionPerformed
         try {
             File pelanggan = new File("src/report/layanan.jasper");
-            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), null, Koneksi.Koneksi.koneksidb());
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), MapCustom.of("tanggal", reportDate()), Koneksi.Koneksi.koneksidb());
             JasperViewer.viewReport(jp, false);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e);
@@ -1941,7 +1951,7 @@ public class Home extends javax.swing.JFrame {
         try {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             File pelanggan = new File("src/report/transaksi.jasper");
-            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), MapCustom.of("tanggalMulai", simpleDateFormat.format(tanggalMulaiReport.getDate()), "tanggalSelesai", simpleDateFormat.format(tanggalSelesaiReport.getDate())), Koneksi.Koneksi.koneksidb());
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), MapCustom.of("tanggalMulai", simpleDateFormat.format(tanggalMulaiReport.getDate()), "tanggalSelesai", simpleDateFormat.format(tanggalSelesaiReport.getDate()), "tanggal", reportDate()), Koneksi.Koneksi.koneksidb());
             JasperViewer.viewReport(jp, false);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e);
@@ -2107,7 +2117,8 @@ public class Home extends javax.swing.JFrame {
             JasperPrint jp = JasperFillManager.fillReport(jadwalSales.getPath(), MapCustom.of(
                     "param_id_sales", idSales,
                     "param_start_date", startTime,
-                    "param_end_date", endTime
+                    "param_end_date", endTime,
+                    "tanggal", reportDate()
             ), Koneksi.Koneksi.koneksidb());
             JasperViewer.viewReport(jp, false);
         } catch (JRException e) {
@@ -2128,7 +2139,8 @@ public class Home extends javax.swing.JFrame {
                         "tanggal_selesai", data.getTanggalSelesai(),
                         "pelanggan", data.getPelanggan().getNamaPic()+" - "+data.getPelanggan().getNamaInstansi(),
                         "layanan", data.getLayanan().getNama(),
-                        "total_harga", data.getTotalHarga()
+                        "total_harga", data.getTotalHarga(),
+                        "tanggal", reportDate()
                 ), Koneksi.Koneksi.koneksidb());
                 JasperViewer.viewReport(jp, false);
             } catch (JRException e) {
