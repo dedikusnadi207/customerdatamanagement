@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f31d43da-5b08-497b-a49c-c79f5de45b16">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<parameter name="tanggal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
 		<![CDATA[SELECT * FROM sales;]]>
 	</queryString>
 	<field name="id_sales" class="java.lang.Integer">
@@ -105,13 +108,25 @@
 				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="e251b609-08d1-4cf2-860a-2f7b8c71ba4a"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="19fc4b47-88ae-47a1-b75d-94d574e6e9c2"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band/>
+		<band height="120">
+			<staticText>
+				<reportElement x="370" y="34" width="185" height="20" uuid="80b0ad76-9d5a-43ee-8fe5-e7baa6d3f334"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Chief Marketing Officer]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="14" width="185" height="20" uuid="011db9f4-471a-4eaa-a358-648854f971a4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{tanggal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="100" width="185" height="20" uuid="cdecb3bb-d901-467e-90f7-59c78586c716"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tengku Mariani P]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>

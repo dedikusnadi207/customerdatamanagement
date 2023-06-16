@@ -12,7 +12,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -202,6 +204,14 @@ public class AdminDashboard extends javax.swing.JFrame {
     void logout(){
         this.dispose();
         new Login().setVisible(true);
+    }
+    
+    String reportDate() {
+        Locale locale = new Locale("id", "ID");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy", locale);
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jakarta"));
+        
+        return "Jakarta, " + sdf.format(new Date());
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -2278,7 +2288,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void btn_tambah_pelanggan5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah_pelanggan5ActionPerformed
         try {
             File pelanggan = new File("src/report/sales.jasper");
-            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), null, Koneksi.Koneksi.koneksidb());
+            JasperPrint jp = JasperFillManager.fillReport(pelanggan.getPath(), MapCustom.of("tanggal", reportDate()), Koneksi.Koneksi.koneksidb());
             JasperViewer.viewReport(jp, false);
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e);
