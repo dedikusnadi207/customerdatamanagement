@@ -23,20 +23,22 @@
 	</background>
 	<title>
 		<band height="72">
-			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="3b5364c5-a688-48c4-80f4-f2a6e32e9d3f"/>
-				<staticText>
-					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="3faee35f-b8de-4eaf-96fe-cdc4b9ccf34c"/>
-					<textElement>
-						<font size="34" isBold="true"/>
-					</textElement>
-					<text><![CDATA[Data Sales]]></text>
-				</staticText>
-			</frame>
+			<image scaleImage="RealHeight" hAlign="Center">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="72" uuid="a48c2f72-b054-450e-8262-1168c4939c97"/>
+				<imageExpression><![CDATA["C:\\Users\\labuser\\Documents\\GitHub\\customerdatamanagement\\customerdatamanagement\\src\\dashboardapp\\images\\kop_surat_maxplus.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="13"/>
+		<band height="24">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="24" forecolor="#006699" uuid="fcad272f-ce8d-4b13-b107-5c9ccf15deb9"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Sales]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="21">
