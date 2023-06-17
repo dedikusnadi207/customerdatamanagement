@@ -77,7 +77,7 @@ WHERE tanggal_mulai >= $P{tanggalMulai} AND tanggal_selesai<=$P{tanggalSelesai}]
 		<band height="72">
 			<image scaleImage="RealHeight" hAlign="Center">
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="72" uuid="a48c2f72-b054-450e-8262-1168c4939c97"/>
-				<imageExpression><![CDATA["C:\\Users\\labuser\\Documents\\GitHub\\customerdatamanagement\\customerdatamanagement\\src\\dashboardapp\\images\\kop_surat_maxplus.png"]]></imageExpression>
+				<imageExpression><![CDATA["../dashboardapp/images/kop_surat_maxplus.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

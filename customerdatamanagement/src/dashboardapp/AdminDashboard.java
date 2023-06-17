@@ -208,7 +208,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     
     String reportDate() {
         Locale locale = new Locale("id", "ID");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy", locale);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd MMMMM yyyy", locale);
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jakarta"));
         
         return "Jakarta, " + sdf.format(new Date());

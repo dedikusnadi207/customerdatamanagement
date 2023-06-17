@@ -43,7 +43,8 @@ public class TransaksiRepository extends Repository<Transaksi> {
             "id_sales", Types.INTEGER,
             "total_harga", Types.INTEGER,
             "created_at", Types.VARCHAR,
-            "updated_at", Types.VARCHAR
+            "updated_at", Types.VARCHAR,
+            "status", Types.VARCHAR
         );
     }
 

@@ -7,6 +7,7 @@ package dashboardapp;
 
 import java.awt.Color;
 import java.io.File;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -193,7 +194,7 @@ public class Home extends javax.swing.JFrame {
     
     String reportDate() {
         Locale locale = new Locale("id", "ID");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy", locale);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd MMMMM yyyy", locale);
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Jakarta"));
         
         return "Jakarta, " + sdf.format(new Date());
@@ -1879,7 +1880,7 @@ public class Home extends javax.swing.JFrame {
             transaksiRepository.save(transaksi);
             clearFormTransaksi();
             selectMenu("transaksi");
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Gagal menyimpan data Transaksi! : "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_tambah_pelanggan1ActionPerformed
